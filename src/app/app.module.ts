@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,11 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule, MatIcon } from '@angular/material/icon';
 import { HomeComponent } from './home/home.component';
+import { FootbarComponent } from './footbar/footbar.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      HomeComponent
+      HomeComponent,
+      FootbarComponent
    ],
    imports: [
       BrowserModule,
@@ -20,7 +23,10 @@ import { HomeComponent } from './home/home.component';
       BrowserAnimationsModule,
       MatButtonModule,
       MatIconModule,
-      MatToolbarModule
+      MatToolbarModule,
+      RouterModule.forRoot([
+        { path: '', component: HomeComponent }
+      ])
    ],
    providers: [],
    bootstrap: [
