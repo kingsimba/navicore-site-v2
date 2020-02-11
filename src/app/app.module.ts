@@ -10,12 +10,22 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule, MatIcon } from '@angular/material/icon';
 import { HomeComponent } from './home/home.component';
 import { FootbarComponent } from './footbar/footbar.component';
+import { ServicesComponent } from './services/services.component';
+import { InavicoreComponent } from './inavicore/inavicore.component';
+import { JnavicoreComponent } from './jnavicore/jnavicore.component';
+import { OpenSourceComponent } from './open-source/open-source.component';
+import { NavizeroComponent } from './navizero/navizero.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       HomeComponent,
-      FootbarComponent
+      FootbarComponent,
+      ServicesComponent,
+      InavicoreComponent,
+      JnavicoreComponent,
+      OpenSourceComponent,
+      NavizeroComponent
    ],
    imports: [
       BrowserModule,
@@ -25,7 +35,12 @@ import { FootbarComponent } from './footbar/footbar.component';
       MatIconModule,
       MatToolbarModule,
       RouterModule.forRoot([
-        { path: '', component: HomeComponent }
+        { path: '', component: HomeComponent },
+        { path: 'inavicore', component: InavicoreComponent },
+        { path: 'jnavicore', component: JnavicoreComponent },
+        { path: 'navizero', component: NavizeroComponent },
+        { path: 'open-source', component: OpenSourceComponent },
+        { path: 'services', component: ServicesComponent }
       ])
    ],
    providers: [],
