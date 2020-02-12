@@ -2,11 +2,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z2">
   <span> <button mat-button [routerLink]="['/']"><img src="assets/static_core_big.png" style="height:1.5em"/>&nbsp; NaviCore</button> </span>
   <span>&nbsp;&nbsp;&nbsp;</span>
-  <span> <button mat-button [routerLink]="['/navizero']">NaviZero</button> </span>
-  <span> <button mat-button [routerLink]="['/inavicore']">iNaviCore</button> </span>
-  <span> <button mat-button [routerLink]="['/jnavicore']">jNaviCore</button> </span>
-  <span> <button mat-button [routerLink]="['/services']">Services</button> </span>
-  <span> <button mat-button [routerLink]="['/open-source']">Open Source</button> </span>
+  <span *ngFor="let page of pages"> <button mat-button [routerLink]="[page.url]">{{ page.title }}</button> </span>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

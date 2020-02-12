@@ -15,6 +15,7 @@ import { InavicoreComponent } from './inavicore/inavicore.component';
 import { JnavicoreComponent } from './jnavicore/jnavicore.component';
 import { OpenSourceComponent } from './open-source/open-source.component';
 import { NavizeroComponent } from './navizero/navizero.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [
@@ -34,6 +35,7 @@ import { NavizeroComponent } from './navizero/navizero.component';
       MatButtonModule,
       MatIconModule,
       MatToolbarModule,
+      FormsModule,
       RouterModule.forRoot([
         { path: '', component: HomeComponent },
         { path: 'inavicore', component: InavicoreComponent },
