@@ -17,13 +17,14 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { NZ_ICONS } from 'ng-zorro-antd';
 
-const ICONS = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, FormOutline];
+const ICONS = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, FormOutline, GithubOutline];
 
 import {
   MenuFoldOutline,
   MenuUnfoldOutline,
   FormOutline,
-  DashboardOutline
+  DashboardOutline,
+  GithubOutline
 } from '@ant-design/icons-angular/icons';
 import { ImageCardComponent } from './image-card/image-card.component';
 
