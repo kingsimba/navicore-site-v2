@@ -1,35 +1,50 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IconsProviderModule } from './icons-provider.module';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { RouterModule, ROUTES } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { HomePageComponent } from './home-page/home-page.component';
+
+import { NZ_ICONS } from 'ng-zorro-antd';
+
+const ICONS = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, FormOutline];
+
+import {
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  FormOutline,
+  DashboardOutline
+} from '@ant-design/icons-angular/icons';
 
 registerLocaleData(en);
 
+const ROUTES: Routes = [
+  { path: '', component: HomePageComponent }
+];
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    IconsProviderModule,
     NgZorroAntdModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot([
-    ])
+    RouterModule.forRoot(ROUTES)
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: NZ_ICONS, useValue: ICONS }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

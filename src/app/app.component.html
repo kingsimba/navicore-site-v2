@@ -1,76 +1,8 @@
-<nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
-    <div class="sidebar-logo">
-      <a href="https://ng.ant.design/" target="_blank">
-        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design Of Angular</h1>
-      </a>
-    </div>
-    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
-        </span>
-      </div>
-    </nz-header>
-    <nz-content>
-      <div class="inner-content">
-        <router-outlet></router-outlet>
-      </div>
-    </nz-content>
-  </nz-layout>
-</nz-layout>
-<nz-card style="width:300px;" [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
-  <nz-card-meta
-    nzTitle="Card title"
-    nzDescription="This is the description"
-    [nzAvatar]="avatarTemplate"
-  ></nz-card-meta>
-</nz-card>
-<ng-template #avatarTemplate>
-  <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-</ng-template>
-<ng-template #coverTemplate>
-  <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
-</ng-template>
-<ng-template #actionSetting>
-  <i nz-icon nzType="setting"></i>
-</ng-template>
-<ng-template #actionEdit>
-  <i nz-icon nzType="edit"></i>
-</ng-template>
-<ng-template #actionEllipsis>
-  <i nz-icon nzType="ellipsis"></i>
-</ng-template>
+<ul nz-menu nzTheme="light" nzMode="horizontal">
+    <li nz-submenu nzOpen routerLink="" nzTitle="NaviCore" nzIcon="dashboard">
+    </li>
+    <li nz-submenu nzOpen nzTitle="NaviZero" nzIcon="form">
+    </li>
+</ul>
+
+<router-outlet></router-outlet>
