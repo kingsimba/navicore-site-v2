@@ -1,8 +1,8 @@
-<ul nz-menu nzTheme="light" nzMode="horizontal">
-    <li nz-submenu nzOpen routerLink="" nzTitle="NaviCore" nzIcon="dashboard">
-    </li>
-    <li nz-submenu nzOpen nzTitle="NaviZero" nzIcon="form">
-    </li>
-</ul>
+<mat-toolbar color="primary" style="height: 45px">
+    <span><button mat-button><img src="assets/static_core_big.png" style="height:20px; padding-bottom: 3px"/>&nbsp;&nbsp;NaviCore</button></span>
+    <span><button mat-button>NaviZero</button></span>
+</mat-toolbar>
 
-<router-outlet></router-outlet>
+<div>
+    <router-outlet></router-outlet>
+</div>

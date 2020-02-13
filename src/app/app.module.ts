@@ -10,6 +10,9 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 import { NZ_ICONS } from 'ng-zorro-antd';
 
@@ -21,6 +24,7 @@ import {
   FormOutline,
   DashboardOutline
 } from '@ant-design/icons-angular/icons';
+import { ImageCardComponent } from './image-card/image-card.component';
 
 registerLocaleData(en);
 
@@ -31,7 +35,8 @@ const ROUTES: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent
+    HomePageComponent,
+    ImageCardComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +44,9 @@ const ROUTES: Routes = [
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
