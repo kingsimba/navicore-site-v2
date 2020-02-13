@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+
+.container {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.vl {
+    border-left: 6px;
+    display: inline-block;
+    width: 10px;
+}
+
+.cell {
+    @include mat-elevation(2, black, 0.5);
+    background-color: white;
+    padding: 10px 20px;
+
+    h1 {
+        margin-bottom: 5px;
+    }
+}
+
+.layoutRow {
+    margin: 10px;
+}
