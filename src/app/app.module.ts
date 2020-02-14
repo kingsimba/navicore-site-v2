@@ -21,17 +21,25 @@ import { MatRippleModule } from '@angular/material/core';
 
 import { NZ_ICONS } from 'ng-zorro-antd';
 
-const ICONS = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, FormOutline, GithubOutline, ToolFill, ApiFill];
-
 import {
     MenuFoldOutline,
     MenuUnfoldOutline,
     FormOutline,
     DashboardOutline,
     GithubOutline,
-    ToolFill,
-    ApiFill
+    ToolTwoTone,
+    ApiTwoTone
 } from '@ant-design/icons-angular/icons';
+
+const ICONS = [
+    MenuFoldOutline,
+    MenuUnfoldOutline,
+    DashboardOutline,
+    FormOutline,
+    GithubOutline,
+    ToolTwoTone,
+    ApiTwoTone];
+
 import { ImageCardComponent } from './image-card/image-card.component';
 import { NavizeroComponent } from './navizero/navizero.component';
 import { SdkComponent } from './sdk/sdk.component';

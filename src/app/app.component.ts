@@ -29,6 +29,6 @@ export class AppComponent {
     }
 
     isDesktop() {
-        return this.innerWidth >= 800;
+        return this.innerWidth >= 768;
     }
 }
