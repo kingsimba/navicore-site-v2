@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
@@ -50,6 +51,7 @@ const ROUTES: Routes = [
     MatIconModule,
     MatButtonModule,
     NzIconModule,
+    FlexLayoutModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [

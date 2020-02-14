@@ -11,20 +11,18 @@
     width: 10px;
 }
 
-.cell {
+.row {
+    margin: 10px;
+    height: 100%;
+    display: flex;
+}
+
+.col {
     @include mat-elevation(2, black, 0.5);
     background-color: white;
     padding: 10px 20px;
     min-width: 300px;
-    height: 100%;
-
     h1 {
         margin-bottom: 5px;
     }
-}
-
-.layoutRow {
-    margin: 10px;
-    height: 100%;
-    display: flex;
 }
