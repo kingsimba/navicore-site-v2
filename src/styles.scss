@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: PingFang SC,微软雅黑; }
+
+h1, h2 {
+  display: block;
+  margin-block-start: 0.5em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 1.8em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  margin-top: 0em;
+}
+
+ol {
+  display: block;
+  list-style-type: decimal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+li {
+  line-height: 2em;
+}
+
+.appContent {
+  @include mat-elevation(2, black, 0.5);
+  margin: 10px;
+  background-color: white;
+  padding: 10px 20px;
+}
