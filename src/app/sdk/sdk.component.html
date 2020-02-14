@@ -1,0 +1,38 @@
+<div class="content">
+    <h1>
+        <i nz-icon nzType="tool" nzTheme="fill"></i> 导航SDK
+    </h1>
+    <p>使用SDK，可以轻松的开发出类似<a href="navizero">导航零号</a>的软件。
+        支持主流平台 iOS、Android。</p>
+    <p>SDK对内开源，已经成为智联NGLP的基础，并且在企业服务中广泛应用。
+    </p>
+
+    <p>
+        iOS平台SDK代号<b>iNaviCore</b>。它使用 ObjectiveC 进行封装，并打包成iOS framework。
+    </p>
+
+    <p>
+        Android平台SDK代号<b>jNaviCore</b>。他使用 Java 进行封装，并打包成 JAR 包。
+    </p>
+
+    <h2>下载</h2>
+
+    <ul>
+        <li *ngFor="let file of downloads">
+            <a [href]="file.link">
+                {{ file.title }}
+            </a>
+        </li>
+    </ul>
+
+    <h2>代码仓库</h2>
+    <p>只对内开源，代码只能从内网访问。</p>
+    <ul>
+        <li *ngFor="let repo of codesRepos">
+            <a [href]="repo.link">
+                {{ repo.title }}
+            </a>
+        </li>
+    </ul>
+
+</div>

@@ -34,12 +34,14 @@ import {
 } from '@ant-design/icons-angular/icons';
 import { ImageCardComponent } from './image-card/image-card.component';
 import { NavizeroComponent } from './navizero/navizero.component';
+import { SdkComponent } from './sdk/sdk.component';
 
 registerLocaleData(en);
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
-    { path: 'navizero', component: NavizeroComponent }
+    { path: 'navizero', component: NavizeroComponent },
+    { path: 'sdk', component: SdkComponent }
 ];
 
 @NgModule({
@@ -47,7 +49,8 @@ const ROUTES: Routes = [
         AppComponent,
         HomePageComponent,
         ImageCardComponent,
-        NavizeroComponent
+        NavizeroComponent,
+        SdkComponent
     ],
     imports: [
         BrowserModule,

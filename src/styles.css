@@ -5,14 +5,21 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: PingFang SC,微软雅黑; }
 
-h1 {
+h1, h2 {
   display: block;
-  font-size: 1.17em;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+}
+
+h1 {
+  font-size: 1.8em;
+}
+
+h2 {
+  font-size: 1.5em;
 }
 
 p {
