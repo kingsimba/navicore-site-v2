@@ -9,7 +9,7 @@ import { HostListener } from '@angular/core';
 export class AppComponent {
     isCollapsed = false;
 
-    menuItems = [ 
+    menuItems = [
         { title: '导航零号', link: 'navizero' },
         { title: '导航SDK', link: 'sdk' },
         { title: 'API', link: 'api' },

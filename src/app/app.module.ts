@@ -30,18 +30,21 @@ import {
   GithubOutline
 } from '@ant-design/icons-angular/icons';
 import { ImageCardComponent } from './image-card/image-card.component';
+import { NavizeroComponent } from './navizero/navizero.component';
 
 registerLocaleData(en);
 
 const ROUTES: Routes = [
-  { path: '', component: HomePageComponent }
+  { path: '', component: HomePageComponent },
+  { path: 'navizero', component: NavizeroComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    ImageCardComponent
+    ImageCardComponent,
+    NavizeroComponent
   ],
   imports: [
     BrowserModule,

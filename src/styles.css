@@ -2,5 +2,38 @@
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body { height: 100%; width: 100%;}
+html, body { height: 100%; }
 body { margin: 0; font-family: PingFang SC,微软雅黑; }
+
+h2 {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  margin-top: 0em;
+}
+
+ol {
+  display: block;
+  list-style-type: decimal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+li {
+  line-height: 2em;
+}

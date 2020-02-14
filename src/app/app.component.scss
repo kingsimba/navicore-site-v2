@@ -4,35 +4,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.header {
+.app-header {
     padding-left: 0;
     padding-right: 0;
     height: fit-content;
 }
 
-@media screen and (max-width: 1000px) {
-    .pcLayout {
-        padding-left: 0;
-        padding-right: 0;
-        height: fit-content;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .mobileLayout {
-        display: none;
-        padding-left: 0;
-        padding-right: 0;
-        height: fit-content;
-    }
-}
-
-.content {
+.app-content {
+    margin: 0 auto;
     max-width: 1024px;
     padding: 10px 30px 0 30px;
 }
 
-.footer {
+.app-footer {
     text-align: center;
 }
 

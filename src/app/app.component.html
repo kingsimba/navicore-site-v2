@@ -1,10 +1,10 @@
 <nz-layout>
     <mat-drawer-container class="example-container" hasBackdrop="true">
         <mat-drawer #drawer mode="over">I'm a drawer</mat-drawer>
-        <nz-header class="header">
+        <nz-header class="app-header">
             <mat-toolbar color="primary" class="mat-elevation-z4">
                 <span>
-                    <button mat-button>
+                    <button mat-button routerLink="">
                         <img src="assets/static_core_big.png"
                             style="height:20px; padding-bottom: 3px" />&nbsp;&nbsp;NaviCore
                     </button>
@@ -25,9 +25,9 @@
                 </span>
             </mat-toolbar>
         </nz-header>
-        <nz-content class="content">
+        <nz-content class="app-content">
             <router-outlet></router-outlet>
         </nz-content>
-        <nz-footer class="footer">The source code of this site is hosted on GitHub. Pay a Visit.</nz-footer>
+        <nz-footer class="app-footer">The source code of this site is hosted on GitHub. Pay a Visit.</nz-footer>
     </mat-drawer-container>
 </nz-layout>
