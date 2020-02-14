@@ -5,7 +5,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: PingFang SC,微软雅黑; }
 
-h2 {
+h1 {
   display: block;
   font-size: 1.17em;
   margin-block-start: 1em;
