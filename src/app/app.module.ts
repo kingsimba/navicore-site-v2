@@ -15,6 +15,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { NZ_ICONS } from 'ng-zorro-antd';
 
@@ -50,6 +52,8 @@ const ROUTES: Routes = [
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatSidenavModule,
+    MatMenuModule,
     NzIconModule,
     FlexLayoutModule,
     RouterModule.forRoot(ROUTES)

@@ -1,13 +1,33 @@
 <nz-layout>
-    <nz-header class="header">
-        <mat-toolbar color="primary" class="mat-elevation-z4">
-            <span><button mat-button><img src="assets/static_core_big.png"
-                        style="height:20px; padding-bottom: 3px" />&nbsp;&nbsp;NaviCore</button></span>
-            <span><button mat-button>NaviZero</button></span>
-        </mat-toolbar>
-    </nz-header>
-    <nz-content class="content">
-        <router-outlet></router-outlet>
-    </nz-content>
-    <nz-footer class="footer">The source code of this site is hosted on GitHub. Pay a Visit.</nz-footer>
+    <mat-drawer-container class="example-container" hasBackdrop="true">
+        <mat-drawer #drawer mode="over">I'm a drawer</mat-drawer>
+        <nz-header class="header">
+            <mat-toolbar color="primary" class="mat-elevation-z4">
+                <span>
+                    <button mat-button>
+                        <img src="assets/static_core_big.png"
+                            style="height:20px; padding-bottom: 3px" />&nbsp;&nbsp;NaviCore
+                    </button>
+                </span>
+                <span *ngFor="let item of menuItems">
+                    <button *ngIf="isDesktop()" mat-button [routerLink]="item.link"> {{ item.title }} </button>
+                </span>
+                <span class="example-spacer"></span>
+                <span *ngIf="!isDesktop()">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item *ngFor="let item of menuItems" [routerLink]="item.link">
+                            {{ item.title }}
+                        </button>
+                    </mat-menu>
+                </span>
+            </mat-toolbar>
+        </nz-header>
+        <nz-content class="content">
+            <router-outlet></router-outlet>
+        </nz-content>
+        <nz-footer class="footer">The source code of this site is hosted on GitHub. Pay a Visit.</nz-footer>
+    </mat-drawer-container>
 </nz-layout>
