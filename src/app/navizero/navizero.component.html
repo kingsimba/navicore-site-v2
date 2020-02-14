@@ -1,50 +1,42 @@
 <div class="content">
-<h1><img src="assets/navizero_icon.png" height="40px" /> 导航零号</h1>
-<p>免费的导航软件，有 iOS 和 Android 两个版本。苹果 AppStore，华为商店，小米商店均可下载。</p>
-<p>具备搜索、算路、路况等全部功能。它是个样板项目，体现了导航引擎最新的功能。
-    为各种定制导航项目趟平了产品化的道路。</p>
-<p>并且，它已经内部全部开源。各项目部可以在它的基础上做改造，做项目定制。</p>
+    <h1><img src="assets/navizero_icon.png" height="40px" /> 导航零号</h1>
+    <p>免费的导航软件，有 iOS 和 Android 两个版本。苹果 AppStore，华为商店，小米商店均可下载。</p>
+    <p>具备搜索、算路、路况等全部功能。它是个样板项目，体现了导航引擎最新的功能。
+        为各种定制导航项目趟平了产品化的道路。</p>
+    <p>并且，它已经内部全部开源。各项目部可以在它的基础上做改造，做项目定制。</p>
 
-<img src="assets/navizero_screenshot.png" />
+    <img *ngFor="let img of images" [src]="img"/>
 
-<h2>下载</h2>
-<ul>
-    <li>
-        <a href="https://apps.apple.com/cn/app/%E5%AF%BC%E8%88%AA%E9%9B%B6%E5%8F%B7/id1469022033">
-            iOS版 AppStore 下载
-        </a>
-    </li>
-    <li>
-        <a href="https://www.pgyer.com/eGby">
-            Android 内测版 (密码: mapbar)
-        </a>
-    </li>
-</ul>
+    <h2>下载</h2>
+    <ul>
+        <li *ngFor="let ref of downloads">
+            <a [href]="ref.link">
+                {{ ref.title }}
+            </a>
+        </li>
+    </ul>
 
-<h2>源代码</h2>
-<p>源代码只能从公司内网访问。</p>
-<ul>
-    <li>
-        <a href="https://gitlab.mapbar.com/navicore/navi-zero-ios">
-            iOS版代码仓库
-        </a>
-    </li>
-    <li>
-        <a href="https://gitlab.mapbar.com/navicore/navi-zero-android">
-            Android版代码仓库
-        </a>
-    </li>
-</ul>
+    <h2>源代码</h2>
+    <p>源代码只能从公司内网访问。</p>
+    <ul>
+        <li>
+            <a href="https://gitlab.mapbar.com/navicore/navi-zero-ios">
+                iOS版代码仓库
+            </a>
+        </li>
+        <li>
+            <a href="https://gitlab.mapbar.com/navicore/navi-zero-android">
+                Android版代码仓库
+            </a>
+        </li>
+    </ul>
 
-<h2>其它资料</h2>
-<p>
-    Text: {{ references | json }}
-</p>
-<ul>
-    <li *ngFor="let ref of references">
-        <a [href]="ref.link">
-            {{ ref.title }}
-        </a>
-    </li>
-</ul>
+    <h2>其它资料</h2>
+    <ul>
+        <li *ngFor="let ref of references">
+            <a [href]="ref.link">
+                {{ ref.title }}
+            </a>
+        </li>
+    </ul>
 </div>

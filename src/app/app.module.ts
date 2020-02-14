@@ -17,17 +17,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatRippleModule } from '@angular/material/core';
 
 import { NZ_ICONS } from 'ng-zorro-antd';
 
 const ICONS = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, FormOutline, GithubOutline];
 
 import {
-  MenuFoldOutline,
-  MenuUnfoldOutline,
-  FormOutline,
-  DashboardOutline,
-  GithubOutline
+    MenuFoldOutline,
+    MenuUnfoldOutline,
+    FormOutline,
+    DashboardOutline,
+    GithubOutline
 } from '@ant-design/icons-angular/icons';
 import { ImageCardComponent } from './image-card/image-card.component';
 import { NavizeroComponent } from './navizero/navizero.component';
@@ -35,36 +36,37 @@ import { NavizeroComponent } from './navizero/navizero.component';
 registerLocaleData(en);
 
 const ROUTES: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'navizero', component: NavizeroComponent }
+    { path: '', component: HomePageComponent },
+    { path: 'navizero', component: NavizeroComponent }
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomePageComponent,
-    ImageCardComponent,
-    NavizeroComponent
-  ],
-  imports: [
-    BrowserModule,
-    NgZorroAntdModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatMenuModule,
-    NzIconModule,
-    FlexLayoutModule,
-    RouterModule.forRoot(ROUTES)
-  ],
-  providers: [
-    { provide: NZ_I18N, useValue: en_US },
-    { provide: NZ_ICONS, useValue: ICONS }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomePageComponent,
+        ImageCardComponent,
+        NavizeroComponent
+    ],
+    imports: [
+        BrowserModule,
+        NgZorroAntdModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatMenuModule,
+        MatRippleModule,
+        NzIconModule,
+        FlexLayoutModule,
+        RouterModule.forRoot(ROUTES)
+    ],
+    providers: [
+        { provide: NZ_I18N, useValue: en_US },
+        { provide: NZ_ICONS, useValue: ICONS }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
