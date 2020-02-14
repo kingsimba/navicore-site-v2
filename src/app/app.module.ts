@@ -43,13 +43,19 @@ const ICONS = [
 import { ImageCardComponent } from './image-card/image-card.component';
 import { NavizeroComponent } from './navizero/navizero.component';
 import { SdkComponent } from './sdk/sdk.component';
+import { OpenSourceComponent } from './open-source/open-source.component';
+import { IteComponent } from './ite/ite.component';
+import { ApiComponent } from './api/api.component';
 
 registerLocaleData(en);
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
+    { path: 'sdk', component: SdkComponent },
     { path: 'navizero', component: NavizeroComponent },
-    { path: 'sdk', component: SdkComponent }
+    { path: 'api', component: ApiComponent },
+    { path: 'ite', component: IteComponent },
+    { path: 'open-source', component: OpenSourceComponent },
 ];
 
 @NgModule({
@@ -58,7 +64,10 @@ const ROUTES: Routes = [
         HomePageComponent,
         ImageCardComponent,
         NavizeroComponent,
-        SdkComponent
+        SdkComponent,
+        OpenSourceComponent,
+        IteComponent,
+        ApiComponent
     ],
     imports: [
         BrowserModule,
