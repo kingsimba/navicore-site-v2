@@ -1,0 +1,10 @@
+.scrolling-wrapper-flexbox {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+    img {
+        margin: 3px;
+        flex: 0 0 auto;
+    }
+}

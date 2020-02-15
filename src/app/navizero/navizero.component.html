@@ -6,7 +6,9 @@
         为各种定制导航项目趟平了产品化的道路。</p>
     <p>并且，它已经内部全部开源。各项目部可以在它的基础上做改造，做项目定制。</p>
 
-    <img *ngFor="let img of images" [src]="img"/>
+    <div class="scrolling-wrapper-flexbox">
+        <img [src]="img" *ngFor="let img of images"/>
+    </div>
 
     <h2>下载</h2>
     <ul>
