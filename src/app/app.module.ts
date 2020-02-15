@@ -83,7 +83,11 @@ const ROUTES: Routes = [
         MatRippleModule,
         NzIconModule,
         FlexLayoutModule,
-        RouterModule.forRoot(ROUTES)
+        RouterModule.forRoot(ROUTES,
+            {
+                scrollPositionRestoration: 'enabled'
+            }
+        )
     ],
     providers: [
         { provide: NZ_I18N, useValue: en_US },
