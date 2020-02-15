@@ -46,6 +46,7 @@ import { SdkComponent } from './sdk/sdk.component';
 import { OpenSourceComponent } from './open-source/open-source.component';
 import { IteComponent } from './ite/ite.component';
 import { ApiComponent } from './api/api.component';
+import { ExternalLinkDirective } from './external-link.directive';
 
 registerLocaleData(en);
 
@@ -67,7 +68,8 @@ const ROUTES: Routes = [
         SdkComponent,
         OpenSourceComponent,
         IteComponent,
-        ApiComponent
+        ApiComponent,
+        ExternalLinkDirective
     ],
     imports: [
         BrowserModule,
