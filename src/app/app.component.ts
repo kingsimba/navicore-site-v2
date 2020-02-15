@@ -17,7 +17,23 @@ export class AppComponent {
         { title: '开源项目', link: 'open-source' }
     ];
 
-    public innerWidth: any;
+    loginBoxVisible = false;
+
+    private innerWidth: any;
+
+    showLoginBox(): void {
+        this.loginBoxVisible = true;
+    }
+
+    handleLoginOK(): void {
+        console.log('Button ok clicked!');
+        this.loginBoxVisible = false;
+    }
+
+    handleLoginCancel(): void {
+        console.log('Button cancel clicked!');
+        this.loginBoxVisible = false;
+    }
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnInit() {
         this.innerWidth = window.innerWidth;

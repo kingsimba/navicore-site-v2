@@ -9,10 +9,29 @@
                             style="height:20px; padding-bottom: 3px" />&nbsp;&nbsp;NaviCore
                     </button>
                 </span>
+
+                <!-- Menu items -->
                 <span *ngFor="let item of menuItems">
                     <button *ngIf="isDesktop()" mat-button [routerLink]="item.link"> {{ item.title }} </button>
                 </span>
+
+                <!-- Spacer -->
                 <span class="example-spacer"></span>
+
+                <!-- Login -->
+                <span>
+                    <button mat-button (click)="showLoginBox()">登录</button>
+                    <nz-modal [(nzVisible)]="loginBoxVisible" nzTitle="Login" (nzOnCancel)="handleLoginCancel()"
+                        (nzOnOk)="handleLoginOK()">
+                        <p>
+                            <nz-tag [nzColor]="'gold'">登录功能还未实现，不用试了</nz-tag>
+                        </p>
+                        <p><input nz-input placeholder="LDAP 用户名" /></p>
+                        <p><input nz-input placeholder="密码" /></p>
+                    </nz-modal>
+                </span>
+
+                <!-- Menu(on the right) for Mobile device -->
                 <span *ngIf="!isDesktop()">
                     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                         <mat-icon>menu</mat-icon>
@@ -28,6 +47,8 @@
         <nz-content class="app-content">
             <router-outlet></router-outlet>
         </nz-content>
-        <nz-footer class="app-footer">The source code of this site is hosted on <a href="https://github.com/kingsimba/navicore-site-v2">GitHub <i nz-icon nzType="github"></i></a>.</nz-footer>
+        <nz-footer class="app-footer">The source code of this site is hosted on <a
+                href="https://github.com/kingsimba/navicore-site-v2">GitHub <i nz-icon nzType="github"></i></a>.
+        </nz-footer>
     </mat-drawer-container>
 </nz-layout>
