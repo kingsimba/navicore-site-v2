@@ -37,7 +37,10 @@
     <h2>其它资料</h2>
     <ul>
         <li *ngFor="let ref of references">
-            <a [href]="ref.link">
+            <a [href]="ref.link" *ngIf="ref.link.startsWith('http')">
+                {{ ref.title }}
+            </a>
+            <a [routerLink]="ref.link" *ngIf="!ref.link.startsWith('http')">
                 {{ ref.title }}
             </a>
         </li>
