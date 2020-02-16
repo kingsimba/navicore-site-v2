@@ -1,25 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { AppComponent } from './app.component';
-import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
-import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
+
+import { AppComponent } from './app.component';
+
+// flex-layout module
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+// ant design modules
+import { NZ_ICONS, NZ_I18N, en_US } from 'ng-zorro-antd';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzInputModule } from 'ng-zorro-antd/input';
+
+// material design modules
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
-
-import { NZ_ICONS } from 'ng-zorro-antd';
 
 import {
     MenuFoldOutline,
@@ -28,7 +35,7 @@ import {
     DashboardOutline,
     GithubOutline,
     ToolTwoTone,
-    ApiTwoTone
+    ApiTwoTone,
 } from '@ant-design/icons-angular/icons';
 
 const ICONS = [
@@ -40,7 +47,7 @@ const ICONS = [
     ToolTwoTone,
     ApiTwoTone];
 
-import { ImageCardComponent } from './image-card/image-card.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { NavizeroComponent } from './navizero/navizero.component';
 import { SdkComponent } from './sdk/sdk.component';
 import { OpenSourceComponent } from './open-source/open-source.component';
@@ -66,14 +73,13 @@ const ROUTES: Routes = [
     { path: 'navizero/privacy', component: PrivacyComponent },
     { path: 'navizero/NaviZeroPrivatePolicy.htm', component: PrivacyComponent },
     { path: 'navizero/service-terms', component: ServiceTermsComponent },
-    { path: 'navizero/NaviZeroServiceTerms.htm', component: PrivacyComponent },
+    { path: 'navizero/NaviZeroServiceTerms.htm', component: ServiceTermsComponent },
 ];
 
 @NgModule({
     declarations: [
         AppComponent,
         HomePageComponent,
-        ImageCardComponent,
         NavizeroComponent,
         SdkComponent,
         OpenSourceComponent,
@@ -87,17 +93,20 @@ const ROUTES: Routes = [
     ],
     imports: [
         BrowserModule,
-        NgZorroAntdModule,
+        NzButtonModule,
+        NzLayoutModule,
+        NzCardModule,
+        NzTagModule,
+        NzIconModule,
+        NzModalModule,
+        NzInputModule,
         FormsModule,
         HttpClientModule,
         BrowserAnimationsModule,
         MatToolbarModule,
-        MatIconModule,
         MatButtonModule,
-        MatSidenavModule,
         MatMenuModule,
         MatRippleModule,
-        NzIconModule,
         FlexLayoutModule,
         RouterModule.forRoot(ROUTES,
             {

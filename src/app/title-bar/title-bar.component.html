@@ -29,8 +29,8 @@
 
     <!-- Menu(on the right) for Mobile device -->
     <span *ngIf="!isDesktop()">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>menu</mat-icon>
+        <button mat-button [matMenuTriggerFor]="menu">
+            <i nz-icon nzType="menu-unfold"></i>
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item *ngFor="let item of menuItems" [routerLink]="item.link">
