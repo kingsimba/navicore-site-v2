@@ -52,9 +52,7 @@ import { OpenSourceComponent } from './open-source/open-source.component';
 import { IteComponent } from './ite/ite.component';
 import { ApiComponent } from './api/api.component';
 import { ExternalLinkDirective } from './external-link.directive';
-import { LegalNoticeComponent } from './navizero/legal-notice/legal-notice.component';
-import { PrivacyComponent } from './navizero/privacy/privacy.component';
-import { ServiceTermsComponent } from './navizero/service-terms/service-terms.component';
+import { HtmlPageComponent } from './navizero/html-page/html-page.component';
 import { TitleBarComponent } from './title-bar/title-bar.component';
 
 registerLocaleData(en);
@@ -66,12 +64,12 @@ const ROUTES: Routes = [
     { path: 'api', component: ApiComponent },
     { path: 'ite', component: IteComponent },
     { path: 'open-source', component: OpenSourceComponent },
-    { path: 'navizero/legal-notice', component: LegalNoticeComponent },
-    { path: 'navizero/legal-notice.html', component: LegalNoticeComponent },
-    { path: 'navizero/privacy', component: PrivacyComponent },
-    { path: 'navizero/NaviZeroPrivatePolicy.htm', component: PrivacyComponent },
-    { path: 'navizero/service-terms', component: ServiceTermsComponent },
-    { path: 'navizero/NaviZeroServiceTerms.htm', component: ServiceTermsComponent },
+    { path: 'navizero/:doc', component: HtmlPageComponent },
+    // { path: 'navizero/legal-notice.html', component: LegalNoticeComponent },
+    // { path: 'navizero/privacy', component: PrivacyComponent },
+    // { path: 'navizero/NaviZeroPrivatePolicy.htm', component: PrivacyComponent },
+    // { path: 'navizero/service-terms', component: ServiceTermsComponent },
+    // { path: 'navizero/NaviZeroServiceTerms.htm', component: ServiceTermsComponent },
 ];
 
 @NgModule({
@@ -84,9 +82,7 @@ const ROUTES: Routes = [
         IteComponent,
         ApiComponent,
         ExternalLinkDirective,
-        LegalNoticeComponent,
-        PrivacyComponent,
-        ServiceTermsComponent,
+        HtmlPageComponent,
         TitleBarComponent
     ],
     imports: [
