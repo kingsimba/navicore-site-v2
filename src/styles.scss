@@ -32,6 +32,7 @@ p {
   margin-top: 0em;
 }
 
+// first level ordered-list
 ol {
   display: block;
   list-style-type: decimal;
@@ -39,11 +40,18 @@ ol {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  padding-inline-start: 40px;
+  padding-inline-start: 20px;
+}
+
+// second level ordered-list
+ol ol {
+  padding-inline-start: 25px;
 }
 
 li {
-  line-height: 2em;
+  p {
+    margin: .5em;
+  }
 }
 
 .appContent {
@@ -51,4 +59,19 @@ li {
   margin: 10px;
   background-color: white;
   padding: 10px 20px;
+}
+
+
+/*
+  For rst2html5.py generated content
+*/
+.document {
+  .title {
+    font-size: 1.8em;
+  }
+  .section {
+    h1 {
+      font-size: 1.3em;
+    }
+  }
 }
