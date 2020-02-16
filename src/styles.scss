@@ -4,7 +4,7 @@
 @import '~@angular/material/theming';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: PingFang SC,微软雅黑; }
+body { margin: 0; font-family: 'Segoe UI','PingFang SC','微软雅黑'; }
 
 h1, h2 {
   display: block;
@@ -20,6 +20,7 @@ h1 {
 }
 
 h2 {
+  font-weight: 500;
   font-size: 1.5em;
 }
 
@@ -29,7 +30,8 @@ p {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  margin-top: 0em;
+  margin-top: .75em;
+  margin-bottom: .75em;
 }
 
 // first level ordered-list
@@ -49,8 +51,11 @@ ol ol {
 }
 
 li {
+  margin-top: .5em;
+  margin-bottom: .5em;
   p {
-    margin: .5em;
+    margin-top: .5em;
+    margin-bottom: .5em;
   }
 }
 
@@ -73,5 +78,69 @@ li {
     h1 {
       font-size: 1.3em;
     }
+  }
+
+  table {
+    border-collapse: collapse;
+    border: 1px solid #fff; /*for older IE*/
+      border-style: hidden;
+  }
+
+  table caption {
+    background-color: #ddd;
+    color: #fff;
+    font-size: small;
+    font-weight: bold;
+    letter-spacing: .3em;
+  }
+
+  table thead th {
+    padding: 16px;
+    background-color: rgba(0, 0, 0, .05);
+      font-size: small;
+      font-weight: 500;
+  }
+
+  table thead th#thDay {
+    width: 40%;
+  }
+
+  table thead th#thRegular, table thead th#thOvertime, table thead th#thTotal {
+    width: 20%;
+  }
+
+  table th, table td {
+    padding: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.1) transparent;
+  }
+
+  table td {
+      text-align: left;
+  }
+
+  table tbody th {
+    text-align: left;
+    font-weight: normal;
+  }
+
+  table tfoot {
+    font-weight: bold;
+    font-size: small;
+    background-color: #687886;
+    color: #fff;
+  }
+
+  table tr.even {
+    background-color: #fde9d9;
+  }
+
+  td p {
+      font-size: small;
+  }
+
+  td p, tr p {
+    margin: 0;
   }
 }
