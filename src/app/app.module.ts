@@ -101,7 +101,9 @@ const ROUTES: Routes = [
         FlexLayoutModule,
         RouterModule.forRoot(ROUTES,
             {
-                scrollPositionRestoration: 'enabled'
+                scrollPositionRestoration: 'enabled',
+                anchorScrolling: 'enabled',
+                onSameUrlNavigation: 'reload'
             }
         )
     ],
