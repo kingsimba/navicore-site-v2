@@ -27,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import {
     MenuFoldOutline,
@@ -107,6 +108,7 @@ const ROUTES: Routes = [
         MatButtonModule,
         MatMenuModule,
         MatRippleModule,
+        MatSidenavModule,
         FlexLayoutModule,
         RouterModule.forRoot(ROUTES,
             {

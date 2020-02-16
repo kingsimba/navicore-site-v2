@@ -1,12 +1,14 @@
 <nz-layout>
-    <nz-header class="app-header" *ngIf="!isStandaloneDocument()">
-        <app-title-bar></app-title-bar>
-    </nz-header>
-    <nz-content class="app-content">
-        <router-outlet></router-outlet>
-    </nz-content>
-    <nz-footer class="app-footer" *ngIf="!isStandaloneDocument()">
-        The source code of this site is hosted on
-        <a href="https://github.com/kingsimba/navicore-site-v2">GitHub <i nz-icon nzType="github"></i></a>.
-    </nz-footer>
+    <mat-drawer-container class="example-container" hasBackdrop="true">
+        <nz-header class="app-header" *ngIf="!isStandaloneDocument()">
+            <app-title-bar></app-title-bar>
+        </nz-header>
+        <nz-content class="app-content">
+            <router-outlet></router-outlet>
+        </nz-content>
+        <nz-footer class="app-footer" *ngIf="!isStandaloneDocument()">
+            The source code of this site is hosted on
+            <a href="https://github.com/kingsimba/navicore-site-v2">GitHub <i nz-icon nzType="github"></i></a>.
+        </nz-footer>
+    </mat-drawer-container>
 </nz-layout>
