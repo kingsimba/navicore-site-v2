@@ -50,6 +50,7 @@ import { ExternalLinkDirective } from './external-link.directive';
 import { LegalNoticeComponent } from './navizero/legal-notice/legal-notice.component';
 import { PrivacyComponent } from './navizero/privacy/privacy.component';
 import { ServiceTermsComponent } from './navizero/service-terms/service-terms.component';
+import { TitleBarComponent } from './title-bar/title-bar.component';
 
 registerLocaleData(en);
 
@@ -81,7 +82,8 @@ const ROUTES: Routes = [
         ExternalLinkDirective,
         LegalNoticeComponent,
         PrivacyComponent,
-        ServiceTermsComponent
+        ServiceTermsComponent,
+        TitleBarComponent
     ],
     imports: [
         BrowserModule,

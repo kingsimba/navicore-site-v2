@@ -2,47 +2,7 @@
     <mat-drawer-container class="example-container" hasBackdrop="true">
         <mat-drawer #drawer mode="over">I'm a drawer</mat-drawer>
         <nz-header class="app-header">
-            <mat-toolbar color="primary" class="mat-elevation-z4">
-                <span>
-                    <button mat-button routerLink="">
-                        <img src="assets/static_core_big.png"
-                            style="height:20px; padding-bottom: 3px" />&nbsp;&nbsp;NaviCore
-                    </button>
-                </span>
-
-                <!-- Menu items -->
-                <span *ngFor="let item of menuItems">
-                    <button *ngIf="isDesktop()" mat-button [routerLink]="item.link"> {{ item.title }} </button>
-                </span>
-
-                <!-- Spacer -->
-                <span class="example-spacer"></span>
-
-                <!-- Login -->
-                <span>
-                    <button mat-button (click)="showLoginBox()">登录</button>
-                    <nz-modal [(nzVisible)]="loginBoxVisible" nzTitle="Login" (nzOnCancel)="handleLoginCancel()"
-                        (nzOnOk)="handleLoginOK()">
-                        <p>
-                            <nz-tag [nzColor]="'gold'">登录功能还未实现，不用试了</nz-tag>
-                        </p>
-                        <p><input nz-input placeholder="LDAP 用户名" /></p>
-                        <p><input nz-input placeholder="密码" /></p>
-                    </nz-modal>
-                </span>
-
-                <!-- Menu(on the right) for Mobile device -->
-                <span *ngIf="!isDesktop()">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                        <mat-icon>menu</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item *ngFor="let item of menuItems" [routerLink]="item.link">
-                            {{ item.title }}
-                        </button>
-                    </mat-menu>
-                </span>
-            </mat-toolbar>
+            <app-title-bar></app-title-bar>
         </nz-header>
         <nz-content class="app-content">
             <router-outlet></router-outlet>
