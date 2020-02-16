@@ -27,11 +27,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
 
 import {
-    MenuFoldOutline,
-    MenuUnfoldOutline,
+    MenuOutline,
     FormOutline,
     DashboardOutline,
     GithubOutline,
@@ -40,8 +38,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 
 const ICONS = [
-    MenuFoldOutline,
-    MenuUnfoldOutline,
+    MenuOutline,
     DashboardOutline,
     FormOutline,
     GithubOutline,
@@ -108,7 +105,6 @@ const ROUTES: Routes = [
         MatButtonModule,
         MatMenuModule,
         MatRippleModule,
-        MatSidenavModule,
         FlexLayoutModule,
         RouterModule.forRoot(ROUTES,
             {
