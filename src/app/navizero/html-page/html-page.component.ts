@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     template: `<div class="appContent" [innerHtml]="myTemplate"></div>`,
@@ -12,19 +12,24 @@ export class HtmlPageComponent implements OnInit {
     myTemplate: any = '';
 
     constructor(private http: HttpClient,
+                private router : Router,
                 private activatedRoute: ActivatedRoute
         ) {
+
+        let path: string = router.url.substring(0, router.url.lastIndexOf('/') + 1);
         let docUrl: string = this.activatedRoute.snapshot.paramMap.get('doc');
 
+        console.warn(router.url);
+
         if (docUrl === 'NaviZeroPrivatePolicy.htm') {
-            docUrl = 'privacy.html';
+            docUrl = path + 'privacy.html';
         } else if (docUrl === 'NaviZeroServiceTerms.htm') {
-            docUrl = 'service-terms.html';
+            docUrl = path + 'service-terms.html';
         } else if (!docUrl.endsWith('.html')) {
-            docUrl = docUrl + '.html';
+            docUrl = path + docUrl + '.html';
         }
 
-        this.http.get(`/assets/navizero/${docUrl}`, { responseType: 'text' }).subscribe(
+        this.http.get(`/assets${docUrl}`, { responseType: 'text' }).subscribe(
             data => {
                 this.myTemplate = data;
             }

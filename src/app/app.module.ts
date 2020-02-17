@@ -65,11 +65,8 @@ const ROUTES: Routes = [
     { path: 'ite', component: IteComponent },
     { path: 'open-source', component: OpenSourceComponent },
     { path: 'navizero/:doc', component: HtmlPageComponent },
-    // { path: 'navizero/legal-notice.html', component: LegalNoticeComponent },
-    // { path: 'navizero/privacy', component: PrivacyComponent },
-    // { path: 'navizero/NaviZeroPrivatePolicy.htm', component: PrivacyComponent },
-    // { path: 'navizero/service-terms', component: ServiceTermsComponent },
-    // { path: 'navizero/NaviZeroServiceTerms.htm', component: ServiceTermsComponent },
+    { path: 'license/:doc', component: HtmlPageComponent },	// backward compatible with legacy pages: /license/NC_MIT_0.1
+    { path: 'inavicore', component: SdkComponent },			// backward compatible with legacy page
 ];
 
 @NgModule({
