@@ -67,6 +67,7 @@ const ROUTES: Routes = [
     { path: 'navizero/:doc', component: HtmlPageComponent },
     { path: 'license/:doc', component: HtmlPageComponent },	// backward compatible with legacy pages: /license/NC_MIT_0.1
     { path: 'inavicore', component: SdkComponent },			// backward compatible with legacy page
+    { path: 'jnavicore', component: SdkComponent },			// backward compatible with legacy page
 ];
 
 @NgModule({

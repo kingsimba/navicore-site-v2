@@ -15,11 +15,11 @@ export class HtmlPageComponent implements OnInit {
                 private router : Router,
                 private activatedRoute: ActivatedRoute
         ) {
+    }
 
-        let path: string = router.url.substring(0, router.url.lastIndexOf('/') + 1);
+    ngOnInit() {
+        let path: string = this.router.url.substring(0, this.router.url.lastIndexOf('/') + 1);
         let docUrl: string = this.activatedRoute.snapshot.paramMap.get('doc');
-
-        console.warn(router.url);
 
         if (docUrl === 'NaviZeroPrivatePolicy.htm') {
             docUrl = path + 'privacy.html';
@@ -29,14 +29,18 @@ export class HtmlPageComponent implements OnInit {
             docUrl = path + docUrl + '.html';
         }
 
+        this.myTemplate = "loading " + docUrl;
+
         this.http.get(`/assets${docUrl}`, { responseType: 'text' }).subscribe(
-            data => {
-                this.myTemplate = data;
+            {
+                next: value => {
+                    this.myTemplate = value;
+                },
+                error: err => {
+                    this.myTemplate = "error: " + err;
+                }
             }
         );
-    }
-
-    ngOnInit() {
     }
 
 }
