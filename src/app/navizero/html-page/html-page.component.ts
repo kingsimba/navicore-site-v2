@@ -27,9 +27,9 @@ export class HtmlPageComponent implements OnInit {
             docUrl = path + 'service-terms.html';
         } else if (!docUrl.endsWith('.html')) {
             docUrl = path + docUrl + '.html';
+        } else {
+            docUrl = path + docUrl;
         }
-
-        this.myTemplate = "loading " + docUrl;
 
         this.http.get(`/assets${docUrl}`, { responseType: 'text' }).subscribe(
             {
