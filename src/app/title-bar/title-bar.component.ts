@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'app-title-bar',
@@ -22,7 +23,14 @@ export class TitleBarComponent implements OnInit {
 
     private innerWidth: any;
 
-    constructor() { }
+    loginForm : any;
+
+    constructor( private formBuilder: FormBuilder ) {
+        this.loginForm = this.formBuilder.group({
+            name: '',
+            password: ''
+          });
+    }
 
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnInit() {
@@ -33,8 +41,9 @@ export class TitleBarComponent implements OnInit {
         this.loginBoxVisible = true;
     }
 
-    handleLoginOK(): void {
+    handleLoginOK(loginData): void {
         console.log('Button ok clicked!');
+        console.log(loginData);
         this.loginBoxVisible = false;
     }
 

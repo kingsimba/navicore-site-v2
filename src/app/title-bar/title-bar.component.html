@@ -1,8 +1,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z4">
     <span>
         <button mat-button routerLink="">
-            <img src="assets/static_core_big.png"
-                style="height:20px; padding-bottom: 3px" />&nbsp;&nbsp;NaviCore
+            <img src="assets/static_core_big.png" style="height:20px; padding-bottom: 3px" />&nbsp;&nbsp;NaviCore
         </button>
     </span>
 
@@ -18,12 +17,14 @@
     <span>
         <button mat-button (click)="showLoginBox()">登录</button>
         <nz-modal [(nzVisible)]="loginBoxVisible" nzTitle="Login" (nzOnCancel)="handleLoginCancel()"
-            (nzOnOk)="handleLoginOK()">
-            <p>
-                <nz-tag [nzColor]="'gold'">登录功能还未实现，不用试了</nz-tag>
-            </p>
-            <p><input nz-input placeholder="LDAP 用户名" /></p>
-            <p><input nz-input placeholder="密码" /></p>
+            (nzOnOk)="handleLoginOK(loginForm.value)">
+            <form [formGroup]="loginForm" (ngSubmit)="handleLoginOK()" >
+                <p>
+                    <nz-tag [nzColor]="'gold'">登录功能还未实现，不用试了</nz-tag>
+                </p>
+                <p><input nz-input formControlName="name" placeholder="LDAP 用户名" /></p>
+                <p><input nz-input formControlName="password" placeholder="密码" /></p>
+            </form>
         </nz-modal>
     </span>
 
