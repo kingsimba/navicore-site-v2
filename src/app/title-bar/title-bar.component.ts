@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-title-bar',
@@ -8,6 +9,8 @@ import { FormBuilder } from '@angular/forms';
     styleUrls: ['./title-bar.component.scss']
 })
 export class TitleBarComponent implements OnInit {
+
+    loginMessage = '登录功能还未实现，不用试了';
 
     isCollapsed = false;
 
@@ -23,13 +26,13 @@ export class TitleBarComponent implements OnInit {
 
     private innerWidth: any;
 
-    loginForm : any;
+    loginForm: FormGroup;
 
-    constructor( private formBuilder: FormBuilder ) {
+    constructor(private formBuilder: FormBuilder, private http: HttpClient) {
         this.loginForm = this.formBuilder.group({
-            name: '',
+            username: '',
             password: ''
-          });
+        });
     }
 
     // tslint:disable-next-line: use-lifecycle-interface
@@ -42,9 +45,27 @@ export class TitleBarComponent implements OnInit {
     }
 
     handleLoginOK(loginData): void {
-        console.log('Button ok clicked!');
-        console.log(loginData);
-        this.loginBoxVisible = false;
+        console.log('login clicked!');
+
+        this.loginForm.disable();
+
+        // post form data
+        const params = new HttpParams({ fromObject: loginData });
+        this.http.post<any>('http://dal.navicore.cn:9080', params).subscribe(
+            {
+                next: value => {
+                    this.loginBoxVisible = false;
+                    this.loginForm.enable();
+                },
+                error: err => {
+                    console.log(err);
+                    // reset password
+                    this.loginForm.get('password').reset();
+                    this.loginMessage = '登录错误: ' + err.message;
+                    this.loginForm.enable();
+                }
+            }
+        );
     }
 
     handleLoginCancel(): void {

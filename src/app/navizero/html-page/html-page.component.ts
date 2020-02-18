@@ -12,13 +12,13 @@ export class HtmlPageComponent implements OnInit {
     myTemplate: any = '';
 
     constructor(private http: HttpClient,
-                private router : Router,
+                private router: Router,
                 private activatedRoute: ActivatedRoute
         ) {
     }
 
     ngOnInit() {
-        let path: string = this.router.url.substring(0, this.router.url.lastIndexOf('/') + 1);
+        const path: string = this.router.url.substring(0, this.router.url.lastIndexOf('/') + 1);
         let docUrl: string = this.activatedRoute.snapshot.paramMap.get('doc');
 
         if (docUrl === 'NaviZeroPrivatePolicy.htm') {
@@ -37,7 +37,7 @@ export class HtmlPageComponent implements OnInit {
                     this.myTemplate = value;
                 },
                 error: err => {
-                    this.myTemplate = "error: " + err;
+                    this.myTemplate = 'error: ' + err;
                 }
             }
         );

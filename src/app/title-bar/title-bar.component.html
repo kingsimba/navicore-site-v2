@@ -20,10 +20,10 @@
             (nzOnOk)="handleLoginOK(loginForm.value)">
             <form [formGroup]="loginForm" (ngSubmit)="handleLoginOK()" >
                 <p>
-                    <nz-tag [nzColor]="'gold'">登录功能还未实现，不用试了</nz-tag>
+                    <nz-tag [nzColor]="'gold'" [innerHtml]="loginMessage"></nz-tag>
                 </p>
-                <p><input nz-input formControlName="name" placeholder="LDAP 用户名" /></p>
-                <p><input nz-input formControlName="password" placeholder="密码" /></p>
+                <p><input nz-input formControlName="username" placeholder="LDAP 用户名" /></p>
+                <p><input nz-input formControlName="password" type="password" placeholder="密码" /></p>
             </form>
         </nz-modal>
     </span>
