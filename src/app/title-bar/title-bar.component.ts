@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { NzModalRef } from 'ng-zorro-antd';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-title-bar',
@@ -9,8 +11,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
     styleUrls: ['./title-bar.component.scss']
 })
 export class TitleBarComponent implements OnInit {
+    @ViewChild('loginBox', { static: false }) loginBox: NzModalRef;
+    @ViewChild('passwordInput', { static: false }) passwordInput: ElementRef;
 
-    loginMessage = '登录功能还未实现，不用试了';
+    loginMessage = '';
 
     isCollapsed = false;
 
@@ -27,6 +31,8 @@ export class TitleBarComponent implements OnInit {
     private innerWidth: any;
 
     loginForm: FormGroup;
+
+    loginRequest: Subscription;
 
     constructor(private formBuilder: FormBuilder, private http: HttpClient) {
         this.loginForm = this.formBuilder.group({
@@ -51,18 +57,22 @@ export class TitleBarComponent implements OnInit {
 
         // post form data
         const params = new HttpParams({ fromObject: loginData });
-        this.http.post<any>('http://dal.navicore.cn:9080', params).subscribe(
+        this.loginRequest = this.http.post<any>('http://dal.navicore.cn:9080', params).subscribe(
             {
                 next: value => {
                     this.loginBoxVisible = false;
                     this.loginForm.enable();
+                    this.loginRequest = undefined;
                 },
                 error: err => {
                     console.log(err);
-                    // reset password
-                    this.loginForm.get('password').reset();
+                    setTimeout(() => { // this will make the execution after the above boolean has changed
+                        this.passwordInput.nativeElement.focus();
+                        this.passwordInput.nativeElement.select();
+                    }, 0);
                     this.loginMessage = '登录错误: ' + err.message;
                     this.loginForm.enable();
+                    this.loginRequest = undefined;
                 }
             }
         );
@@ -70,7 +80,14 @@ export class TitleBarComponent implements OnInit {
 
     handleLoginCancel(): void {
         console.log('Button cancel clicked!');
+        if (this.loginRequest) {
+            this.loginRequest.unsubscribe();
+        }
         this.loginBoxVisible = false;
+    }
+
+    clearLoginMessage() {
+        this.loginMessage = '';
     }
 
     @HostListener('window:resize', ['$event'])
