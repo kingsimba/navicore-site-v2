@@ -17,6 +17,6 @@ export class AppComponent {
     }
 
     isStandaloneDocument() {
-        return this.router.url.endsWith('.html') || this.router.url.endsWith('htm');
+        return this.router.url.startsWith('docs') && (this.router.url.endsWith('.html') || this.router.url.endsWith('htm'));
     }
 }

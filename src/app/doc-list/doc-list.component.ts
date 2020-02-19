@@ -7,11 +7,9 @@ import { LoginService } from '../login.service';
     styleUrls: ['./doc-list.component.css']
 })
 export class DocListComponent implements OnInit {
-
-    loginService : LoginService;
     documents: string[];
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, public loginService: LoginService) { }
 
     ngOnInit() {
         this.refreshDocs();
@@ -22,6 +20,6 @@ export class DocListComponent implements OnInit {
             next: value => {
                 this.documents = value['list'];
             }
-        })
+        });
     }
 }

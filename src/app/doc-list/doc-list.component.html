@@ -3,11 +3,13 @@
         <h1>文档列表</h1>
         <button (click)="refreshDocs()">refresh</button>
         <ul>
-            <li *ngFor="let doc of documents">{{doc}}</li>
+            <li *ngFor="let doc of documents">{{ doc }}</li>
         </ul>
     </div>
 </div>
 
-<div #unauthorized>
-    请先登录
-</div>
+<ng-template #unauthorized>
+    <div class="appContent">
+        <h1 style="text-align: center;">请先登录</h1>
+    </div>
+</ng-template>
