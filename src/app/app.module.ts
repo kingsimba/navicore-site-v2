@@ -35,6 +35,8 @@ import {
     GithubOutline,
     ToolTwoTone,
     ApiTwoTone,
+    DownOutline,
+    UserOutline
 } from '@ant-design/icons-angular/icons';
 
 const ICONS = [
@@ -43,7 +45,10 @@ const ICONS = [
     FormOutline,
     GithubOutline,
     ToolTwoTone,
-    ApiTwoTone];
+    ApiTwoTone,
+    DownOutline,
+    UserOutline
+];
 
 import { HomePageComponent } from './home-page/home-page.component';
 import { NavizeroComponent } from './navizero/navizero.component';

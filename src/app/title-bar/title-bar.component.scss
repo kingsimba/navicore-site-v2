@@ -1,3 +1,11 @@
 .example-spacer {
     flex: 1 1 auto;
 }
+
+.profile-img {
+    display: inline-block;
+    border-radius: 50%;
+    margin: 0 auto;
+    height: 30px;
+    width: auto;
+}

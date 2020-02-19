@@ -15,7 +15,12 @@
 
     <!-- Login -->
     <span>
-        <button mat-button (click)="showLoginBox()">登录</button>
+        <button mat-button *ngIf="!loginService.loginSucceeded" (click)="showLoginBox()">登录</button>
+        <button mat-button *ngIf="loginService.loginSucceeded" [matMenuTriggerFor]="profileMenu">
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            &nbsp; {{ loginService.username }} &nbsp;
+            <i nz-icon nzType="down" nzTheme="outline" style="font-size: 10px;"></i>
+        </button>
         <nz-modal #loginBox [(nzVisible)]="loginBoxVisible" nzTitle="Login" nzMaskClosable="false"
             [nzOkDisabled]="loginForm.disabled" (nzOnCancel)="handleLoginCancel()"
             (nzOnOk)="handleLoginOK(loginForm.value)">
@@ -35,10 +40,14 @@
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <i nz-icon nzType="menu" style="line-height: 1em;"></i>
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menu>
             <button mat-menu-item *ngFor="let item of menuItems" [routerLink]="item.link">
                 {{ item.title }}
             </button>
         </mat-menu>
     </span>
+
+    <mat-menu #profileMenu>
+        <button mat-menu-item (click)="loginService.logout()">退出登录</button>
+    </mat-menu>
 </mat-toolbar>

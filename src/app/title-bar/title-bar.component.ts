@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { NzModalRef } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
+import { LoginService } from '../login.service';
 
 @Component({
     selector: 'app-title-bar',
@@ -34,10 +34,10 @@ export class TitleBarComponent implements OnInit {
 
     loginRequest: Subscription;
 
-    constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+    constructor(private formBuilder: FormBuilder, public loginService: LoginService) {
         this.loginForm = this.formBuilder.group({
-            username: '',
-            password: ''
+            username: 'fundrive',
+            password: 'GaBriElE5'
         });
     }
 
@@ -55,27 +55,23 @@ export class TitleBarComponent implements OnInit {
 
         this.loginForm.disable();
 
-        // post form data
-        const params = new HttpParams({ fromObject: loginData });
-        this.loginRequest = this.http.post<any>('http://dal.navicore.cn:9080', params).subscribe(
-            {
-                next: value => {
-                    this.loginBoxVisible = false;
-                    this.loginForm.enable();
-                    this.loginRequest = undefined;
-                },
-                error: err => {
-                    console.log(err);
-                    setTimeout(() => { // this will make the execution after the above boolean has changed
-                        this.passwordInput.nativeElement.focus();
-                        this.passwordInput.nativeElement.select();
-                    }, 0);
-                    this.loginMessage = '登录错误: ' + err.message;
-                    this.loginForm.enable();
-                    this.loginRequest = undefined;
-                }
+        this.loginRequest = this.loginService.login<any>(loginData.username, loginData.password).subscribe({
+            next: value => {
+                this.loginForm.enable();
+                this.loginBoxVisible = false;
+                this.loginRequest = undefined;
+            },
+            error: err => {
+                console.log(err);
+                setTimeout(() => { // this will make the execution after the above boolean has changed
+                    this.passwordInput.nativeElement.focus();
+                    this.passwordInput.nativeElement.select();
+                }, 0);
+                this.loginMessage = '登录错误: ' + err;
+                this.loginForm.enable();
+                this.loginRequest = undefined;
             }
-        );
+        });
     }
 
     handleLoginCancel(): void {
