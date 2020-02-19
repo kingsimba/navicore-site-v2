@@ -59,6 +59,8 @@ import { ApiComponent } from './api/api.component';
 import { ExternalLinkDirective } from './external-link.directive';
 import { HtmlPageComponent } from './navizero/html-page/html-page.component';
 import { TitleBarComponent } from './title-bar/title-bar.component';
+import { DocsComponent } from './docs/docs.component';
+import { DocListComponent } from './doc-list/doc-list.component';
 
 registerLocaleData(en);
 
@@ -69,6 +71,12 @@ const ROUTES: Routes = [
     { path: 'api', component: ApiComponent },
     { path: 'ite', component: IteComponent },
     { path: 'open-source', component: OpenSourceComponent },
+    {
+        path: 'docs', children: [
+            {path: '', component: DocListComponent},
+            {path: '**', component: DocsComponent},
+        ]
+    },
     { path: 'navizero/:doc', component: HtmlPageComponent },
     { path: 'license/:doc', component: HtmlPageComponent },	// backward compatible with legacy pages: /license/NC_MIT_0.1
     { path: 'inavicore', component: SdkComponent },			// backward compatible with legacy page
@@ -86,7 +94,9 @@ const ROUTES: Routes = [
         ApiComponent,
         ExternalLinkDirective,
         HtmlPageComponent,
-        TitleBarComponent
+        TitleBarComponent,
+        DocsComponent,
+        DocListComponent
     ],
     imports: [
         BrowserModule,

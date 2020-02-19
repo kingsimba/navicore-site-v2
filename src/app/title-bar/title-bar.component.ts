@@ -23,7 +23,8 @@ export class TitleBarComponent implements OnInit {
         { title: '导航SDK', link: 'sdk' },
         { title: 'API', link: 'api' },
         { title: 'ITE', link: 'ite' },
-        { title: '开源项目', link: 'open-source' }
+        { title: '开源项目', link: 'open-source' },
+        { title: '文档', link: 'docs' }
     ];
 
     loginBoxVisible = false;
@@ -36,8 +37,8 @@ export class TitleBarComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder, public loginService: LoginService) {
         this.loginForm = this.formBuilder.group({
-            username: 'fundrive',
-            password: 'GaBriElE5'
+            username: 'NiTactics',
+            password: 'Shiv4a9L'
         });
     }
 

@@ -20,7 +20,7 @@ export class LoginService {
             const params = new HttpParams()
                 .set("username", username)
                 .set("password", password);
-            this.loginRequest = this.http.post<any>('login', params).subscribe(
+            this.loginRequest = this.http.post<any>('api/login', params).subscribe(
                 {
                     next: value => {
                         console.log(value);

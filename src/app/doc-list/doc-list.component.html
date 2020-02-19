@@ -1,0 +1,13 @@
+<div class="appContent" *ngIf="loginService.loginSucceeded; else unauthorized">
+    <div>
+        <h1>文档列表</h1>
+        <button (click)="refreshDocs()">refresh</button>
+        <ul>
+            <li *ngFor="let doc of documents">{{doc}}</li>
+        </ul>
+    </div>
+</div>
+
+<div #unauthorized>
+    请先登录
+</div>
