@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { Subscription, Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,12 @@ export class LoginService {
 
     loginRequest: Subscription;
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private cookieService: CookieService
+    ) {
+        this.syncWithCookie();
+    }
 
     login<T>(username: string, password: string): Observable<T> {
         let observable = new Observable<T>((observer) => {
@@ -32,10 +38,12 @@ export class LoginService {
                         } else {
                             observer.error(value.msg);
                         }
+                        this.syncWithCookie();
                     },
                     error: err => {
                         observer.error(err.errorMessage);
                         this.loginRequest = undefined;
+                        this.syncWithCookie();
                     }
                 }
             );
@@ -55,5 +63,10 @@ export class LoginService {
     logout() {
         this.loginSucceeded = false;
         this.username = '';
+    }
+
+    syncWithCookie() {
+        this.username = this.cookieService.get('Name');
+        this.loginSucceeded = this.username != '';
     }
 }

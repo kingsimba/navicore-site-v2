@@ -16,8 +16,7 @@ export class DocsComponent implements OnInit {
     ) {
         router.events.subscribe((val) => {
             // see also 
-            if (val instanceof NavigationEnd)
-            {
+            if (val instanceof NavigationEnd) {
                 this.loadPage();
             }
         });
@@ -31,9 +30,15 @@ export class DocsComponent implements OnInit {
         if (!url.endsWith('.html')) {
             url = url + '/index.html';
         }
-        const path: string = url.substring(0, url.lastIndexOf('/'));
+        // trim anchor #xxxx
+        let path: string = url;
+        const anchorIndex = path.lastIndexOf('#');
+        if (anchorIndex != -1) {
+            path = path.substring(0, path.lastIndexOf('#'));
+        }
+        path = path.substring(0, path.lastIndexOf('/'));
 
-        this.http.get(`/assets${url}`, { responseType: 'text' }).subscribe({
+        this.http.get(`/api${url}`, { responseType: 'text' }).subscribe({
             next: value => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(value, 'text/html');
@@ -42,8 +47,9 @@ export class DocsComponent implements OnInit {
 
                 // correct all images
                 for (let i = images.length; i--;) {
-                    const src = images[i].getAttribute('src');
-                    images[i].setAttribute('src', `/assets${path}/${src}`);
+                    let src = images[i].getAttribute('src');
+
+                    images[i].setAttribute('src', `/api${path}/${src}`);
                 }
 
                 // make all link to use router
@@ -59,7 +65,7 @@ export class DocsComponent implements OnInit {
                 this.docContent.nativeElement.insertAdjacentElement('beforeend', mainDocument);
             },
             error: err => {
-                this.docContent.nativeElement.setInnerHtml('beforeend', 'error: ' + err);
+                this.docContent.nativeElement.innerHTML = 'error: ' + err;
             }
         });
     }

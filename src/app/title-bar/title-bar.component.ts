@@ -37,8 +37,8 @@ export class TitleBarComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder, public loginService: LoginService) {
         this.loginForm = this.formBuilder.group({
-            username: 'NiTactics',
-            password: 'Shiv4a9L'
+            username: '',
+            password: ''
         });
     }
 

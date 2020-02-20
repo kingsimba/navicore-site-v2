@@ -27,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
+import { CookieService } from 'ngx-cookie-service';
 
 import {
     MenuOutline,
@@ -126,7 +127,8 @@ const ROUTES: Routes = [
     ],
     providers: [
         { provide: NZ_I18N, useValue: en_US },
-        { provide: NZ_ICONS, useValue: ICONS }
+        { provide: NZ_ICONS, useValue: ICONS },
+        CookieService
     ],
     bootstrap: [AppComponent]
 })

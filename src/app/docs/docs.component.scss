@@ -6,3 +6,17 @@
 ::ng-deep .appContent img {
     max-width: 100%;
 }
+
+::ng-deep .document {
+    .title {
+        font-size: 1.8em;
+    }
+    .section {
+        h1 {
+            font-size: 1.8em;
+        }
+        h2 {
+            font-size: 1.3em;
+        }
+    }
+}
