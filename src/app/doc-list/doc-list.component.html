@@ -3,7 +3,9 @@
         <h1>文档列表</h1>
         <button (click)="refreshDocs()">refresh</button>
         <ul>
-            <li *ngFor="let doc of documents">{{ doc }}</li>
+            <li *ngFor="let doc of documents">
+                <a (click)="openDocument(doc)">{{ doc }}</a>
+            </li>
         </ul>
     </div>
 </div>

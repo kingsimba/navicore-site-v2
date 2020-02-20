@@ -1,9 +1,7 @@
 const PROXY_CONFIG = [
   {
       context: [
-          "/login",
-          "/logout",
-          "/list"
+          "/api"
       ],
       target: "http://dal.navicore.cn:9080",
       secure: false
