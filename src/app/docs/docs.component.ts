@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { WindowService } from '../window.service';
 
 @Component({
     templateUrl: './docs.component.html',
@@ -19,8 +18,7 @@ export class DocsComponent implements OnInit {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private windowService: WindowService
+        private activatedRoute: ActivatedRoute
     ) {
         router.events.subscribe((val) => {
             // see also
