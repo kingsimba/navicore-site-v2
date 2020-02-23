@@ -52,8 +52,8 @@ ol ol {
 }
 
 li {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  margin-top: .2em;
+  margin-bottom: .2em;
   p {
     margin-top: .5em;
     margin-bottom: .5em;
@@ -62,7 +62,8 @@ li {
 
 .appContent {
   @include mat-elevation(2, black, 0.5);
-  margin: 10px;
+  max-width: 980px;
+  margin: 10px auto 5px auto;
   background-color: white;
   padding: 10px 20px;
 }

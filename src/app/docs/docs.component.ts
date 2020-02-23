@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { WindowService } from '../window.service';
 
 @Component({
     templateUrl: './docs.component.html',
@@ -8,37 +9,63 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 })
 export class DocsComponent implements OnInit {
     @ViewChild('docContent', { static: false }) docContent: ElementRef;
+    @ViewChild('navigation', { static: false }) navigation: ElementRef;
+    @ViewChild('siderBar', { static: false }) siderBar: ElementRef;
+
+    siderBarHeight: number;
+    siderBarClass: string;
+    currentDocUrl: string;
 
     constructor(
         private http: HttpClient,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private windowService: WindowService
     ) {
         router.events.subscribe((val) => {
-            // see also 
+            // see also
             if (val instanceof NavigationEnd) {
-                this.loadPage();
+                this.loadPageIfNeeded();
             }
         });
     }
 
-    ngOnInit() {
+    @HostListener('window:scroll', [])
+    onWindowScroll() {
+        if (window.pageYOffset > 64) {
+            this.siderBarClass = 'nz-sider-sticky';
+            this.siderBarHeight = window.innerHeight;
+        } else {
+            this.siderBarClass = '';
+            this.siderBarHeight = window.innerHeight - 64 + window.pageYOffset;
+        }
     }
 
-    loadPage() {
+    ngOnInit() {
+        this.onWindowScroll();
+    }
+
+    loadPageIfNeeded() {
         let url = this.router.url;
         if (!url.endsWith('.html')) {
             url = url + '/index.html';
         }
         // trim anchor #xxxx
-        let path: string = url;
-        const anchorIndex = path.lastIndexOf('#');
-        if (anchorIndex != -1) {
-            path = path.substring(0, path.lastIndexOf('#'));
+        let docUrl: string = url;
+        const anchorIndex = docUrl.lastIndexOf('#');
+        if (anchorIndex !== -1) {
+            docUrl = docUrl.substring(0, docUrl.lastIndexOf('#'));
         }
-        path = path.substring(0, path.lastIndexOf('/'));
+        if (this.currentDocUrl !== docUrl) {
+            this.loadPage(docUrl);
+        }
+    }
 
-        this.http.get(`/api${url}`, { responseType: 'text' }).subscribe({
+    loadPage(docUrl: string) {
+        const path = docUrl.substring(0, docUrl.lastIndexOf('/'));
+        this.currentDocUrl = docUrl;
+
+        this.http.get(`/api${docUrl}`, { responseType: 'text' }).subscribe({
             next: value => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(value, 'text/html');
@@ -47,22 +74,20 @@ export class DocsComponent implements OnInit {
 
                 // correct all images
                 for (let i = images.length; i--;) {
-                    let src = images[i].getAttribute('src');
+                    const src = images[i].getAttribute('src');
 
                     images[i].setAttribute('src', `/api${path}/${src}`);
                 }
 
-                // make all link to use router
-                const links = mainDocument.querySelectorAll('a');
-                for (let i = links.length; i--;) {
-                    const href = links[i].getAttribute('href');
-                    links[i].removeAttribute('href');
-                    links[i].setAttribute('url', `${path}/${href}`);
-                    links[i].addEventListener('click', this.openDocument.bind(this));
-                }
+                this.correctLinks(mainDocument, docUrl, path);
 
                 this.docContent.nativeElement.innerHTML = '';
                 this.docContent.nativeElement.insertAdjacentElement('beforeend', mainDocument);
+
+                const navigationEle = this.getNavigationElement(doc);
+                this.correctLinks(navigationEle, docUrl, path);
+                this.navigation.nativeElement.innerHTML = '';
+                this.navigation.nativeElement.insertAdjacentElement('beforeend', navigationEle);
             },
             error: err => {
                 this.docContent.nativeElement.innerHTML = 'error: ' + err;
@@ -70,8 +95,32 @@ export class DocsComponent implements OnInit {
         });
     }
 
+    private correctLinks(rootNode: Element, docUrl: string, path: string): void {
+        // make all link to use angular router
+        const links = rootNode.querySelectorAll('a');
+        for (let i = links.length; i--;) {
+            const href = links[i].getAttribute('href');
+            if (href.startsWith('#')) {
+                // section anchors
+                links[i].setAttribute('url', `${docUrl}${href}`);
+            } else {
+                // relative links
+                links[i].setAttribute('url', `${path}/${href}`);
+            }
+
+            // use router
+            links[i].removeAttribute('href');
+            links[i].addEventListener('click', this.openDocument.bind(this));
+        }
+    }
+
+    getNavigationElement(doc: Document): Element {
+        const navigation = doc.querySelector('.wy-menu');
+        return navigation;
+    }
+
     openDocument(doc: any) {
-        let url = doc.currentTarget.getAttribute('url');
+        const url = doc.currentTarget.getAttribute('url');
         this.router.navigateByUrl(url);
     }
 }

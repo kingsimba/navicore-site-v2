@@ -21,6 +21,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 
 // material design modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -108,6 +109,7 @@ const ROUTES: Routes = [
         NzIconModule,
         NzModalModule,
         NzInputModule,
+        NzProgressModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

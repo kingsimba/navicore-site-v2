@@ -1,48 +1,55 @@
-<div class="row" 
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutGap="10px">
-    <div class="col" fxFlex="60%" matRipple routerLink="navizero">
-        <h1><img src="assets/navizero_icon.png" height="30px" /> 导航零号</h1>
-        <p>免费的导航软件，有 iOS 和 Android 两个版本。
-            苹果 AppStore，华为应用市场，小米应用商店均可下载。</p>
-        <p>具备搜索、算路、路况等全部功能。它是个样板项目，体现了导航引擎最新的功能。
-            为各种定制导航项目趟平了产品化的道路。</p>
-        <p>并且，它已经内部全部开源。各项目部可以在它的基础上做改造，做项目定制。</p>
+<div class="home-container">
+    <div class="row" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+        <div class="col" fxFlex="60%" matRipple routerLink="navizero">
+            <h1>
+                <img src="assets/navizero_icon.png" height="30px" /> 导航零号
+            </h1>
+            <p>
+                免费的导航软件，有 iOS 和 Android 两个版本。 苹果
+                AppStore，华为应用市场，小米应用商店均可下载。
+            </p>
+            <p>
+                具备搜索、算路、路况等全部功能。它是个样板项目，体现了导航引擎最新的功能。
+                为各种定制导航项目趟平了产品化的道路。
+            </p>
+            <p>
+                并且，它已经内部全部开源。各项目部可以在它的基础上做改造，做项目定制。
+            </p>
+        </div>
+        <div class="col" matRipple routerLink="sdk">
+            <h1><i nz-icon nzType="tool" nzTheme="twotone"></i> 导航SDK</h1>
+            <p>
+                支持主流平台 iOS、Android、嵌入式Linux。
+                使用它，可以轻松的开发出类似<b>导航零号</b>的软件。
+            </p>
+            <p>
+                iNaviCore(iOS SDK) jNaviCore(Android SDK)已经全部内部开源。
+                已经成为智联NGLP的基础，并且在企业服务中广泛应用。
+            </p>
+        </div>
     </div>
-    <div class="col" matRipple routerLink="sdk">
-        <h1>
-            <i nz-icon nzType="tool" nzTheme="twotone"></i> 导航SDK
-        </h1>
-        <p>支持主流平台 iOS、Android、嵌入式Linux。
-            使用它，可以轻松的开发出类似<b>导航零号</b>的软件。</p>
-        <p>iNaviCore(iOS SDK) jNaviCore(Android SDK)已经全部内部开源。
-            已经成为智联NGLP的基础，并且在企业服务中广泛应用。
-        </p>
-    </div>
-</div>
-<div class="row"
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutGap="10px">
-    <div class="col" fxFlex="40%" matRipple routerLink="api">
-        <h1>
-            <i nz-icon nzType="api" nzTheme="twotone"></i> API
-        </h1>
-        <p>包括在线算路、搜索、路况信息等全套的在线API。
-            它是在线导航的基础，导航SDK依赖于它完成在线功能。</p>
-        <p>我们提供直接调用，也支持本地部署。其中算路服务因为定制需求比较多，也已经开源，供各项目部定制开发。</p>
-    </div>
-    <div class="col" fxFlex="30%" matRipple routerLink="ite">
-        <h1><img src="assets/hamster.png" height="30px" /> ITE</h1>
-        <p>
-            导航功能集成测试环境。展示了导航引擎全部前沿功能。
-            它是和引擎同步开发的，主要用于引擎的集成开发。测试人员也用它测试引擎功能。
-            产品人员用它编辑地图配色。
-        </p>
-    </div>
-    <div class="col" fxFlex="30%" matRipple routerLink="open-source">
-        <h1><i nz-icon nzType="github"></i> 开源项目</h1>
-        我们的C++服务器架构、地图数据切割算法等已经开源。
+    <div class="row" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+        <div class="col" fxFlex="40%" matRipple routerLink="api">
+            <h1><i nz-icon nzType="api" nzTheme="twotone"></i> API</h1>
+            <p>
+                包括在线算路、搜索、路况信息等全套的在线API。
+                它是在线导航的基础，导航SDK依赖于它完成在线功能。
+            </p>
+            <p>
+                我们提供直接调用，也支持本地部署。其中算路服务因为定制需求比较多，也已经开源，供各项目部定制开发。
+            </p>
+        </div>
+        <div class="col" fxFlex="30%" matRipple routerLink="ite">
+            <h1><img src="assets/hamster.png" height="30px" /> ITE</h1>
+            <p>
+                导航功能集成测试环境。展示了导航引擎全部前沿功能。
+                它是和引擎同步开发的，主要用于引擎的集成开发。测试人员也用它测试引擎功能。
+                产品人员用它编辑地图配色。
+            </p>
+        </div>
+        <div class="col" fxFlex="30%" matRipple routerLink="open-source">
+            <h1><i nz-icon nzType="github"></i> 开源项目</h1>
+            我们的C++服务器架构、地图数据切割算法等已经开源。
+        </div>
     </div>
 </div>

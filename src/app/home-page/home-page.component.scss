@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 .container {
     width: fit-content;
@@ -31,4 +31,10 @@ img {
     // Move the icon up a bit
     position: relative;
     top: -2px;
+}
+
+.home-container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0;
 }

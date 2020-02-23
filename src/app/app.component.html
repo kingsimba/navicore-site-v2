@@ -1,12 +1,12 @@
 <nz-layout>
     <div>
-        <nz-header class="app-header" *ngIf="!isStandaloneDocument()">
+        <nz-header class="app-header mat-elevation-z4" *ngIf="!isStandaloneDocument()">
             <app-title-bar></app-title-bar>
         </nz-header>
-        <nz-content class="app-content">
+        <nz-content>
             <router-outlet></router-outlet>
         </nz-content>
-        <nz-footer class="app-footer" *ngIf="!isStandaloneDocument()">
+        <nz-footer class="app-footer" *ngIf="needsFooter()">
             备案号：<a href="http://beian.miit.gov.cn/">京ICP备18024060号-1</a>
             <br>
             <span style="font-size: smaller">

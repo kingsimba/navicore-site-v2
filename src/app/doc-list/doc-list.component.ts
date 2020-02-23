@@ -15,6 +15,12 @@ export class DocListComponent implements OnInit {
         private http: HttpClient,
         public loginService: LoginService) {
 
+        this.loginService.loginStatusChanged.subscribe({
+            next: value => {
+                this.refreshDocs();
+            }
+        });
+
     }
 
     ngOnInit() {

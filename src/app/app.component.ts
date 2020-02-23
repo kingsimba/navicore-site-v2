@@ -19,4 +19,11 @@ export class AppComponent {
     isStandaloneDocument() {
         return this.router.url.startsWith('docs') && (this.router.url.endsWith('.html') || this.router.url.endsWith('htm'));
     }
+
+    needsFooter(): boolean {
+        if (this.isStandaloneDocument()) {
+            return false;
+        }
+        return !this.router.url.startsWith('/docs/');
+    }
 }

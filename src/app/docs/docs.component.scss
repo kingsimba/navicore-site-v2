@@ -8,15 +8,196 @@
 }
 
 ::ng-deep .document {
+    padding: 0 20px 20px 20px;
+
+    img {
+        max-width: 90%;
+    }
+
     .title {
         font-size: 1.8em;
     }
     .section {
+        a {
+            color: #314659;
+        }
         h1 {
-            font-size: 1.8em;
+            font-size: 2.8em;
+            margin: 10px 0;
         }
         h2 {
             font-size: 1.3em;
+            font-weight: bold;
+            border-style: solid;
+            border-width: 0 0 1px 0;
+            border-color: rgb(221, 221, 221);
+            padding-bottom: 8px;
+        }
+        h3 {
+            margin: 5px 0;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+        h1, h2, h3, h4, h5 {
+            color: #314659;
+            text-transform: capitalize;
+        }
+        h1:hover,
+        h2:hover,
+        h3:hover {
+            .headerlink::after {
+                visibility: visible;
+            }
+        }
+        ul {
+            padding-left: 25px;
+        }
+        pre {
+            background-color: rgb(241, 241, 241);
+            padding: 10px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono",
+                "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono",
+                "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L",
+                Monaco, "Courier New", Courier, monospace;
+            font-size: 80%;
+            border-style: solid;
+            border-width: 0 0 0 3px;
+            border-color: rgb(182, 182, 182);
+        }
+
+        .literal {
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(226, 226, 226);
+            background-color: white;
+            padding: 2px 5px;
+            color: rgb(211, 0, 0);
+            font-size: 90%;
+        }
+
+        .warning {
+            .first {
+                margin: 0;
+                padding: 5px 10px;
+                background-color: rgb(247, 175, 99);
+                color: white;
+                font-weight: bold;
+            }
+            .first::before {
+                content: "⚠ ";
+            }
+            .last {
+                margin: 0;
+                padding: 10px 10px;
+                background-color: rgb(252, 231, 208);
+            }
+        }
+
+        .note {
+            .first {
+                margin: 0;
+                padding: 5px 10px;
+                background-color: rgb(102, 173, 224);
+                color: white;
+                font-weight: bold;
+            }
+            .first::before {
+                content: "⚠ ";
+            }
+            .last {
+                margin: 0;
+                padding: 10px 10px;
+                background-color: rgb(225, 243, 255);
+            }
+        }
+
+        dt {
+            font-weight: bold;
+        }
+        dd {
+            padding-left: 25px;
         }
     }
+
+    .headerlink {
+        visibility: hidden;
+        font-family: FontAwesome;
+        font-size: 70%;
+    }
+
+    .headerlink::after {
+        content: "🔗";
+    }
+}
+
+::ng-deep .navigation {
+    padding: 10px 10px 10px 0;
+
+    ul {
+        list-style-type: none;
+        padding-inline-start: 0px;
+        padding: 0;
+    }
+
+    li {
+        margin: 0;
+        padding: 0;
+        background-color: white;
+    }
+
+    a {
+        display: block;
+        color: #314659;
+        padding: 5px 0px 5px 20px;
+        font-weight: 500;
+    }
+
+    ul li ul li a {
+        padding: 5px 0px 5px 40px;
+        font-weight: normal;
+    }
+
+    ul li ul li ul li a {
+        padding: 5px 0px 5px 60px;
+        font-size: 80%;
+        color: #45637d;
+    }
+
+    ul li ul li ul li ul li a {
+        padding: 5px 0px 5px 80px;
+        font-size: 80%;
+        color: #45637d;
+    }
+
+    a:hover {
+        color: #1890ff;
+    }
+}
+
+nz-sider {
+    scrollbar-width: thin;
+    overflow: hidden;
+    position: absolute;
+    background: white;
+    width: 250px;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    border-color: rgb(231, 231, 231);
+}
+
+nz-sider:hover {
+    height: 100vh;
+    overflow: auto;
+}
+
+.nz-sider-sticky {
+    position: fixed;
+    top: 0;
+}
+
+nz-content {
+    margin: 0 0 0 250px;
+    padding: 0px;
+    overflow: initial;
+    background: white;
 }
