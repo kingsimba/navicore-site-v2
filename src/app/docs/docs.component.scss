@@ -92,6 +92,24 @@
         .toctree-wrapper {
             ul {
                 list-style: none;
+                padding-left: 0;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+
+            ul li a {
+                display: block;
+                padding: 5px 0;
+            }
+
+            ul ul {
+                padding-left: 20px;
+                font-size: 85%;
+                font-weight: normal;
+            }
+
+            ul ul a {
+                padding: 0;
             }
         }
 

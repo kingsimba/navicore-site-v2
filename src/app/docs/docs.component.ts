@@ -64,10 +64,13 @@ export class DocsComponent implements OnInit {
         if (!this.loginService.loginSucceeded)
         {
             this.currentDocUrl = '';
-            return false;
+            return;
         }
 
         let url = this.router.url;
+        if (url === '/docs') {
+            return;
+        }
         if (!url.endsWith('.html')) {
             url = url + '/index.html';
         }
