@@ -54,8 +54,49 @@
         ul {
             padding-left: 25px;
         }
+
+        .contents {
+            margin: 20px 0 20px 0;
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                border-width: 0 0 0 3px;
+                border-color: #1890ff;
+                border-style: solid;
+                font-size: 1em;
+
+                li {
+                    padding: 0;
+                    margin: 0;
+                    a {
+                        text-transform: capitalize;
+                        display: block;
+                    }
+                    ul {
+                        border-style: none;
+                        font-size: 85%;
+                    }
+                }
+            }
+
+            ul li a {
+                padding: 5px 0 5px 20px;
+            }
+
+            ul li ul li a {
+                padding: 5px 0 5px 40px;
+            }
+        }
+
+        .toctree-wrapper {
+            ul {
+                list-style: none;
+            }
+        }
+
         pre {
-            background-color: rgb(241, 241, 241);
+            background-color: rgb(234, 247, 255);
             padding: 10px;
             font-family: Consolas, "Andale Mono WT", "Andale Mono",
                 "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono",
@@ -64,7 +105,7 @@
             font-size: 80%;
             border-style: solid;
             border-width: 0 0 0 3px;
-            border-color: rgb(182, 182, 182);
+            border-color: rgb(104, 185, 255);
         }
 
         .literal {
@@ -157,17 +198,16 @@
     ul li ul li a {
         padding: 5px 0px 5px 40px;
         font-weight: normal;
+        font-size: 85%;
     }
 
     ul li ul li ul li a {
         padding: 5px 0px 5px 60px;
-        font-size: 80%;
         color: #45637d;
     }
 
     ul li ul li ul li ul li a {
         padding: 5px 0px 5px 80px;
-        font-size: 80%;
         color: #45637d;
     }
 
@@ -203,4 +243,3 @@ nz-content {
     overflow: initial;
     background: white;
 }
-

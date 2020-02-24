@@ -29,7 +29,7 @@
                     <input (input)="clearLoginMessage();addUserNamePostFix($event);" nz-input formControlName="username" placeholder="LDAP 用户名"
                         [nzAutocomplete]="auto" />
                     <nz-autocomplete #auto>
-                        <nz-auto-option *ngFor="let option of userNamePostfixes" [nzValue]="option">{{ option }}</nz-auto-option>
+                        <nz-auto-option *ngFor="let option of userNameOptions" [nzValue]="option">{{ option }}</nz-auto-option>
                     </nz-autocomplete>
                 </p>
                 <p>

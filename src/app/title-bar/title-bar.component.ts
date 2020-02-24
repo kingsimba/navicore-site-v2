@@ -17,7 +17,7 @@ export class TitleBarComponent implements OnInit {
     loginMessage = '';
     passwordVisible = false;
     isCollapsed = false;
-    userNamePostfixes: string[];
+    userNameOptions: string[];
 
     menuItems = [
         { title: '导航零号', link: 'navizero' },
@@ -94,12 +94,31 @@ export class TitleBarComponent implements OnInit {
     }
 
     addUserNamePostFix(e: Event): void {
-        const value = (e.target as HTMLInputElement).value;
-        if (!value || value.indexOf('@') >= 0) {
-            this.userNamePostfixes = [];
+        const name = (e.target as HTMLInputElement).value;
+
+        // split name into user + domain
+        let user = '';
+        let domain = '';
+        const atSymbolIndex = name.indexOf('@');
+        if (name != null && atSymbolIndex !== -1) {
+            user = name.substring(0, atSymbolIndex);
+            domain = name.substring(atSymbolIndex);
         } else {
-            this.userNamePostfixes = ['@navinfo.com', '@mapbar.com', ''].map(domain => `${value}${domain}`);
+            user = name;
         }
+
+        const options = domain !== '' ?  [] : [name];
+
+        if (domain != null) {
+            const domains = ['@navinfo.com', '@mapbar.com'];
+            for (const d of domains) {
+                if (d.startsWith(domain)) {
+                    options.push(user + d);
+                }
+            }
+        }
+
+        this.userNameOptions = options;
     }
 
     @HostListener('window:resize', ['$event'])
