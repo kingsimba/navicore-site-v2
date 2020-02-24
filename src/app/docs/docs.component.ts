@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { LoginService } from '../login.service';
 
 @Component({
     templateUrl: './docs.component.html',
@@ -18,18 +19,34 @@ export class DocsComponent implements OnInit {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        public loginService: LoginService
     ) {
         router.events.subscribe((val) => {
             // see also
             if (val instanceof NavigationEnd) {
-                this.loadPageIfNeeded();
+                this.updatePageIfNeeded();
             }
         });
+
+        this.loginService.loginStatusChanged.subscribe({
+            next: value => {
+                this.updatePageIfNeeded();
+            }
+        })
     }
 
     @HostListener('window:scroll', [])
     onWindowScroll() {
+        this.adjustScrollBar();
+    }
+
+    @HostListener('window:resize', [])
+    onWindowResize() {
+        this.adjustScrollBar();
+    }
+
+    private adjustScrollBar() {
         if (window.pageYOffset > 64) {
             this.siderBarClass = 'nz-sider-sticky';
             this.siderBarHeight = window.innerHeight;
@@ -43,7 +60,13 @@ export class DocsComponent implements OnInit {
         this.onWindowScroll();
     }
 
-    loadPageIfNeeded() {
+    updatePageIfNeeded() {
+        if (!this.loginService.loginSucceeded)
+        {
+            this.currentDocUrl = '';
+            return false;
+        }
+
         let url = this.router.url;
         if (!url.endsWith('.html')) {
             url = url + '/index.html';

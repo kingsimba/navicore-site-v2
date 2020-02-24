@@ -14,6 +14,7 @@ export class LoginService {
     username = '';
 
     private loginRequest: Subscription;
+    private logoutRequest: Subscription;
 
     constructor(
         private http: HttpClient,
@@ -64,9 +65,52 @@ export class LoginService {
         return observable;
     }
 
-    logout() {
-        this.loginSucceeded = false;
-        this.username = '';
+    logout(): void {
+        // post form data
+        this.logoutRequest = this.http.get<any>('api/logout').subscribe(
+            {
+                next: value => {
+                    console.log(value);
+                    if (value.code === 0) {
+                        this.performLogout();
+                    }
+                    this.logoutRequest = undefined;
+                },
+                error: err => {
+                    if (err.status == 401) {
+                        this.performLogout();
+                    }
+                    this.logoutRequest = undefined;
+                }
+            }
+        );
+    }
+
+    performLogout(): void {
+        if (this.loginSucceeded) {
+            this.cookieService.set('Name', '', 0, '/');
+            this.cookieService.set('Token', '', 0, '/');
+
+            this.syncWithCookie();
+
+            this.loginStatusChanged.emit(null);
+        }
+    }
+
+    // if failed, return error message. Or else, return ''.
+    performBasicLoginCheck(username: string, password: string): string {
+        if (password.length < 1) {
+            return "密码不能为空";
+        }
+        else if (username.length < 1) {
+            return '用户名不能为空';
+        }
+        else if ((username.indexOf('@') !== -1) &&
+            (!username.endsWith("@navinfo.com") && !username.endsWith('@mapbar.com'))) {
+            return "用户名必须为 xxx@navinfo.com 或者 xxx@mapbar.com";
+        }
+
+        return '';
     }
 
     syncWithCookie() {

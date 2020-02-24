@@ -25,10 +25,23 @@
             [nzOkDisabled]="loginForm.disabled" (nzOnCancel)="handleLoginCancel()"
             (nzOnOk)="handleLoginOK(loginForm.value)">
             <form [formGroup]="loginForm">
-                <p><input (input)="clearLoginMessage()" nz-input formControlName="username" placeholder="LDAP 用户名" />
+                <p>
+                    <input (input)="clearLoginMessage();addUserNamePostFix($event);" nz-input formControlName="username" placeholder="LDAP 用户名"
+                        [nzAutocomplete]="auto" />
+                    <nz-autocomplete #auto>
+                        <nz-auto-option *ngFor="let option of userNamePostfixes" [nzValue]="option">{{ option }}</nz-auto-option>
+                    </nz-autocomplete>
                 </p>
-                <p><input (input)="clearLoginMessage()" nz-input #passwordInput formControlName="password"
-                        type="password" placeholder="密码" /></p>
+                <p>
+                    <nz-input-group [nzSuffix]="suffixTemplate">
+                        <input #passwordInput formControlName="password" [type]="passwordVisible ? 'text' : 'password'"
+                            nz-input placeholder="密码" (ngModel)="password" />
+                    </nz-input-group>
+                    <ng-template #suffixTemplate>
+                        <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                            (click)="passwordVisible = !passwordVisible"></i>
+                    </ng-template>
+                </p>
                 <p *ngIf="loginMessage != ''">
                     <nz-tag [nzColor]="'gold'">{{ loginMessage }}</nz-tag>
                 </p>

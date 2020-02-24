@@ -15,8 +15,9 @@ export class TitleBarComponent implements OnInit {
     @ViewChild('passwordInput', { static: false }) passwordInput: ElementRef;
 
     loginMessage = '';
-
+    passwordVisible = false;
     isCollapsed = false;
+    userNamePostfixes: string[];
 
     menuItems = [
         { title: '导航零号', link: 'navizero' },
@@ -54,6 +55,11 @@ export class TitleBarComponent implements OnInit {
     handleLoginOK(loginData): void {
         console.log('login clicked!');
 
+        this.loginMessage = this.loginService.performBasicLoginCheck(loginData.username, loginData.password);
+        if (this.loginMessage !== '') {
+            return;
+        }
+
         this.loginForm.disable();
 
         this.loginRequest = this.loginService.login<any>(loginData.username, loginData.password).subscribe({
@@ -85,6 +91,15 @@ export class TitleBarComponent implements OnInit {
 
     clearLoginMessage() {
         this.loginMessage = '';
+    }
+
+    addUserNamePostFix(e: Event): void {
+        const value = (e.target as HTMLInputElement).value;
+        if (!value || value.indexOf('@') >= 0) {
+            this.userNamePostfixes = [];
+        } else {
+            this.userNamePostfixes = ['@navinfo.com', '@mapbar.com', ''].map(domain => `${value}${domain}`);
+        }
     }
 
     @HostListener('window:resize', ['$event'])

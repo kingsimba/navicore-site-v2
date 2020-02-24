@@ -11,16 +11,14 @@
     padding: 0 20px 20px 20px;
 
     img {
-        max-width: 90%;
+        max-width: 100%;
+        max-height: 400px;
     }
 
     .title {
         font-size: 1.8em;
     }
     .section {
-        a {
-            color: #314659;
-        }
         h1 {
             font-size: 2.8em;
             margin: 10px 0;
@@ -38,7 +36,11 @@
             font-size: 1.3em;
             font-weight: 500;
         }
-        h1, h2, h3, h4, h5 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
             color: #314659;
             text-transform: capitalize;
         }
@@ -201,3 +203,4 @@ nz-content {
     overflow: initial;
     background: white;
 }
+

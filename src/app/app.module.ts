@@ -22,6 +22,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 // material design modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -38,7 +39,8 @@ import {
     ToolTwoTone,
     ApiTwoTone,
     DownOutline,
-    UserOutline
+    UserOutline,
+    EyeInvisibleOutline,
 } from '@ant-design/icons-angular/icons';
 
 const ICONS = [
@@ -49,7 +51,8 @@ const ICONS = [
     ToolTwoTone,
     ApiTwoTone,
     DownOutline,
-    UserOutline
+    UserOutline,
+    EyeInvisibleOutline,
 ];
 
 import { HomePageComponent } from './home-page/home-page.component';
@@ -110,6 +113,7 @@ const ROUTES: Routes = [
         NzModalModule,
         NzInputModule,
         NzProgressModule,
+        NzAutocompleteModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

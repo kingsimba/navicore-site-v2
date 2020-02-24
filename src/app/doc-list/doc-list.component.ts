@@ -28,11 +28,13 @@ export class DocListComponent implements OnInit {
     }
 
     refreshDocs() {
-        this.http.get('/api/list').subscribe({
-            next: value => {
-                this.documents = value['list'];
-            }
-        });
+        if (this.loginService.loginSucceeded) {
+            this.http.get('/api/list').subscribe({
+                next: value => {
+                    this.documents = value['list'];
+                }
+            });
+        }
     }
 
     openDocument(doc: string) {
