@@ -35,7 +35,7 @@
                 <p>
                     <nz-input-group [nzSuffix]="suffixTemplate">
                         <input #passwordInput formControlName="password" [type]="passwordVisible ? 'text' : 'password'"
-                            nz-input placeholder="密码" (ngModel)="password" />
+                            nz-input placeholder="密码"/>
                     </nz-input-group>
                     <ng-template #suffixTemplate>
                         <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"

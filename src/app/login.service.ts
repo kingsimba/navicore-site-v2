@@ -88,8 +88,8 @@ export class LoginService {
 
     performLogout(): void {
         if (this.loginSucceeded) {
-            this.cookieService.set('Name', '', 0, '/');
-            this.cookieService.set('Token', '', 0, '/');
+            this.cookieService.delete('Name', '/')
+            this.cookieService.delete('Token', '/');
 
             this.syncWithCookie();
 

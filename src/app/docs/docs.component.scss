@@ -137,39 +137,43 @@
         }
 
         .warning {
-            .first {
+            background-color: rgb(252, 231, 208);
+            .admonition-title {
                 margin: 0;
                 padding: 5px 10px;
                 background-color: rgb(247, 175, 99);
                 color: white;
                 font-weight: bold;
             }
-            .first::before {
+            .admonition-title::before {
                 content: "⚠ ";
             }
             .last {
                 margin: 0;
                 padding: 10px 10px;
-                background-color: rgb(252, 231, 208);
             }
         }
 
         .note {
-            .first {
+            background-color: rgb(225, 243, 255);
+            .admonition-title {
                 margin: 0;
                 padding: 5px 10px;
                 background-color: rgb(102, 173, 224);
                 color: white;
                 font-weight: bold;
             }
-            .first::before {
+            .admonition-title::before {
                 content: "⚠ ";
             }
             .last {
                 margin: 0;
                 padding: 10px 10px;
-                background-color: rgb(225, 243, 255);
             }
+        }
+
+        .warning, .note {
+            margin: 5px 0;
         }
 
         dt {
