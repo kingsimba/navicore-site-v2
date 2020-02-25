@@ -3,7 +3,7 @@
         <h1>文档列表</h1>
         <ul>
             <li *ngFor="let doc of documents">
-                <a (click)="openDocument(doc)">{{ doc }}</a>
+                <a (click)="openDocument(doc.link)">{{ doc.name }}</a>
             </li>
         </ul>
     </div>
