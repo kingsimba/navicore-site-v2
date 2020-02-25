@@ -1,17 +1,20 @@
-<nz-layout *ngIf="loginService.loginSucceeded;else unauthorized">
-    <nz-sider #siderBar nzWidth="250" [class]="siderBarClass" [style.height.px]="siderBarHeight">
-        <div class="navigation" #navigation></div>
-    </nz-sider>
-    <nz-content class="document">
-        <div #docContent>
-            <nz-progress class="progressBar" [nzPercent]="100" nzSize="small" nzStatus="active" [nzShowInfo]="false">
-            </nz-progress>
-        </div>
-    </nz-content>
-</nz-layout>
+<div style="margin: 0 auto; max-width: 1024px;">
+    <nz-layout *ngIf="loginService.loginSucceeded;else unauthorized">
+        <nz-sider #siderBar nzWidth="250" [class]="siderBarClass" [style.height.px]="siderBarHeight">
+            <div class="navigation" #navigation></div>
+        </nz-sider>
+        <nz-content class="document">
+            <div #docContent>
+                <nz-progress class="progressBar" [nzPercent]="100" nzSize="small" nzStatus="active"
+                    [nzShowInfo]="false">
+                </nz-progress>
+            </div>
+        </nz-content>
+    </nz-layout>
 
-<ng-template #unauthorized>
-    <div class="appContent">
-        <h1 style="text-align: center;">请先登录</h1>
-    </div>
-</ng-template>
+    <ng-template #unauthorized>
+        <div class="appContent">
+            <h1 style="text-align: center;">请先登录</h1>
+        </div>
+    </ng-template>
+</div>
