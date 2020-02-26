@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { LoginService } from './login.service';
+import { Subscription } from 'rxjs';
 
-class Document {
+export class Document {
     constructor(public name: string, public link: string) { }
 
     isEqual(r: Document): boolean {
@@ -32,18 +33,29 @@ class Document {
 export class DocListService {
 
     private documents: Document[] = [];
+    private loginSubs : Subscription;
+    private loadDocSubs: Subscription;
+
     documentsChanged: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private http: HttpClient,
         private loginService: LoginService) {
-        this.loginService.loginStatusChanged.subscribe({
+    }
+
+    ngOnInit() {
+        this. loginSubs =this.loginService.loginStatusChanged.subscribe({
             next: value => {
                 this.refreshDocs();
             }
         });
     }
 
-    getDocuments() {
+    ngOnDestroy() { 
+        this.loginSubs.unsubscribe();
+        this.loadDocSubs.unsubscribe();
+    }
+
+    getDocuments(): Document[] {
         return this.documents;
     }
 
@@ -56,7 +68,10 @@ export class DocListService {
 
     refreshDocs() {
         if (this.documents.length == 0 && this.loginService.loginSucceeded) {
-            this.http.get('/api/list').subscribe({
+            if (this.loadDocSubs != null) {
+                this.loadDocSubs.unsubscribe();
+            }
+            this.loadDocSubs = this.http.get('/api/list').subscribe({
                 next: value => {
                     const docs = value['list'];
                     let modifiedDocs: Document[] = [];

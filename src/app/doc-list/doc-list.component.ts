@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
-import { DocListService } from '../doc-list.service';
+import { DocListService, Document } from '../doc-list.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     templateUrl: './doc-list.component.html',
@@ -10,6 +11,7 @@ import { DocListService } from '../doc-list.service';
 })
 export class DocListComponent implements OnInit {
     documents: Document[] = [];
+    subscription: Subscription;
 
     constructor(
         private router: Router,
@@ -17,18 +19,22 @@ export class DocListComponent implements OnInit {
         public loginService: LoginService,
         private docListService: DocListService) {
 
-        docListService.documentsChanged.subscribe(
+        this.documents = this.docListService.getDocuments();
+        this.docListService.refreshDocs();
+    }
+
+    ngOnInit() {
+        this.subscription = this.docListService.documentsChanged.subscribe(
             {
                 next: docs => {
                     this.documents = docs;
                 }
             }
         )
-
-        this.docListService.refreshDocs();
     }
 
-    ngOnInit() {
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     openDocument(doc: string) {

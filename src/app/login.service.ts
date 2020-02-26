@@ -12,9 +12,9 @@ export class LoginService {
 
     loginSucceeded = false;
     username = '';
+    nickname = '';
 
-    private loginRequest: Subscription;
-    private logoutRequest: Subscription;
+    private logoutSubs: Subscription;
 
     constructor(
         private http: HttpClient,
@@ -29,24 +29,22 @@ export class LoginService {
             const params = new HttpParams()
                 .set('username', username)
                 .set('password', password);
-            this.loginRequest = this.http.post<any>('api/login', params).subscribe(
+            const loginSubs = this.http.post<any>('api/login', params).subscribe(
                 {
                     next: value => {
                         console.log(value);
                         if (value.code === 0) {
-                            this.username = username;
                             this.loginSucceeded = true;
-                            this.loginRequest = undefined;
+                            this.syncWithCookie();
                             observer.next(value);
                         } else {
+                            this.syncWithCookie();
                             observer.error(value.msg);
                         }
-                        this.syncWithCookie();
                         this.loginStatusChanged.emit(null);
                     },
                     error: err => {
                         observer.error(err.errorMessage);
-                        this.loginRequest = undefined;
                         this.syncWithCookie();
                         this.loginStatusChanged.emit(null);
                     }
@@ -55,8 +53,8 @@ export class LoginService {
 
             return {
                 unsubscribe() {
-                    if (this.loginRequest) {
-                        this.loginRequest.unsubscribe();
+                    if (loginSubs) {
+                        loginSubs.unsubscribe();
                     }
                 }
             };
@@ -67,20 +65,23 @@ export class LoginService {
 
     logout(): void {
         // post form data
-        this.logoutRequest = this.http.get<any>('api/logout').subscribe(
+        if (this.logoutSubs != null) {
+            this.logoutSubs.unsubscribe();
+        }
+        this.logoutSubs = this.http.get<any>('api/logout').subscribe(
             {
                 next: value => {
                     console.log(value);
                     if (value.code === 0) {
                         this.performLogout();
                     }
-                    this.logoutRequest = undefined;
+                    this.logoutSubs = undefined;
                 },
                 error: err => {
                     if (err.status == 401) {
                         this.performLogout();
                     }
-                    this.logoutRequest = undefined;
+                    this.logoutSubs = undefined;
                 }
             }
         );
@@ -115,6 +116,7 @@ export class LoginService {
 
     syncWithCookie() {
         this.username = this.cookieService.get('Name');
+        this.nickname = this.username.split('@')[0];
         this.loginSucceeded = this.username !== '';
     }
 }

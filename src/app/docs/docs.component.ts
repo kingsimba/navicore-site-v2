@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, HostListener, Inject } from '
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LoginService } from '../login.service';
+import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: './docs.component.html',
@@ -13,8 +14,11 @@ export class DocsComponent implements OnInit {
     @ViewChild('siderBar', { static: false }) siderBar: ElementRef;
 
     siderBarHeight: number;
+    titleBarBottom: number;
     siderBarClass: string;
     currentDocUrl: string;
+    loadingDocUrl: string;
+    loadingDocument: boolean;
 
     constructor(
         private http: HttpClient,
@@ -50,9 +54,11 @@ export class DocsComponent implements OnInit {
         if (window.pageYOffset > 64) {
             this.siderBarClass = 'nz-sider-sticky';
             this.siderBarHeight = window.innerHeight;
+            this.titleBarBottom = window.pageYOffset;
         } else {
             this.siderBarClass = '';
             this.siderBarHeight = window.innerHeight - 64 + window.pageYOffset;
+            this.titleBarBottom = 64;
         }
     }
 
@@ -61,8 +67,7 @@ export class DocsComponent implements OnInit {
     }
 
     updatePageIfNeeded() {
-        if (!this.loginService.loginSucceeded)
-        {
+        if (!this.loginService.loginSucceeded) {
             this.currentDocUrl = '';
             return;
         }
@@ -75,48 +80,68 @@ export class DocsComponent implements OnInit {
             url = url + '/index.html';
         }
         // trim anchor #xxxx
-        let docUrl: string = url;
-        const anchorIndex = docUrl.lastIndexOf('#');
-        if (anchorIndex !== -1) {
-            docUrl = docUrl.substring(0, docUrl.lastIndexOf('#'));
-        }
+        let docUrl = this.getDocUrlFromFullUrl(url);
         if (this.currentDocUrl !== docUrl) {
-            this.loadPage(docUrl);
+            this.loadPage(docUrl).subscribe({
+                next: value => {
+
+                },
+                error: value => {
+
+                }
+            });
         }
     }
 
-    loadPage(docUrl: string) {
-        const path = docUrl.substring(0, docUrl.lastIndexOf('/'));
-        this.currentDocUrl = docUrl;
+    loadPage<T>(docUrl: string): Observable<T> {
+        const observable = new Observable<T>((observer) => {
+            const path = docUrl.substring(0, docUrl.lastIndexOf('/'));
+            this.currentDocUrl = docUrl;
+            this.loadingDocument = true;
 
-        this.http.get(`/api${docUrl}`, { responseType: 'text' }).subscribe({
-            next: value => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(value, 'text/html');
-                const mainDocument = doc.querySelector('.document');
-                const images = mainDocument.querySelectorAll('img');
+            let subscription = this.http.get(`/api${docUrl}`, { responseType: 'text' }).subscribe({
+                next: value => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(value, 'text/html');
+                    const mainDocument = doc.querySelector('.document');
+                    const images = mainDocument.querySelectorAll('img');
 
-                // correct all images
-                for (let i = images.length; i--;) {
-                    const src = images[i].getAttribute('src');
+                    // correct all images
+                    for (let i = images.length; i--;) {
+                        const src = images[i].getAttribute('src');
 
-                    images[i].setAttribute('src', `/api${path}/${src}`);
+                        images[i].setAttribute('src', `/api${path}/${src}`);
+                    }
+
+                    this.correctLinks(mainDocument, docUrl, path);
+
+                    this.docContent.nativeElement.innerHTML = '';
+                    this.docContent.nativeElement.insertAdjacentElement('beforeend', mainDocument);
+
+                    const navigationEle = this.getNavigationElement(doc);
+                    this.correctLinks(navigationEle, docUrl, path);
+                    this.navigation.nativeElement.innerHTML = '';
+                    this.navigation.nativeElement.insertAdjacentElement('beforeend', navigationEle);
+                    this.loadingDocument = false;
+                    observer.next(null);
+                },
+                error: err => {
+                    this.docContent.nativeElement.innerHTML = 'error: ' + err;
+                    this.loadingDocument = false;
+                    observer.error(err);
                 }
+            });
 
-                this.correctLinks(mainDocument, docUrl, path);
-
-                this.docContent.nativeElement.innerHTML = '';
-                this.docContent.nativeElement.insertAdjacentElement('beforeend', mainDocument);
-
-                const navigationEle = this.getNavigationElement(doc);
-                this.correctLinks(navigationEle, docUrl, path);
-                this.navigation.nativeElement.innerHTML = '';
-                this.navigation.nativeElement.insertAdjacentElement('beforeend', navigationEle);
-            },
-            error: err => {
-                this.docContent.nativeElement.innerHTML = 'error: ' + err;
-            }
+            return {
+                unsubscribe() {
+                    if (subscription) {
+                        subscription.unsubscribe();
+                    }
+                }
+            };
         });
+
+        return observable;
     }
 
     private correctLinks(rootNode: Element, docUrl: string, path: string): void {
@@ -145,6 +170,27 @@ export class DocsComponent implements OnInit {
 
     openDocument(doc: any) {
         const url = doc.currentTarget.getAttribute('url');
-        this.router.navigateByUrl(url);
+        let docUrl = this.getDocUrlFromFullUrl(url);
+        if (this.currentDocUrl !== docUrl) {
+            this.loadPage(docUrl).subscribe({
+                next: value => {
+                    this.router.navigateByUrl(url);
+                }
+            })
+        }
+        else
+        {
+            this.router.navigateByUrl(url);
+        }
+    }
+
+    private getDocUrlFromFullUrl(fullUrl: string): string {
+        // trim #anchor from url
+        let docUrl: string = fullUrl;
+        const anchorIndex = docUrl.lastIndexOf('#');
+        if (anchorIndex !== -1) {
+            docUrl = docUrl.substring(0, docUrl.lastIndexOf('#'));
+        }
+        return docUrl;
     }
 }

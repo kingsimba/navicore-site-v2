@@ -267,3 +267,10 @@ nz-content {
     overflow: initial;
     background: white;
 }
+
+mat-progress-bar {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 64px;
+}

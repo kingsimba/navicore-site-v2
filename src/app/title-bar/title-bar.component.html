@@ -18,7 +18,7 @@
         <button mat-button *ngIf="!loginService.loginSucceeded" (click)="showLoginBox()">登录</button>
         <button mat-button *ngIf="loginService.loginSucceeded" [matMenuTriggerFor]="profileMenu">
             <i nz-icon nzType="user" nzTheme="outline"></i>
-            &nbsp; {{ loginService.username }} &nbsp;
+            &nbsp; {{ loginService.nickname }} &nbsp;
             <i nz-icon nzType="down" nzTheme="outline" style="font-size: 10px;"></i>
         </button>
         <nz-modal #loginBox [(nzVisible)]="loginBoxVisible" nzTitle="Login" nzMaskClosable="false"
