@@ -1,14 +1,14 @@
-import { Component, OnInit, ElementRef, ViewChild, HostListener, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LoginService } from '../login.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
     templateUrl: './docs.component.html',
     styleUrls: ['./docs.component.scss']
 })
-export class DocsComponent implements OnInit {
+export class DocsComponent implements OnInit, OnDestroy {
     @ViewChild('docContent', { static: false }) docContent: ElementRef;
     @ViewChild('navigation', { static: false }) navigation: ElementRef;
     @ViewChild('siderBar', { static: false }) siderBar: ElementRef;
@@ -20,24 +20,38 @@ export class DocsComponent implements OnInit {
     loadingDocUrl: string;
     loadingDocument: boolean;
 
+    private routerSubs: Subscription;
+    private loginSubs: Subscription;
+    private docSubs: Subscription;
+
     constructor(
         private http: HttpClient,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         public loginService: LoginService
     ) {
-        router.events.subscribe((val) => {
+        this.routerSubs = this.router.events.subscribe((val) => {
             // see also
             if (val instanceof NavigationEnd) {
                 this.updatePageIfNeeded();
             }
         });
 
-        this.loginService.loginStatusChanged.subscribe({
+        this.loginSubs = this.loginService.loginStatusChanged.subscribe({
             next: value => {
                 this.updatePageIfNeeded();
             }
-        })
+        });
+    }
+
+    ngOnInit() {
+        this.onWindowScroll();
+    }
+
+    ngOnDestroy() {
+         this.routerSubs.unsubscribe();
+         this.loginSubs.unsubscribe();
+         this.docSubs.unsubscribe();
     }
 
     @HostListener('window:scroll', [])
@@ -62,10 +76,6 @@ export class DocsComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
-        this.onWindowScroll();
-    }
-
     updatePageIfNeeded() {
         if (!this.loginService.loginSucceeded) {
             this.currentDocUrl = '';
@@ -79,18 +89,7 @@ export class DocsComponent implements OnInit {
         if (!url.endsWith('.html')) {
             url = url + '/index.html';
         }
-        // trim anchor #xxxx
-        let docUrl = this.getDocUrlFromFullUrl(url);
-        if (this.currentDocUrl !== docUrl) {
-            this.loadPage(docUrl).subscribe({
-                next: value => {
-
-                },
-                error: value => {
-
-                }
-            });
-        }
+        this.openLink(url);
     }
 
     loadPage<T>(docUrl: string): Observable<T> {
@@ -99,7 +98,7 @@ export class DocsComponent implements OnInit {
             this.currentDocUrl = docUrl;
             this.loadingDocument = true;
 
-            let subscription = this.http.get(`/api${docUrl}`, { responseType: 'text' }).subscribe({
+            const subscription = this.http.get(`/api${docUrl}`, { responseType: 'text' }).subscribe({
                 next: value => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(value, 'text/html');
@@ -159,7 +158,7 @@ export class DocsComponent implements OnInit {
 
             // use router
             links[i].removeAttribute('href');
-            links[i].addEventListener('click', this.openDocument.bind(this));
+            links[i].addEventListener('click', this.onClickLink.bind(this));
         }
     }
 
@@ -168,18 +167,23 @@ export class DocsComponent implements OnInit {
         return navigation;
     }
 
-    openDocument(doc: any) {
+    onClickLink(doc: any) {
         const url = doc.currentTarget.getAttribute('url');
-        let docUrl = this.getDocUrlFromFullUrl(url);
+        this.openLink(url, true);
+    }
+
+    openLink(url: string, navigateTo: boolean = false): void {
+        const docUrl = this.getDocUrlFromFullUrl(url);
         if (this.currentDocUrl !== docUrl) {
-            this.loadPage(docUrl).subscribe({
+            if (this.docSubs) {
+                this.docSubs.unsubscribe();
+            }
+            this.docSubs = this.loadPage(docUrl).subscribe({
                 next: value => {
                     this.router.navigateByUrl(url);
                 }
-            })
-        }
-        else
-        {
+            });
+        } else if (navigateTo) {
             this.router.navigateByUrl(url);
         }
     }

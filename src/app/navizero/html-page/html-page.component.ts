@@ -1,14 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     template: `<div class="appContent" [innerHtml]="myTemplate"></div>`,
     styles: []
 })
-export class HtmlPageComponent implements OnInit {
+export class HtmlPageComponent implements OnInit, OnDestroy {
 
     myTemplate: any = '';
+    private docSubs: Subscription;
 
     constructor(private http: HttpClient,
                 private router: Router,
@@ -30,7 +32,7 @@ export class HtmlPageComponent implements OnInit {
             docUrl = path + docUrl;
         }
 
-        this.http.get(`/assets${docUrl}`, { responseType: 'text' }).subscribe(
+        this.docSubs = this.http.get(`/assets${docUrl}`, { responseType: 'text' }).subscribe(
             {
                 next: value => {
                     this.myTemplate = value;
@@ -40,6 +42,10 @@ export class HtmlPageComponent implements OnInit {
                 }
             }
         );
+    }
+
+    ngOnDestroy() {
+        this.docSubs.unsubscribe();
     }
 
 }

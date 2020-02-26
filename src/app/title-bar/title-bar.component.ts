@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd';
@@ -10,7 +10,7 @@ import { LoginService } from '../login.service';
     templateUrl: './title-bar.component.html',
     styleUrls: ['./title-bar.component.scss']
 })
-export class TitleBarComponent implements OnInit {
+export class TitleBarComponent implements OnInit, OnDestroy {
     @ViewChild('loginBox', { static: false }) loginBox: NzModalRef;
     @ViewChild('passwordInput', { static: false }) passwordInput: ElementRef;
 
@@ -48,8 +48,18 @@ export class TitleBarComponent implements OnInit {
         this.innerWidth = window.innerWidth;
     }
 
+    ngOnDestroy() {
+        this.unsubscribeLogin();
+    }
+
     showLoginBox(): void {
         this.loginBoxVisible = true;
+    }
+
+    private unsubscribeLogin() {
+        if (this.loginRequest) {
+            this.loginRequest.unsubscribe();
+        }
     }
 
     handleLoginOK(loginData): void {
@@ -61,7 +71,7 @@ export class TitleBarComponent implements OnInit {
         }
 
         this.loginForm.disable();
-
+        this.unsubscribeLogin();
         this.loginRequest = this.loginService.login<any>(loginData.username, loginData.password).subscribe({
             next: value => {
                 this.loginForm.enable();
@@ -83,9 +93,7 @@ export class TitleBarComponent implements OnInit {
 
     handleLoginCancel(): void {
         console.log('Button cancel clicked!');
-        if (this.loginRequest) {
-            this.loginRequest.unsubscribe();
-        }
+        this.unsubscribeLogin();
         this.loginBoxVisible = false;
     }
 

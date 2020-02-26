@@ -1,10 +1,10 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loadingDocument" [style.top.px]="titleBarBottom"></mat-progress-bar>
-<div style="margin: 0 auto; max-width: 1024px;">
+<div style="margin: 0 auto; max-width: 1024px;" class="mat-elevation-z1">
     <nz-layout *ngIf="loginService.loginSucceeded;else unauthorized">
         <nz-sider #siderBar nzWidth="250" [class]="siderBarClass" [style.height.px]="siderBarHeight">
             <div class="navigation" #navigation></div>
         </nz-sider>
-        <nz-content class="document">
+        <nz-content class="document" [style.min-height.px]="siderBarHeight">
             <div #docContent>
             </div>
         </nz-content>

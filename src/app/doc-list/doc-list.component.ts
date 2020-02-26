@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
@@ -9,9 +9,9 @@ import { Subscription } from 'rxjs';
     templateUrl: './doc-list.component.html',
     styleUrls: ['./doc-list.component.scss']
 })
-export class DocListComponent implements OnInit {
+export class DocListComponent implements OnInit, OnDestroy {
     documents: Document[] = [];
-    subscription: Subscription;
+    docChangeSub: Subscription;
 
     constructor(
         private router: Router,
@@ -24,17 +24,17 @@ export class DocListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.subscription = this.docListService.documentsChanged.subscribe(
+        this.docChangeSub = this.docListService.documentsChanged.subscribe(
             {
                 next: docs => {
                     this.documents = docs;
                 }
             }
-        )
+        );
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.docChangeSub.unsubscribe();
     }
 
     openDocument(doc: string) {

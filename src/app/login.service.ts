@@ -64,7 +64,6 @@ export class LoginService {
     }
 
     logout(): void {
-        // post form data
         if (this.logoutSubs != null) {
             this.logoutSubs.unsubscribe();
         }
@@ -78,7 +77,7 @@ export class LoginService {
                     this.logoutSubs = undefined;
                 },
                 error: err => {
-                    if (err.status == 401) {
+                    if (err.status === 401) {
                         this.performLogout();
                     }
                     this.logoutSubs = undefined;
@@ -89,7 +88,7 @@ export class LoginService {
 
     performLogout(): void {
         if (this.loginSucceeded) {
-            this.cookieService.delete('Name', '/')
+            this.cookieService.delete('Name', '/');
             this.cookieService.delete('Token', '/');
 
             this.syncWithCookie();
@@ -101,14 +100,12 @@ export class LoginService {
     // if failed, return error message. Or else, return ''.
     performBasicLoginCheck(username: string, password: string): string {
         if (password.length < 1) {
-            return "密码不能为空";
-        }
-        else if (username.length < 1) {
+            return '密码不能为空';
+        } else if (username.length < 1) {
             return '用户名不能为空';
-        }
-        else if ((username.indexOf('@') !== -1) &&
-            (!username.endsWith("@navinfo.com") && !username.endsWith('@mapbar.com'))) {
-            return "用户名必须为 xxx@navinfo.com 或者 xxx@mapbar.com";
+        } else if ((username.indexOf('@') !== -1) &&
+            (!username.endsWith('@navinfo.com') && !username.endsWith('@mapbar.com'))) {
+            return '用户名必须为 xxx@navinfo.com 或者 xxx@mapbar.com';
         }
 
         return '';

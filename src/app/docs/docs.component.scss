@@ -20,7 +20,7 @@
     }
     .section {
         h1 {
-            font-size: 2.0em;
+            font-size: 2em;
             margin: 20px 0 10px 0;
         }
         h2 {
@@ -172,7 +172,8 @@
             }
         }
 
-        .warning, .note {
+        .warning,
+        .note {
             margin: 5px 0;
         }
 
@@ -198,7 +199,7 @@
 ::ng-deep .navigation {
     padding: 10px 10px 10px 0;
     font-size: 14px;
-    font-family: 'Roboto','Segoe UI','PingFang SC','微软雅黑';
+    font-family: "Roboto", "Segoe UI", "PingFang SC", "微软雅黑";
 
     ul {
         list-style-type: none;
@@ -254,6 +255,28 @@ nz-sider {
 nz-sider:hover {
     height: 100vh;
     overflow: auto;
+}
+
+// scroll bar
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .nz-sider-sticky {

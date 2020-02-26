@@ -1,17 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from './login.service';
 import { Subscription } from 'rxjs';
 
 export class Document {
     constructor(public name: string, public link: string) { }
 
-    isEqual(r: Document): boolean {
-        return this.name === r.name && this.link === r.link;
-    }
-
     static documentsEqual(l: Document[], r: Document[]): boolean {
-        if (l.length != r.length) {
+        if (l.length !== r.length) {
             return false;
         }
 
@@ -25,32 +21,32 @@ export class Document {
 
         return true;
     }
+
+    isEqual(r: Document): boolean {
+        return this.name === r.name && this.link === r.link;
+    }
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class DocListService {
+export class DocListService implements OnDestroy {
 
     private documents: Document[] = [];
-    private loginSubs : Subscription;
+    private loginSubs: Subscription;
     private loadDocSubs: Subscription;
 
     documentsChanged: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private http: HttpClient,
-        private loginService: LoginService) {
-    }
-
-    ngOnInit() {
-        this. loginSubs =this.loginService.loginStatusChanged.subscribe({
+    constructor(private http: HttpClient, private loginService: LoginService) {
+        this.loginSubs = this.loginService.loginStatusChanged.subscribe({
             next: value => {
                 this.refreshDocs();
             }
         });
     }
 
-    ngOnDestroy() { 
+    ngOnDestroy() {
         this.loginSubs.unsubscribe();
         this.loadDocSubs.unsubscribe();
     }
@@ -67,14 +63,14 @@ export class DocListService {
     }
 
     refreshDocs() {
-        if (this.documents.length == 0 && this.loginService.loginSucceeded) {
+        if (this.documents.length === 0 && this.loginService.loginSucceeded) {
             if (this.loadDocSubs != null) {
                 this.loadDocSubs.unsubscribe();
             }
             this.loadDocSubs = this.http.get('/api/list').subscribe({
                 next: value => {
                     const docs = value['list'];
-                    let modifiedDocs: Document[] = [];
+                    const modifiedDocs: Document[] = [];
                     for (const doc of docs) {
                         const docObj = new Document(doc.split('-').join(' '), doc);
                         modifiedDocs.push(docObj);
