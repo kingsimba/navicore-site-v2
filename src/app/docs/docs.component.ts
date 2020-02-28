@@ -128,9 +128,8 @@ export class DocsComponent implements OnInit, OnDestroy {
                     observer.next(null);
 
                     // title
-                    const titleEle = doc.head.getElementsByTagName('title')[0];
-                    const title = titleEle.innerHTML;
-                    this.documentTitle = title.split(' — ')[1];
+                    const titleEle = doc.querySelector('.icon-home');
+                    this.documentTitle = titleEle.innerHTML.trim();
                     const docRootPath = this.router.url.split('/').slice(0, 3).join('/');
                     this.documentTitleLink = docRootPath;
                 },
