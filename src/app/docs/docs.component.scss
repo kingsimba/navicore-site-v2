@@ -196,23 +196,39 @@
 
 .navigation-title {
     font-family: "Roboto", "Segoe UI", "PingFang SC", "微软雅黑";
-    padding: 20px 10px 0px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    white-space:nowrap;
+    margin: 10px 10px 0 10px;
+    padding: 5px 10px 10px 10px;
+    font-size: 12px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: rgb(226, 226, 226);
+    color: #314659;
+
+    a {
+        color: #314659;
+    }
 }
 
 ::ng-deep .navigation {
     padding: 10px 10px 10px 0;
-    font-size: 14px;
+    font-size: 13px;
     font-family: "Roboto", "Segoe UI", "PingFang SC", "微软雅黑";
 
     ul {
         list-style-type: none;
         padding-inline-start: 0px;
         padding: 0;
+    }
+
+    .toctree-l1.current {
+        background-color: rgb(211, 236, 253);
+    }
+
+    .toctree-l2.current {
+        background-color: rgb(231, 243, 251);
     }
 
     li {
@@ -236,12 +252,10 @@
 
     ul li ul li ul li a {
         padding: 5px 0px 5px 60px;
-        color: #45637d;
     }
 
     ul li ul li ul li ul li a {
         padding: 5px 0px 5px 80px;
-        color: #45637d;
     }
 
     a:hover {
@@ -263,7 +277,7 @@
     top: 64px;
 }
 
-// 
+//
 .sider-bar:hover {
     height: 100vh;
     overflow: auto;
@@ -297,11 +311,11 @@ mat-progress-bar {
 ::-webkit-scrollbar {
     width: 8px;
 }
- 
+
 ::-webkit-scrollbar-track {
     background-color: rgb(241, 241, 241);
 }
- 
+
 ::-webkit-scrollbar-thumb {
-    background-color:rgb(191, 191, 191);
+    background-color: rgb(191, 191, 191);
 }

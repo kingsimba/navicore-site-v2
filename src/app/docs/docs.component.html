@@ -3,7 +3,7 @@
     <div *ngIf="loginService.loginSucceeded;else unauthorized">
         <div #siderBar [class]="titleBarVisible ? 'sider-bar' : 'sider-bar sider-bar-sticky'" [style.height.px]="siderBarHeight">
             <div class="navigation-title">
-                <i nz-icon nzType="home" nzTheme="twotone"></i>&nbsp;<a href="#">NaviCore 竞品分析和需求差距调研(删节版)</a>
+                <i nz-icon nzType="home" nzTheme="outline"></i>&nbsp;<a [routerLink]="documentTitleLink">{{ documentTitle }}</a>
             </div>
             <div class="navigation" #navigation></div>
         </div>

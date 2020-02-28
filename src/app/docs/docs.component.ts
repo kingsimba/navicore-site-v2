@@ -20,6 +20,8 @@ export class DocsComponent implements OnInit, OnDestroy {
     loadingDocUrl: string;
     loadingDocument: boolean;
     isCollapsed = false;
+    documentTitle: string;
+    documentTitleLink: string;
 
     private routerSubs: Subscription;
     private loginSubs: Subscription;
@@ -102,7 +104,7 @@ export class DocsComponent implements OnInit, OnDestroy {
             const subscription = this.http.get(`/api${docUrl}`, { responseType: 'text' }).subscribe({
                 next: value => {
                     const parser = new DOMParser();
-                    const doc = parser.parseFromString(value, 'text/html');
+                    const doc: HTMLDocument = parser.parseFromString(value, 'text/html');
                     const mainDocument = doc.querySelector('.document');
                     const images = mainDocument.querySelectorAll('img');
 
@@ -124,6 +126,13 @@ export class DocsComponent implements OnInit, OnDestroy {
                     this.navigation.nativeElement.insertAdjacentElement('beforeend', navigationEle);
                     this.loadingDocument = false;
                     observer.next(null);
+
+                    // title
+                    const titleEle = doc.head.getElementsByTagName('title')[0];
+                    const title = titleEle.innerHTML;
+                    this.documentTitle = title.split(' — ')[1];
+                    const docRootPath = this.router.url.split('/').slice(0, 3).join('/');
+                    this.documentTitleLink = docRootPath;
                 },
                 error: err => {
                     this.docContent.nativeElement.innerHTML = 'error: ' + err;
