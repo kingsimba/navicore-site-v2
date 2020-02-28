@@ -8,6 +8,25 @@
 }
 
 ::ng-deep .document {
+    table {
+        font-size: 0.8em;
+    }
+    table thead th {
+        padding: 16px;
+        background-color: rgba(0, 0, 0, 0.05);
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    table thead th {
+        padding: 10px 16px;
+    }
+
+    table th,
+    table td {
+        padding: 10px 16px;
+    }
+
     img {
         max-width: 100%;
         max-height: 400px;
