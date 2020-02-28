@@ -13,12 +13,13 @@ export class DocsComponent implements OnInit, OnDestroy {
     @ViewChild('navigation', { static: false }) navigation: ElementRef;
     @ViewChild('siderBar', { static: false }) siderBar: ElementRef;
 
-    siderBarHeight: number;
     titleBarBottom: number;
-    siderBarClass: string;
+    titleBarVisible = true;
+    siderBarHeight: number;
     currentDocUrl: string;
     loadingDocUrl: string;
     loadingDocument: boolean;
+    isCollapsed = false;
 
     private routerSubs: Subscription;
     private loginSubs: Subscription;
@@ -66,11 +67,11 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     private adjustScrollBar() {
         if (window.pageYOffset > 64) {
-            this.siderBarClass = 'nz-sider-sticky';
+            this.titleBarVisible = false;
             this.siderBarHeight = window.innerHeight;
             this.titleBarBottom = window.pageYOffset;
         } else {
-            this.siderBarClass = '';
+            this.titleBarVisible = true;
             this.siderBarHeight = window.innerHeight - 64 + window.pageYOffset;
             this.titleBarBottom = 64;
         }
