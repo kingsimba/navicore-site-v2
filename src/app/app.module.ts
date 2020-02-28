@@ -42,6 +42,7 @@ import {
     DownOutline,
     UserOutline,
     EyeInvisibleOutline,
+    HomeTwoTone,
     MenuFoldOutline,
 } from '@ant-design/icons-angular/icons';
 
@@ -56,6 +57,7 @@ const ICONS = [
     UserOutline,
     EyeInvisibleOutline,
     MenuFoldOutline,
+    HomeTwoTone,
 ];
 
 import { HomePageComponent } from './home-page/home-page.component';

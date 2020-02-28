@@ -2,6 +2,9 @@
 <div style="margin: 0 auto; max-width: 1024px;" class="mat-elevation-z1">
     <div *ngIf="loginService.loginSucceeded;else unauthorized">
         <div #siderBar [class]="titleBarVisible ? 'sider-bar' : 'sider-bar sider-bar-sticky'" [style.height.px]="siderBarHeight">
+            <div class="navigation-title">
+                <i nz-icon nzType="home" nzTheme="twotone"></i>&nbsp;<a href="#">NaviCore 竞品分析和需求差距调研(删节版)</a>
+            </div>
             <div class="navigation" #navigation></div>
         </div>
         <div class="doc-content" [style.min-height.px]="siderBarHeight">

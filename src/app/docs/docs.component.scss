@@ -194,6 +194,16 @@
     }
 }
 
+.navigation-title {
+    font-family: "Roboto", "Segoe UI", "PingFang SC", "微软雅黑";
+    padding: 20px 10px 0px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 ::ng-deep .navigation {
     padding: 10px 10px 10px 0;
     font-size: 14px;
