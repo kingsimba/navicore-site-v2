@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs';
 interface ItemData {
     href: string;
     title: string;
-    description: string;
     content: string;
 }
 
@@ -73,7 +72,6 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/navicore-public-docs',
                 title: `NaviCore 公开文档`,
-                description: '最详细的引擎功能、设计介绍',
                 content:
                     '本文档由引擎组开发人员编写，介绍了引擎各个模块的功能和实现。'
                     + '文档主要重在展示引擎的功能和技术优势，不包含较为敏感的技术实现细节。'
@@ -82,7 +80,6 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/competitive-analysis',
                 title: `NaviCore 竞品分析和需求差距调研`,
-                description: '最详尽、实时更新的竞品差距分析。',
                 content:
                     '通过本文档，我们希望暴露出我们的导航产品和竞品，以及和用户实际需求之间的差距。 希望相关业务单元知耻而后勇，努力改进我们的产品。'
                     + '本文档把功能按照状态分为几类：已完成、正在研发、等待研发、未计划、需要其他团队支持'
@@ -90,7 +87,6 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/competitive-analysis-trimmed',
                 title: `NaviCore 竞品分析和需求差距调研(删节版)`,
-                description: '删节版虽然隐去了和竞品的差距，但是“已完成”一节展示了引擎最新的功能，值得各项目组查看。',
                 content:
                     '通过本文档，我们希望暴露出我们的导航产品和竞品，以及和用户实际需求之间的差距。 希望相关业务单元知耻而后勇，努力改进我们的产品。'
                     + '本文档把功能按照状态分为几类：已完成、正在研发、等待研发、未计划、需要其他团队支持'
@@ -98,7 +94,6 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/ncdocs',
                 title: `NaviCore Developer's Guide`,
-                description: '引擎开发者必读，尤其是编程规范。',
                 content:
                     'The intended readers of this document are the users of NaviCore and the developers'
                     + ' of it. This document intents to help developers to understand NaviCore, to use it'
