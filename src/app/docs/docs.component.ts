@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LoginService } from '../login.service';
 import { Observable, Subscription } from 'rxjs';
+import '../../modernizr-custom.js';
 
 @Component({
     templateUrl: './docs.component.html',
@@ -22,6 +23,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     isCollapsed = true;
     documentTitle: string;
     documentTitleLink: string;
+
     private innerWidth: any;
 
     private routerSubs: Subscription;
@@ -50,7 +52,7 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.innerWidth = window.innerWidth;
-        this.onWindowScroll();
+        this.adjustScrollBar();
     }
 
     ngOnDestroy() {
@@ -68,6 +70,10 @@ export class DocsComponent implements OnInit, OnDestroy {
     onWindowResize() {
         this.innerWidth = window.innerWidth;
         this.adjustScrollBar();
+    }
+
+    supportTouch() {
+        return Modernizr.touchevents;
     }
 
     private adjustScrollBar() {

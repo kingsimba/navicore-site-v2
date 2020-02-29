@@ -292,7 +292,7 @@
 .sider-bar {
     z-index: 2;
     scrollbar-width: thin;
-    overflow: hidden;
+    overflow: overlay;
     position: absolute;
     background: white;
     width: 250px;
@@ -302,7 +302,10 @@
     top: 64px;
 }
 
-//
+.no-touch {
+    overflow: hidden;
+}
+
 .sider-bar:hover {
     height: 100vh;
     overflow: overlay;
@@ -317,6 +320,19 @@
     left: 40px;
 }
 
+// firefox only: because "overflow: overlay" is not supported on FireFox
+@-moz-document url-prefix() {
+    .sider-bar {
+        overflow: auto;
+    }
+
+    .sider-bar:hover {
+        height: 100vh;
+        overflow: auto;
+    }
+  }
+
+// small sider bar with only one "unfold button
 .sider-bar-xs {
     z-index: 2;
     overflow: hidden;

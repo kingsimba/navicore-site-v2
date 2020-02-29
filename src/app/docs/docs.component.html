@@ -10,6 +10,7 @@
             #siderBar
             [class]="
                 'sider-bar' +
+                (supportTouch() ? '' : ' no-touch') +
                 (titleBarVisible ? '' : ' sider-bar-sticky') +
                 (isDesktop() ? '' : ' sider-bar-on-left')
             "
