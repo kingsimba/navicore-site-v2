@@ -1,11 +1,45 @@
 <div class="appContent" *ngIf="loginService.loginSucceeded; else unauthorized">
     <div>
-        <h1 class="toc-title">文档列表</h1>
-        <ul>
-            <li *ngFor="let doc of documents">
-                <a (click)="openDocument(doc.link)">{{ doc.name }}</a>
-            </li>
-        </ul>
+        <div
+            *ngFor="let doc of featuredDocuments"
+            matRipple
+            class="featured-doc"
+            [routerLink]="'/' + doc.href"
+        >
+            <div class="featured-doc-left">
+                <h1>{{ doc.title }}</h1>
+                <div class="content">
+                    <p>{{ doc.content }}</p>
+                </div>
+            </div>
+            <div class="featured-doc-right">
+                <img src="/assets/doc-image.jpg" />
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-docs">
+        <nz-list
+            [nzDataSource]="documentListArray"
+            [nzRenderItem]="docList"
+            [nzGrid]="{ gutter: 16, xs: 24, sm: 12, md: 8, lg: 6, xl: 6 }"
+        >
+            <ng-template #docList let-item>
+                <nz-list-item [nzContent]="nzContent">
+                    <ng-template #nzContent>
+                        <nz-card [nzTitle]="item.title" [nzBordered]="false">
+                            <ul>
+                                <li *ngFor="let doc of item.documents">
+                                    <a (click)="openDocument(doc.link)">{{
+                                        doc.name
+                                    }}</a>
+                                </li>
+                            </ul>
+                        </nz-card>
+                    </ng-template>
+                </nz-list-item>
+            </ng-template>
+        </nz-list>
     </div>
 </div>
 

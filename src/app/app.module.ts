@@ -23,6 +23,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 // material design modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -121,6 +122,7 @@ const ROUTES: Routes = [
         NzInputModule,
         NzProgressModule,
         NzAutocompleteModule,
+        NzListModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

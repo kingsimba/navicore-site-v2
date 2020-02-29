@@ -89,11 +89,12 @@ export class DocListService implements OnDestroy {
                     const modifiedDocs: Document[] = [];
                     for (const doc of docs) {
                         let name: string = doc.split('-').join(' ');
+                        const link = 'docs/' + doc;
                         const changedName = this.docNameList[name.toLowerCase()];
                         if (changedName) {
                             name = changedName;
                         }
-                        const docObj = new Document(name, doc);
+                        const docObj = new Document(name, link);
                         modifiedDocs.push(docObj);
                     }
                     this.setDocuments(modifiedDocs);
