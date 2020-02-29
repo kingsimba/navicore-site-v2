@@ -230,6 +230,10 @@
     a {
         color: #314659;
     }
+
+    a:hover {
+        color: #1890ff;
+    }
 }
 
 ::ng-deep .navigation {
@@ -286,6 +290,7 @@
 ///////////////////////////////////////////////////
 // Sider bar
 .sider-bar {
+    z-index: 2;
     scrollbar-width: thin;
     overflow: hidden;
     position: absolute;
@@ -308,6 +313,33 @@
     top: 0;
 }
 
+.sider-bar-on-left {
+    left: 40px;
+}
+
+.sider-bar-xs {
+    z-index: 2;
+    overflow: hidden;
+    position: absolute;
+    background: white;
+    padding: 15px 0;
+    text-align: center;
+    width: 40px;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    border-color: rgb(231, 231, 231);
+    top: 64px;
+
+    a {
+        color: #314659;
+    }
+}
+
+.sider-bar-xs-sticky {
+    position: fixed;
+    top: 0;
+}
+
 ///////////////////////////////////////////////////
 // Document area
 .doc-content {
@@ -315,6 +347,20 @@
     padding: 1px 20px 20px 20px;
     overflow: initial;
     background: white;
+}
+
+.doc-content-xs {
+    margin: 0 0 0 40px;
+}
+
+.doc-cover {
+    background-color: rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 ///////////////////////////////////////////////////

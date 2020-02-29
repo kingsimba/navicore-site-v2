@@ -19,9 +19,10 @@ export class DocsComponent implements OnInit, OnDestroy {
     currentDocUrl: string;
     loadingDocUrl: string;
     loadingDocument: boolean;
-    isCollapsed = false;
+    isCollapsed = true;
     documentTitle: string;
     documentTitleLink: string;
+    private innerWidth: any;
 
     private routerSubs: Subscription;
     private loginSubs: Subscription;
@@ -48,13 +49,14 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.innerWidth = window.innerWidth;
         this.onWindowScroll();
     }
 
     ngOnDestroy() {
-         this.routerSubs.unsubscribe();
-         this.loginSubs.unsubscribe();
-         this.docSubs.unsubscribe();
+        this.routerSubs.unsubscribe();
+        this.loginSubs.unsubscribe();
+        this.docSubs.unsubscribe();
     }
 
     @HostListener('window:scroll', [])
@@ -64,6 +66,7 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', [])
     onWindowResize() {
+        this.innerWidth = window.innerWidth;
         this.adjustScrollBar();
     }
 
@@ -205,5 +208,17 @@ export class DocsComponent implements OnInit, OnDestroy {
             docUrl = docUrl.substring(0, docUrl.lastIndexOf('#'));
         }
         return docUrl;
+    }
+
+    public toggleCollapsed(): void {
+        this.isCollapsed = !this.isCollapsed;
+    }
+
+    isDesktop() {
+        return this.innerWidth >= 768;
+    }
+
+    onWheel(): boolean {
+        return false;   // block scroll event
     }
 }

@@ -1,15 +1,61 @@
-<mat-progress-bar mode="indeterminate" *ngIf="loadingDocument" [style.top.px]="titleBarBottom"></mat-progress-bar>
+<mat-progress-bar
+    mode="indeterminate"
+    *ngIf="loadingDocument"
+    [style.top.px]="titleBarBottom"
+></mat-progress-bar>
 <div style="margin: 0 auto; max-width: 1024px;" class="mat-elevation-z1">
-    <div *ngIf="loginService.loginSucceeded;else unauthorized">
-        <div #siderBar [class]="titleBarVisible ? 'sider-bar' : 'sider-bar sider-bar-sticky'" [style.height.px]="siderBarHeight">
+    <div *ngIf="loginService.loginSucceeded; else unauthorized">
+        <!-- sider bar -->
+        <div
+            #siderBar
+            [class]="
+                'sider-bar' +
+                (titleBarVisible ? '' : ' sider-bar-sticky') +
+                (isDesktop() ? '' : ' sider-bar-on-left')
+            "
+            [style.height.px]="siderBarHeight"
+            [style.visibility]="
+                !isDesktop() && isCollapsed ? 'hidden' : 'visible'
+            "
+        >
             <div class="navigation-title">
-                <i nz-icon nzType="home" nzTheme="outline"></i>&nbsp;<a [routerLink]="documentTitleLink">{{ documentTitle }}</a>
+                <i nz-icon nzType="home" nzTheme="outline"></i>&nbsp;<a
+                    [routerLink]="documentTitleLink"
+                    >{{ documentTitle }}</a
+                >
             </div>
             <div class="navigation" #navigation></div>
         </div>
-        <div class="doc-content" [style.min-height.px]="siderBarHeight">
-            <div #docContent>
-            </div>
+
+        <!-- collapsed sider bar -->
+        <div
+            [class]="
+                'mat-level-z1 sider-bar-xs' +
+                (titleBarVisible ? '' : ' sider-bar-xs-sticky')
+            "
+            [style.height.px]="siderBarHeight"
+            [style.visibility]="isDesktop() ? 'hidden' : 'visible'"
+        >
+            <button mat-icon-button (click)="toggleCollapsed()">
+                <i nz-icon nzType="menu-unfold" *ngIf="isCollapsed"></i>
+                <i nz-icon nzType="menu-fold" *ngIf="!isCollapsed"></i>
+            </button>
+        </div>
+
+        <!-- document content -->
+        <div
+            [class]="'doc-content' + (isDesktop() ? '' : ' doc-content-xs')"
+            [style.min-height.px]="siderBarHeight"
+        >
+            <!-- cover -->
+            <div
+                class="doc-cover"
+                *ngIf="!isDesktop() && !isCollapsed"
+                (click)="toggleCollapsed()"
+                (mousewheel)="onWheel()"
+            ></div>
+            <!-- document -->
+            <div #docContent></div>
         </div>
     </div>
 

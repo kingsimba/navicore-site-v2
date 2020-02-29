@@ -43,6 +43,7 @@ import {
     UserOutline,
     EyeInvisibleOutline,
     MenuFoldOutline,
+    MenuUnfoldOutline,
     HomeOutline,
 } from '@ant-design/icons-angular/icons';
 
@@ -57,6 +58,7 @@ const ICONS = [
     UserOutline,
     EyeInvisibleOutline,
     MenuFoldOutline,
+    MenuUnfoldOutline,
     HomeOutline,
 ];
 
