@@ -46,6 +46,7 @@ import {
     MenuFoldOutline,
     MenuUnfoldOutline,
     HomeOutline,
+    CopyTwoTone,
 } from '@ant-design/icons-angular/icons';
 
 const ICONS = [
@@ -61,6 +62,7 @@ const ICONS = [
     MenuFoldOutline,
     MenuUnfoldOutline,
     HomeOutline,
+    CopyTwoTone,
 ];
 
 import { HomePageComponent } from './home-page/home-page.component';
