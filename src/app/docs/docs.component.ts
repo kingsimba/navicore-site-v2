@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LoginService } from '../login.service';
 import { Observable, Subscription } from 'rxjs';
 import '../../modernizr-custom.js';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     templateUrl: './docs.component.html',
@@ -25,12 +26,14 @@ export class DocsComponent implements OnInit, OnDestroy {
     documentTitleLink: string;
 
     private innerWidth: any;
+    private oldTitle: string;
 
     private routerSubs: Subscription;
     private loginSubs: Subscription;
     private docSubs: Subscription;
 
     constructor(
+        private titleService: Title,
         private http: HttpClient,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -51,11 +54,13 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.oldTitle = this.titleService.getTitle();
         this.innerWidth = window.innerWidth;
         this.adjustScrollBar();
     }
 
     ngOnDestroy() {
+        this.titleService.setTitle(this.oldTitle);
         this.routerSubs.unsubscribe();
         this.loginSubs.unsubscribe();
         this.docSubs.unsubscribe();
@@ -139,6 +144,7 @@ export class DocsComponent implements OnInit, OnDestroy {
                     // title
                     const titleEle = doc.querySelector('.icon-home');
                     this.documentTitle = titleEle.innerHTML.trim();
+                    this.titleService.setTitle(this.documentTitle + ' - NaviCore');// html title
                     const docRootPath = this.router.url.split('/').slice(0, 3).join('/');
                     this.documentTitleLink = docRootPath;
                 },
