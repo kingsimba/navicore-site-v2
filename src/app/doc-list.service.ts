@@ -36,22 +36,6 @@ export class DocListService implements OnDestroy {
     private loginSubs: Subscription;
     private loadDocSubs: Subscription;
 
-    private docNameList = {
-        "camera": "独立电子眼模块设计文档",
-        "competitive analysis": "NaviCore 竞品分析和需求差距调研",
-        "competitive analysis trimed": "NaviCore 竞品分析和需求差距调研(删节版)",
-        "jnavicore developer guide": "JNaviCore Developer's Guide",
-        "navicore public docs": "NaviCore 公开文档",
-        "ncdocs": "NaviCore Developer’s Guide",
-        "poi nc": "POI搜索模块设计说明",
-        "poi server": "Poi Server 设计文档说明",
-        "real3d": "NaviCore Real3D Design Specification",
-        "routing": "Route Engine Documentation",
-        "ti servers": "Ti数据服务",
-        "write doc with restructuredtext": "使用Sublime、ResT和RTD进行文档编写",
-        "writing techinical documents": "技术文档编写经验谈"
-    };
-
     documentsChanged: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private http: HttpClient, private loginService: LoginService) {
@@ -88,13 +72,7 @@ export class DocListService implements OnDestroy {
                     const docs = value['list'];
                     const modifiedDocs: Document[] = [];
                     for (const doc of docs) {
-                        let name: string = doc.split('-').join(' ');
-                        const link = 'docs/' + doc;
-                        const changedName = this.docNameList[name.toLowerCase()];
-                        if (changedName) {
-                            name = changedName;
-                        }
-                        const docObj = new Document(name, link);
+                        const docObj = new Document(doc.title, 'docs/' + doc.dir);
                         modifiedDocs.push(docObj);
                     }
                     this.setDocuments(modifiedDocs);
