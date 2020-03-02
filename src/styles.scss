@@ -95,12 +95,18 @@ li {
 
 .appContent {
   @include mat-elevation(2, black, 0.5);
-  max-width: 980px;
-  margin: 10px auto 5px auto;
+  margin: 0px auto 5px auto;
   background-color: white;
   padding: 10px 20px;
 }
 
+@media (min-width: 1024px) {
+  .appContent {
+    max-width: 980px;
+    margin: 10px auto 5px auto;
+    padding: 10px 20px;
+  }
+}
 
 /*
   For rst2html5.py generated content
