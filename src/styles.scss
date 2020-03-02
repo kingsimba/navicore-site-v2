@@ -1,44 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import '~@angular/material/theming';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/theming";
 
 /* open-sans-regular */
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-style: normal;
   font-weight: regular;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot'); /* IE9 Compat Modes */
-  src: local('Open Sans'), local('OpenSans-Normal'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+  src: url("//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot"); /* IE9 Compat Modes */
+  src: local("Open Sans"), local("OpenSans-Normal"),
+    url("//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */
+      url("//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff")
+      format("woff"),
+    /* Modern Browsers */
+      url("//lib.baomitu.com/fonts/open-sans/open-sans-regular.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */
+      url("//lib.baomitu.com/fonts/open-sans/open-sans-regular.svg#OpenSans")
+      format("svg"); /* Legacy iOS */
 }
 
 /* roboto-regular */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: regular;
-  src: url('//lib.baomitu.com/fonts/roboto/roboto-regular.eot'); /* IE9 Compat Modes */
-  src: local('Roboto'), local('Roboto-Normal'),
-       url('//lib.baomitu.com/fonts/roboto/roboto-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/roboto/roboto-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/roboto/roboto-regular.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/roboto/roboto-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/roboto/roboto-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+  src: url("//lib.baomitu.com/fonts/roboto/roboto-regular.eot"); /* IE9 Compat Modes */
+  src: local("Roboto"), local("Roboto-Normal"),
+    url("//lib.baomitu.com/fonts/roboto/roboto-regular.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("//lib.baomitu.com/fonts/roboto/roboto-regular.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("//lib.baomitu.com/fonts/roboto/roboto-regular.woff") format("woff"),
+    /* Modern Browsers */
+      url("//lib.baomitu.com/fonts/roboto/roboto-regular.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */
+      url("//lib.baomitu.com/fonts/roboto/roboto-regular.svg#Roboto")
+      format("svg"); /* Legacy iOS */
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 body {
   margin: 0;
-  font-family: 'Open Sans','Segoe UI','PingFang SC','微软雅黑';
+  font-family: "Open Sans", "Segoe UI", "PingFang SC", "微软雅黑";
   font-size: 14px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   display: block;
   margin-block-start: 0.5em;
   margin-block-end: 1em;
@@ -46,7 +68,7 @@ h1, h2, h3, h4 {
   margin-inline-end: 0px;
   font-weight: bold;
   text-transform: capitalize;
-  font-family: 'Roboto','Segoe UI','PingFang SC','微软雅黑';
+  font-family: "Roboto", "Segoe UI", "PingFang SC", "微软雅黑";
 }
 
 h1 {
@@ -64,8 +86,8 @@ p {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  margin-top: .75em;
-  margin-bottom: .75em;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
 }
 
 // first level ordered-list
@@ -85,11 +107,11 @@ ol ol {
 }
 
 li {
-  margin-top: .2em;
-  margin-bottom: .2em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
   p {
-    margin-top: .5em;
-    margin-bottom: .5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
   }
 }
 
@@ -127,7 +149,7 @@ li {
   table {
     border-collapse: collapse;
     border: 1px solid #fff; /*for older IE*/
-      border-style: hidden;
+    border-style: hidden;
   }
 
   table caption {
@@ -135,25 +157,28 @@ li {
     color: #fff;
     font-size: small;
     font-weight: bold;
-    letter-spacing: .3em;
+    letter-spacing: 0.3em;
   }
 
   table thead th {
     padding: 16px;
-    background-color: rgba(0, 0, 0, .05);
-      font-size: small;
-      font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.05);
+    font-size: small;
+    font-weight: 500;
   }
 
   table thead th#thDay {
     width: 40%;
   }
 
-  table thead th#thRegular, table thead th#thOvertime, table thead th#thTotal {
+  table thead th#thRegular,
+  table thead th#thOvertime,
+  table thead th#thTotal {
     width: 20%;
   }
 
-  table th, table td {
+  table th,
+  table td {
     padding: 16px;
     border-width: 1px;
     border-style: solid;
@@ -161,7 +186,7 @@ li {
   }
 
   table td {
-      text-align: left;
+    text-align: left;
   }
 
   table tbody th {
@@ -181,10 +206,11 @@ li {
   }
 
   td p {
-      font-size: small;
+    font-size: small;
   }
 
-  td p, tr p {
+  td p,
+  tr p {
     margin: 0;
   }
 }
