@@ -32,19 +32,18 @@ ul {
 
 .featured-doc {
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: row;
     padding: 10px 0;
     border-width: 0 0 1px 0;
     border-style: solid;
     border-color: rgb(231, 231, 231);
-    vertical-align: top;
 
     .featured-doc-left {
+        flex: auto;
+        padding-right: 10px;
         overflow: hidden;
-        vertical-align: top;
-        display: inline-block;
-        flex: 1 100%;
-        padding-right: 30px;
+        text-overflow: ellipsis;
+        max-height: 100px;
 
         h1 {
             white-space: nowrap;
@@ -55,16 +54,23 @@ ul {
         }
         p {
             margin: 0 0;
-            max-height: 60px;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
     }
 
-    .featured-doc-right {
-        display: inline-block;
+    .featured-image {
+        width: 150px;
+        min-width: 150px;
+        height: 100px;
+
         img {
-            width: 150px;
+            height: 100px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .featured-image {
+            width: 100px;
+            min-width: 100px;
             height: 100px;
         }
     }

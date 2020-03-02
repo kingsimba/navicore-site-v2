@@ -1,13 +1,8 @@
-::ng-deep .appContent .headerlink {
-    visibility: none;
-    font-size: 14px;
-}
-
-::ng-deep .appContent img {
+.appContent img {
     max-width: 100%;
 }
 
-::ng-deep .document {
+::ng-deep .sphinx-doc .document {
     table {
         font-size: 0.8em;
     }
@@ -236,7 +231,7 @@
     }
 }
 
-::ng-deep .navigation {
+::ng-deep .sphinx-navigation-toc {
     padding: 10px 10px 10px 0;
     font-size: 13px;
     font-family: "Roboto", "Segoe UI", "PingFang SC", "微软雅黑";

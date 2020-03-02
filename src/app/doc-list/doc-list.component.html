@@ -6,13 +6,11 @@
             class="featured-doc"
             [routerLink]="'/' + doc.href"
         >
-            <div class="featured-doc-left">
+            <span class="featured-doc-left">
                 <h1>{{ doc.title }}</h1>
-                <div class="content">
-                    <p>{{ doc.content }}</p>
-                </div>
-            </div>
-            <div class="featured-doc-right">
+                <p>{{ doc.content }}</p>
+            </span>
+            <div class="featured-image">
                 <img src="/assets/doc-image.jpg" />
             </div>
         </div>
