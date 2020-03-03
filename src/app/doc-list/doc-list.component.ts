@@ -73,7 +73,7 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/navicore-public-docs',
                 title: `NaviCore 公开文档`,
-                image: 'assets/docs/navicore-public-docs.jpg',
+                image: 'assets/docs/navicore-public-docs.png',
                 content:
                     '本文档由引擎组开发人员编写，介绍了引擎各个模块的功能和实现。'
                     + '文档主要重在展示引擎的功能和技术优势，不包含较为敏感的技术实现细节。'
@@ -82,7 +82,7 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/competitive-analysis',
                 title: `NaviCore 竞品分析和需求差距调研`,
-                image: 'assets/docs/competitive-analysis.jpg',
+                image: 'assets/docs/competitive-analysis.png',
                 content:
                     '通过本文档，我们希望暴露出我们的导航产品和竞品，以及和用户实际需求之间的差距。 希望相关业务单元知耻而后勇，努力改进我们的产品。'
                     + '本文档把功能按照状态分为几类：已完成、正在研发、等待研发、未计划、需要其他团队支持'
@@ -90,7 +90,7 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/competitive-analysis-trimmed',
                 title: `NaviCore 竞品分析和需求差距调研(删节版)`,
-                image: 'assets/docs/competitive-analysis-trimmed.jpg',
+                image: 'assets/docs/competitive-analysis-trimmed.png',
                 content:
                     '通过本文档，我们希望暴露出我们的导航产品和竞品，以及和用户实际需求之间的差距。 希望相关业务单元知耻而后勇，努力改进我们的产品。'
                     + '本文档把功能按照状态分为几类：已完成、正在研发、等待研发、未计划、需要其他团队支持'
@@ -98,7 +98,7 @@ export class DocListComponent implements OnInit, OnDestroy {
             {
                 href: 'docs/ncdocs',
                 title: `NaviCore Developer's Guide`,
-                image: 'assets/docs/ncdocs.jpg',
+                image: 'assets/docs/ncdocs.png',
                 content:
                     'The intended readers of this document are the users of NaviCore and the developers'
                     + ' of it. This document intents to help developers to understand NaviCore, to use it'
