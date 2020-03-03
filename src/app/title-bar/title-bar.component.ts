@@ -53,6 +53,7 @@ export class TitleBarComponent implements OnInit, OnDestroy {
     }
 
     showLoginBox(): void {
+        this.passwordVisible = false;
         this.loginBoxVisible = true;
     }
 

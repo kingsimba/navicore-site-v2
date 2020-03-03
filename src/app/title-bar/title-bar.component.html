@@ -22,29 +22,36 @@
             <i nz-icon nzType="down" nzTheme="outline" style="font-size: 10px;"></i>
         </button>
         <nz-modal #loginBox [(nzVisible)]="loginBoxVisible" nzTitle="Login" nzMaskClosable="false"
-            [nzOkDisabled]="loginForm.disabled" (nzOnCancel)="handleLoginCancel()"
-            (nzOnOk)="handleLoginOK(loginForm.value)">
+            [nzOkDisabled]="loginForm.disabled" (nzOnCancel)="handleLoginCancel()" [nzFooter]="null">
             <form [formGroup]="loginForm">
                 <p>
-                    <input (input)="clearLoginMessage();addUserNamePostFix($event);" nz-input formControlName="username" placeholder="LDAP 用户名"
-                        [nzAutocomplete]="auto" />
+                    <input (input)="clearLoginMessage();addUserNamePostFix($event);" nz-input formControlName="username"
+                        placeholder="LDAP 用户名 (注意，要加@后缀) " [nzAutocomplete]="auto" />
                     <nz-autocomplete #auto>
-                        <nz-auto-option *ngFor="let option of userNameOptions" [nzValue]="option">{{ option }}</nz-auto-option>
+                        <nz-auto-option *ngFor="let option of userNameOptions" [nzValue]="option">{{ option }}
+                        </nz-auto-option>
                     </nz-autocomplete>
                 </p>
                 <p>
                     <nz-input-group [nzSuffix]="suffixTemplate">
                         <input #passwordInput formControlName="password" [type]="passwordVisible ? 'text' : 'password'"
-                            nz-input placeholder="密码"/>
+                            nz-input placeholder="密码" />
                     </nz-input-group>
                     <ng-template #suffixTemplate>
-                        <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-                            (click)="passwordVisible = !passwordVisible"></i>
+                        <div style="padding: 5px 0 5px 5px" (mousedown)="passwordVisible=true"
+                            (mouseup)="passwordVisible=false">
+                            <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"></i>
+                        </div>
                     </ng-template>
                 </p>
                 <p *ngIf="loginMessage != ''">
                     <nz-tag [nzColor]="'gold'">{{ loginMessage }}</nz-tag>
                 </p>
+
+                <div nz-col class="footer-area">
+                    <button class="ok-button" nz-button [nzType]="'primary'" (click)="handleLoginOK(loginForm.value)">Login</button>
+                    <button class="cancel-button" nz-button nzType="link" (click)="handleLoginCancel()">Cancel</button>
+                </div>
             </form>
         </nz-modal>
     </span>

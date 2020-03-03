@@ -13,3 +13,15 @@
 mat-toolbar {
     height: 64px;
 }
+
+.footer-area {
+    display: flex;
+    padding-top: 10px;
+    flex-direction: row;
+    .ok-button {
+        flex-grow: 1;
+    }
+    .cancel-button {
+        width: 100px;
+    }
+}
