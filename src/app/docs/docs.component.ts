@@ -103,7 +103,7 @@ export class DocsComponent implements OnInit, OnDestroy {
         if (url === '/docs') {
             return;
         }
-        if (!url.endsWith('.html')) {
+        if (!url.endsWith('.html') && url.indexOf('#') == -1) {
             url = url + '/index.html';
         }
         this.openLink(url);
