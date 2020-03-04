@@ -76,6 +76,12 @@ export class DocListService implements OnDestroy {
                         modifiedDocs.push(docObj);
                     }
                     this.setDocuments(modifiedDocs);
+                },
+                error: err => {
+                    if (err.status == 401)
+                    {
+                        setTimeout(()=>{ this.loginService.performLogout(); }, 0);
+                    }
                 }
             });
         }

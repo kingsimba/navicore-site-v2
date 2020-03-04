@@ -152,6 +152,10 @@ export class DocsComponent implements OnInit, OnDestroy {
                     this.docContent.nativeElement.innerHTML = 'error: ' + err;
                     this.loadingDocument = false;
                     observer.error(err);
+                    if (err.status == 401)
+                    {
+                        setTimeout(()=>{ this.loginService.performLogout(); }, 0);
+                    }
                 }
             });
 
