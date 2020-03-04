@@ -1,7 +1,28 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpParameterCodec } from '@angular/common/http';
 import { Subscription, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+
+// A Custom encoder is used because the default one has bug by replacing + with space
+// https://github.com/angular/angular/issues/18261
+// https://github.com/angular/angular/issues/11058
+class CustomQueryEncoderHelper implements HttpParameterCodec {
+    encodeKey(k: string): string {
+        return encodeURIComponent(k);
+    }
+
+    encodeValue(v: string): string {
+        return encodeURIComponent(v);
+    }
+
+    decodeKey(k: string): string {
+        return decodeURIComponent(k);
+    }
+
+    decodeValue(v: string): string {
+        return decodeURIComponent(v);
+    }
+}
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +47,7 @@ export class LoginService {
     login<T>(username: string, password: string): Observable<T> {
         const observable = new Observable<T>((observer) => {
             // post form data
-            const params = new HttpParams()
+            const params = new HttpParams({encoder: new CustomQueryEncoderHelper()})
                 .set('username', username)
                 .set('password', password);
             const loginSubs = this.http.post<any>('api/login', params).subscribe(
