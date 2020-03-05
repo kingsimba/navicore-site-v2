@@ -4,8 +4,14 @@
 
 ::ng-deep .sphinx-doc .document {
     table {
+        // table use smaller font
         font-size: 0.8em;
+
+        // X scroll of table
+        display: block;
+        overflow-x: auto;
     }
+
     table thead th {
         padding: 16px;
         background-color: rgba(0, 0, 0, 0.05);
@@ -22,9 +28,28 @@
         padding: 10px 16px;
     }
 
+    /////////////////////////
+    // numbered code block
+    td.linenos {
+        padding: 0;
+        border-style: hidden;
+    }
+
+    td.code {
+        padding: 0;
+        border-style: hidden;
+
+        pre {
+            border-style: hidden;
+            overflow: hidden;
+        }
+    }
+
+    /////////////////////////
     img {
         max-width: 100%;
         max-height: 400px;
+        margin: 0 0 1em 0;
     }
 
     .title {
@@ -205,12 +230,6 @@
 
     .headerlink::after {
         content: "🔗";
-    }
-
-    // X scroll of table
-    table {
-        display: block;
-        overflow-x: auto;
     }
 
     // for reST footnote
