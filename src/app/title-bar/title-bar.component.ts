@@ -38,7 +38,7 @@ export class TitleBarComponent implements OnInit, OnDestroy {
 
     constructor(private formBuilder: FormBuilder, public loginService: LoginService) {
         this.loginForm = this.formBuilder.group({
-            username: '',
+            username: loginService.username,
             password: ''
         });
     }

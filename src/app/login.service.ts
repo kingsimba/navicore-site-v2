@@ -24,6 +24,9 @@ class CustomQueryEncoderHelper implements HttpParameterCodec {
     }
 }
 
+export const LOGIN_NAME = 'LoginName';
+export const LOGIN_TOKEN = 'LoginToken';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -47,7 +50,7 @@ export class LoginService {
     login<T>(username: string, password: string): Observable<T> {
         const observable = new Observable<T>((observer) => {
             // post form data
-            const params = new HttpParams({encoder: new CustomQueryEncoderHelper()})
+            const params = new HttpParams({ encoder: new CustomQueryEncoderHelper() })
                 .set('username', username)
                 .set('password', password);
             const loginSubs = this.http.post<any>('api/login', params).subscribe(
@@ -109,8 +112,7 @@ export class LoginService {
 
     performLogout(): void {
         if (this.loginSucceeded) {
-            this.cookieService.delete('Name', '/');
-            this.cookieService.delete('Token', '/');
+            this.cookieService.delete(LOGIN_TOKEN, '/');
 
             this.syncWithCookie();
 
@@ -133,8 +135,9 @@ export class LoginService {
     }
 
     syncWithCookie() {
-        this.username = this.cookieService.get('Name');
+        this.username = this.cookieService.get(LOGIN_NAME);
         this.nickname = this.username.split('@')[0];
-        this.loginSucceeded = this.username !== '';
+        const token = this.cookieService.get(LOGIN_TOKEN);
+        this.loginSucceeded = token !== null && token !== '';
     }
 }
