@@ -39,7 +39,8 @@
                     </nz-input-group>
                     <ng-template #suffixTemplate>
                         <div style="padding: 5px 0 5px 5px" (mousedown)="passwordVisible=true"
-                            (mouseup)="passwordVisible=false">
+                            (mouseup)="passwordVisible=false" (touchstart)="passwordVisible=true"
+                            (touchend)="passwordVisible=false" (touchcancel)="passwordVisible=false">
                             <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"></i>
                         </div>
                     </ng-template>
@@ -49,7 +50,8 @@
                 </p>
 
                 <div nz-col class="footer-area">
-                    <button class="ok-button" nz-button [nzType]="'primary'" (click)="handleLoginOK(loginForm.value)">Login</button>
+                    <button class="ok-button" nz-button [nzType]="'primary'"
+                        (click)="handleLoginOK(loginForm.value)">Login</button>
                     <button class="cancel-button" nz-button nzType="link" (click)="handleLoginCancel()">Cancel</button>
                 </div>
             </form>
