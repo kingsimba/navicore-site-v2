@@ -82,14 +82,14 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
 
     private adjustScrollBar() {
-        if (window.pageYOffset > 64) {
+        if (window.pageYOffset > 54) {
             this.titleBarVisible = false;
             this.siderBarHeight = window.innerHeight;
             this.titleBarBottom = window.pageYOffset;
         } else {
             this.titleBarVisible = true;
-            this.siderBarHeight = window.innerHeight - 64 + window.pageYOffset;
-            this.titleBarBottom = 64;
+            this.siderBarHeight = window.innerHeight - 54 + window.pageYOffset;
+            this.titleBarBottom = 54;
         }
     }
 
