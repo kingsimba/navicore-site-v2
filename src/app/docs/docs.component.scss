@@ -206,6 +206,23 @@
     .headerlink::after {
         content: "🔗";
     }
+
+    // X scroll of table
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    // for reST footnote
+    .footnote {
+        td {
+            padding: 3px 5px;
+        }
+        overflow-wrap: anywhere;	// long URL should be broken
+        .label .fn-backref {
+            overflow-wrap: break-word; // the '[1]' should not be broken
+        }
+    }
 }
 
 .navigation-title {
