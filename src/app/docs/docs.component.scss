@@ -70,7 +70,7 @@
         }
         h3 {
             margin: 5px 0;
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: 500;
         }
         h1,
@@ -161,6 +161,16 @@
             border-width: 0 0 0 2px;
             border-color: rgb(104, 185, 255);
             background-color: rgb(242, 250, 255);
+        }
+
+        .line-block {
+            font-size: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(194, 194, 194);
+            background-color: rgb(243, 243, 243);
         }
 
         .literal {
