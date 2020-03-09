@@ -31,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CookieService } from 'ngx-cookie-service';
 
 import {
@@ -47,6 +48,8 @@ import {
     MenuUnfoldOutline,
     HomeOutline,
     CopyTwoTone,
+    LeftCircleOutline,
+    RightCircleOutline,
 } from '@ant-design/icons-angular/icons';
 
 const ICONS = [
@@ -63,6 +66,8 @@ const ICONS = [
     MenuUnfoldOutline,
     HomeOutline,
     CopyTwoTone,
+    LeftCircleOutline,
+    RightCircleOutline,
 ];
 
 import { HomePageComponent } from './home-page/home-page.component';
@@ -134,6 +139,7 @@ const ROUTES: Routes = [
         MatMenuModule,
         MatRippleModule,
         MatProgressBarModule,
+        MatTooltipModule,
         FlexLayoutModule,
         RouterModule.forRoot(ROUTES,
             {

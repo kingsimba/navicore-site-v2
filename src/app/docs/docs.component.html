@@ -61,6 +61,29 @@
 
             <!-- footer -->
             <div class="sphinx-footer" #footer></div>
+            <div class="navi-footer">
+                <button
+                    mat-stroked-button
+                    class="previous"
+                    *ngIf="linkToPrev !== ''"
+                    [matTooltip]="titleToPrev"
+                    (click)="openLink(linkToPrev, true)"
+                >
+                    <i nz-icon nzType="left-circle"></i>
+                    Previous
+                </button>
+                <span class="spacer"></span>
+                <button
+                    mat-stroked-button
+                    class="next"
+                    *ngIf="linkToNext !== ''"
+                    [matTooltip]="titleToNext"
+                    (click)="openLink(linkToNext, true)"
+                >
+                    Next
+                    <i nz-icon nzType="right-circle"></i>
+                </button>
+            </div>
         </div>
     </div>
 

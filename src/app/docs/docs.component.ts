@@ -25,6 +25,10 @@ export class DocsComponent implements OnInit, OnDestroy {
     isCollapsed = true;
     documentTitle: string;
     documentTitleLink: string;
+    linkToPrev = '';
+    linkToNext = '';
+    titleToNext = '';
+    titleToPrev = '';
 
     private innerWidth: any;
     private oldTitle: string;
@@ -104,7 +108,7 @@ export class DocsComponent implements OnInit, OnDestroy {
         if (url === '/docs') {
             return;
         }
-        if (!url.endsWith('.html') && url.indexOf('#') == -1) {
+        if (!url.endsWith('.html') && url.indexOf('#') === -1) {
             url = url + '/index.html';
         }
         this.openLink(url);
@@ -150,18 +154,16 @@ export class DocsComponent implements OnInit, OnDestroy {
                     this.documentTitleLink = docRootPath;
 
                     // footer
-                    const footer = doc.querySelector('.rst-footer-buttons');
-                    this.correctLinks(footer, docUrl, path);
-                    this.footer.nativeElement.innerHTML = '';
-                    this.footer.nativeElement.insertAdjacentElement('beforeend', footer);
+                    const footerNode = doc.querySelector('.rst-footer-buttons');
+                    this.correctLinks(footerNode, docUrl, path);
+                    this.makeFootBar(footerNode);
                 },
                 error: err => {
                     this.docContent.nativeElement.innerHTML = 'error: ' + err;
                     this.loadingDocument = false;
                     observer.error(err);
-                    if (err.status == 401)
-                    {
-                        setTimeout(()=>{ this.loginService.performLogout(); }, 0);
+                    if (err.status === 401) {
+                        setTimeout(() => { this.loginService.performLogout(); }, 0);
                     }
                 }
             });
@@ -176,6 +178,30 @@ export class DocsComponent implements OnInit, OnDestroy {
         });
 
         return observable;
+    }
+
+    private makeFootBar(footerNode: Element) {
+        this.linkToNext = this.linkToPrev = '';
+
+        // find "previous" and "next" button
+        const footerButtons = footerNode.querySelectorAll('.btn');
+        const footerNext = footerNode.querySelector('.btn.float-right');
+        let footerPrev = null;
+        if (footerNext === null) {
+            footerPrev = footerButtons[0];
+        } else if (footerButtons.length === 2) {
+            footerPrev = footerNext === footerButtons[0] ? footerButtons[1] : footerButtons[0];
+        }
+
+        // get information from the two buttons
+        if (footerNext !== null) {
+            this.linkToNext = footerNext.getAttribute('url');
+            this.titleToNext = footerNext.getAttribute('title');
+        }
+        if (footerPrev !== null) {
+            this.linkToPrev = footerPrev.getAttribute('url');
+            this.titleToPrev = footerPrev.getAttribute('title');
+        }
     }
 
     private correctLinks(rootNode: Element, docUrl: string, path: string): void {
