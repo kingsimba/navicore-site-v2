@@ -457,6 +457,29 @@ mat-progress-bar {
     background-color: rgb(191, 191, 191);
 }
 
+/////////////////////////////////////////////
+::ng-deep .rst-footer-buttons {
+    margin: 10px 0 30px 0;
+    padding: 5px 0;
+
+    .btn {
+        padding: 5px 15px;
+        float: left;
+    }
+
+    .fa-arrow-circle-left::before {
+        content: "<";
+    }
+
+    .fa-arrow-circle-right::after {
+        content: ">";
+    }
+
+    .float-right {
+        float: right;
+    }
+}
+
 ////////////////////////////////////////////////////
 // Code Highlight
 ::ng-deep .sphinx-doc .document .highlight {

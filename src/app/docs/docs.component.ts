@@ -14,6 +14,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     @ViewChild('docContent', { static: false }) docContent: ElementRef;
     @ViewChild('navigation', { static: false }) navigation: ElementRef;
     @ViewChild('siderBar', { static: false }) siderBar: ElementRef;
+    @ViewChild('footer', { static: false }) footer: ElementRef;
 
     titleBarBottom: number;
     titleBarVisible = true;
@@ -147,6 +148,12 @@ export class DocsComponent implements OnInit, OnDestroy {
                     this.titleService.setTitle(this.documentTitle + ' - NaviCore');// html title
                     const docRootPath = this.router.url.split('/').slice(0, 3).join('/');
                     this.documentTitleLink = docRootPath;
+
+                    // footer
+                    const footer = doc.querySelector('.rst-footer-buttons');
+                    this.correctLinks(footer, docUrl, path);
+                    this.footer.nativeElement.innerHTML = '';
+                    this.footer.nativeElement.insertAdjacentElement('beforeend', footer);
                 },
                 error: err => {
                     this.docContent.nativeElement.innerHTML = 'error: ' + err;
