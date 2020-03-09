@@ -95,8 +95,6 @@ p {
 ol {
   display: block;
   list-style-type: decimal;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 20px;
@@ -183,7 +181,7 @@ li {
     padding: 16px;
     border-width: 1px;
     border-style: solid;
-    border-color: rgba(0, 0, 0, 0.1) transparent;
+    border-color: rgba(0, 0, 0, 0.1);
   }
 
   table td {
@@ -200,10 +198,6 @@ li {
     font-size: small;
     background-color: #687886;
     color: #fff;
-  }
-
-  table tr.even {
-    background-color: #fde9d9;
   }
 
   td p {
