@@ -92,7 +92,7 @@
             padding-left: 25px;
         }
 
-        .contents {
+        .contents.local {
             margin: 20px 0 20px 0;
             ul {
                 list-style: none;
@@ -123,6 +123,20 @@
 
             ul li ul li a {
                 padding: 5px 0 5px 40px;
+            }
+        }
+
+        // Disable local table of contents on wide screen
+        @media (min-width: 768px) {
+            .contents.local {
+                position: absolute;
+                visibility: hidden;
+            }
+            a.toc-backref {
+                color: currentColor;
+                cursor: text;
+                text-decoration: none;
+                pointer-events: none;
             }
         }
 
