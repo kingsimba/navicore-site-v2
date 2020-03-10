@@ -58,7 +58,6 @@ export class LoginService {
                     next: value => {
                         console.log(value);
                         if (value.code === 0) {
-                            this.loginSucceeded = true;
                             this.syncWithCookie();
                             observer.next(value);
                         } else {

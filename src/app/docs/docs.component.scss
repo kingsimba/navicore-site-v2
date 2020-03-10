@@ -294,6 +294,11 @@
     font-size: 13px;
     font-family: "Roboto", "Segoe UI", "PingFang SC", "微软雅黑";
 
+    .caption {
+        visibility: hidden;
+        position: absolute;
+    }
+
     ul {
         list-style-type: none;
         padding-inline-start: 0px;
