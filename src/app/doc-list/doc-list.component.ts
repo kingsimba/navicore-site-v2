@@ -123,7 +123,8 @@ export class DocListComponent implements OnInit, OnDestroy {
             'route-server',
             'poi-server',
             'map-matching-server',
-            'ti-servers'
+            'ti-servers',
+            'navizero-user-center'
         ].forEach(name => {
             const index = this.indexOfDoument(otherDocuments, 'docs/' + name);
             if (index !== -1) {
