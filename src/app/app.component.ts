@@ -17,7 +17,8 @@ export class AppComponent {
     }
 
     isStandaloneDocument() {
-        return this.router.url.startsWith('docs') && (this.router.url.endsWith('.html') || this.router.url.endsWith('htm'));
+        return (this.router.url.startsWith('/navizero') || this.router.url.startsWith('/license'))
+            && (this.router.url.endsWith('.html') || this.router.url.endsWith('htm'));
     }
 
     needsFooter(): boolean {
