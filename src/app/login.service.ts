@@ -139,4 +139,12 @@ export class LoginService {
         const token = this.cookieService.get(LOGIN_TOKEN);
         this.loginSucceeded = token !== null && token !== '';
     }
+
+    download(url: string) {
+        if (this.loginSucceeded) {
+          window.open(url);
+        } else {
+            window.alert('请先登录');
+        }
+    }
 }

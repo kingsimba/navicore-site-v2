@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../login.service';
 
 @Component({
     selector: 'app-navizero',
@@ -29,6 +30,10 @@ export class NavizeroComponent implements OnInit {
         {
             title: '安卓内测版(密码 mapbar)',
             link: 'https://www.pgyer.com/eGby'
+        },
+        {
+            title: 'iOS内测版(密码 mapbar)',
+            link: 'https://www.pgyer.com/xJXq'
         }
     ];
 
@@ -47,7 +52,7 @@ export class NavizeroComponent implements OnInit {
         }
     ];
 
-    constructor() { }
+    constructor(public loginService: LoginService) { }
 
     ngOnInit() {
     }
