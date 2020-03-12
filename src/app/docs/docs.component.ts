@@ -5,6 +5,7 @@ import { LoginService } from '../login.service';
 import { Observable, Subscription } from 'rxjs';
 import '../../modernizr-custom.js';
 import { Title } from '@angular/platform-browser';
+import { Lightbox } from 'ngx-lightbox';
 
 @Component({
     templateUrl: './docs.component.html',
@@ -42,7 +43,8 @@ export class DocsComponent implements OnInit, OnDestroy {
         private http: HttpClient,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        public loginService: LoginService
+        public loginService: LoginService,
+        private lightbox: Lightbox
     ) {
         this.routerSubs = this.router.events.subscribe((val) => {
             // see also
@@ -132,6 +134,8 @@ export class DocsComponent implements OnInit, OnDestroy {
                         const src = images[i].getAttribute('src');
 
                         images[i].setAttribute('src', `/api${path}/${src}`);
+                        images[i].setAttribute('style', `cursor: pointer`);
+                        images[i].addEventListener('click', this.openLightbox.bind(this));
                     }
 
                     this.correctLinks(mainDocument, docUrl, path);
@@ -269,5 +273,14 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     onWheel(): boolean {
         return false;   // block scroll event
+    }
+
+    openLightbox(image: any) {
+        const url = image.currentTarget.getAttribute('src');
+        const album = []
+        album.push({
+            src: url
+        });
+        this.lightbox.open(album);
     }
 }

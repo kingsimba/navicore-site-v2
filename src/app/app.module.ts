@@ -33,6 +33,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CookieService } from 'ngx-cookie-service';
+import { LightboxModule } from 'ngx-lightbox';
 
 import {
     MenuOutline,
@@ -141,6 +142,7 @@ const ROUTES: Routes = [
         MatProgressBarModule,
         MatTooltipModule,
         FlexLayoutModule,
+        LightboxModule,
         RouterModule.forRoot(ROUTES,
             {
                 scrollPositionRestoration: 'enabled',
