@@ -17,6 +17,8 @@ NaviZero may uses the following copyrighted products.
 +-------------------+------------------------+
 | ZSTD              | BSD license            |
 +-------------------+------------------------+
+| Sqlite            | Public Domain          |
++-------------------+------------------------+
 | libpng            | libpng license         |
 +-------------------+------------------------+
 | libjpeg           | libjpeg License        |
@@ -27,11 +29,11 @@ NaviZero may uses the following copyrighted products.
 +-------------------+------------------------+
 | openssl           | Apache-2.0             |
 +-------------------+------------------------+
-| Tesselator in GLU |                        |
+| Tesselator in GLU | (unknown)              |
 +-------------------+------------------------+
 | Jansson           | MIT license            |
 +-------------------+------------------------+
-| Bsdiff            | MIT licenseO           |
+| Bsdiff            | MIT license            |
 +-------------------+------------------------+
 | OpenCTM           | Zlib License           |
 +-------------------+------------------------+
