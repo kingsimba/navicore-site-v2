@@ -211,7 +211,11 @@
             .admonition-title::before {
                 content: "⚠ ";
             }
-            .last {
+            ol {
+                margin: 0;
+                padding: 0 0 0 30px;
+            }
+            p {
                 margin: 0;
                 padding: 10px 10px;
             }

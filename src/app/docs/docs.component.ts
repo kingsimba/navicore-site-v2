@@ -216,7 +216,11 @@ export class DocsComponent implements OnInit, OnDestroy {
             if (href.startsWith('#')) {
                 // section anchors
                 links[i].setAttribute('url', `${docUrl}${href}`);
-            } else if (href.startsWith('https://') || href.startsWith('http://')) {
+                
+                // use router
+                links[i].removeAttribute('href');
+                links[i].addEventListener('click', this.onClickLink.bind(this));
+            } else if (this.isLinkExternal(href)) {
                 // absolute links. They are external links
                 links[i].setAttribute('target', `_blank`);
             } else {
@@ -285,5 +289,11 @@ export class DocsComponent implements OnInit, OnDestroy {
             src: url
         });
         this.lightbox.open(album);
+    }
+
+    private isLinkExternal(url: string) {
+        return (url.startsWith('http://') || url.startsWith('https://'))
+            && !url.includes(location.hostname) 
+            && !url.startsWith('#');
     }
 }
