@@ -216,14 +216,17 @@ export class DocsComponent implements OnInit, OnDestroy {
             if (href.startsWith('#')) {
                 // section anchors
                 links[i].setAttribute('url', `${docUrl}${href}`);
+            } else if (href.startsWith('https://') || href.startsWith('http://')) {
+                // absolute links. They are external links
+                links[i].setAttribute('target', `_blank`);
             } else {
                 // relative links
                 links[i].setAttribute('url', `${path}/${href}`);
-            }
 
-            // use router
-            links[i].removeAttribute('href');
-            links[i].addEventListener('click', this.onClickLink.bind(this));
+                // use router
+                links[i].removeAttribute('href');
+                links[i].addEventListener('click', this.onClickLink.bind(this));
+            }
         }
     }
 
