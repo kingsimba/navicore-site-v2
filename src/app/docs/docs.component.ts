@@ -220,7 +220,7 @@ export class DocsComponent implements OnInit, OnDestroy {
                 // use router
                 links[i].removeAttribute('href');
                 links[i].addEventListener('click', this.onClickLink.bind(this));
-            } else if (this.isLinkExternal(href)) {
+            } else if (this.isExternalLink(href)) {
                 // absolute links. They are external links
                 links[i].setAttribute('target', `_blank`);
             } else {
@@ -246,6 +246,12 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     openLink(url: string, navigateTo: boolean = false): void {
         const docUrl = this.getDocUrlFromFullUrl(url);
+
+        if (!this.urlIsDocument(docUrl)) {
+            window.open(`/api${docUrl}`, '_blank');
+            return;
+        }
+
         if (this.currentDocUrl !== docUrl) {
             if (this.docSubs) {
                 this.docSubs.unsubscribe();
@@ -291,9 +297,17 @@ export class DocsComponent implements OnInit, OnDestroy {
         this.lightbox.open(album);
     }
 
-    private isLinkExternal(url: string) {
+    private isExternalLink(url: string) {
         return (url.startsWith('http://') || url.startsWith('https://'))
             && !url.includes(location.hostname) 
             && !url.startsWith('#');
+    }
+
+    private urlIsDocument(url: string) : boolean {
+         if (url.endsWith('.html') || url.endsWith('.htm')) {
+            return true;
+         }
+
+         return false;
     }
 }
