@@ -11,7 +11,7 @@ describe('/api/v1/docs', async () => {
         await userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
     });
 
-    it('should return 401 if there is no correct access token', async () => {
+    it('should return 401 if access token is incorrect', async () => {
         let res = await chai.request(app)
             .get('/api/v1/docs/sample.html');
         expect(res).to.have.status(401);
@@ -19,7 +19,7 @@ describe('/api/v1/docs', async () => {
         expect(res.body.message).equals('Please login first');
     });
 
-    it('should return 200 if there is correct access token', async () => {
+    it('should return 200 if access token is correct', async () => {
         let res = await chai.request(app)
             .get('/api/v1/docs/sample.html')
             .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
@@ -33,5 +33,14 @@ describe('/api/v1/docs', async () => {
             .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
         expect(res).to.have.status(404);
         expect(res.text).matches(/404: Page not found/i);
+    });
+
+    it('should return list of document with docs/', async () => {
+        let res = await chai.request(app)
+            .get('/api/v1/docs')
+            .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
+        expect(res).to.have.status(200);
+        expect(res.body.docs).is.an('Array')
+            .and.have.lengthOf(1);
     });
 });
