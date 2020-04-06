@@ -1,6 +1,7 @@
 import express from 'express';
 import { userManager } from "./user-manager";
-import fs from 'fs';
+import fs from 'mz/fs';
+import { JSDOM } from 'jsdom'
 
 export const docsRouter = express.Router();
 
@@ -14,13 +15,41 @@ function authMiddleware(req: express.Request, res: express.Response, next: () =>
     }
 }
 
-function docListMiddleware(req: express.Request, res: express.Response, next: () => void) {
+// find document name in '<a class="icon icon-home>Document Name</a>'
+async function getDocName(dirName: string) : Promise<string> {
+    try {
+        const dom = new JSDOM(await fs.readFile(`docs/${dirName}/index.html`, 'utf8'));
+        return dom.window.document.querySelector(".icon-home").textContent;
+    } catch (error) {
+        return null;
+    }
+}
+
+// list documents under 'docs' folder
+async function docListMiddleware(req: express.Request, res: express.Response, next: () => void) {
     if (req.url == '/') {
-        res.status(200);
-        res.send({
-            status: 200,
-            docs: [ { name: 'DocName' }]
-        });
+        try {
+            const docs = [];
+            const dirs = await fs.readdir('docs');
+            for (const d of dirs) {
+                const st = await fs.stat(`docs/${d}`);
+                if (st.isDirectory()) {
+                    const name = await getDocName(d);
+                    if (name) {
+                        docs.push({ name: name, path: d });
+                    }
+                }
+            };
+
+            res.status(200);
+            res.send({
+                status: 200,
+                docs: docs
+            });
+        } catch (error) {
+            res.status(500);
+            res.send({ status: 500, message: error });
+        }
     } else {
         next();
     }

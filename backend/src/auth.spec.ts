@@ -15,12 +15,12 @@ class Cookies {
     constructor(response: any) {
         this.cookies = [];
         const cookies = response.header['set-cookie'];
-        cookies.forEach((c: string) => {
+        for (const c of cookies) {
             const parsedCookie = Cookie.parse(c);
             if (parsedCookie) {
                 this.cookies.push(parsedCookie);
             }
-        });
+        }
     }
 }
 

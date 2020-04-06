@@ -41,6 +41,9 @@ describe('/api/v1/docs', async () => {
             .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
         expect(res).to.have.status(200);
         expect(res.body.docs).is.an('Array')
-            .and.have.lengthOf(1);
+            .and.have.lengthOf(3)
+            .and.deep.contains({ name: 'NaviCore Public Documents', path: 'navicore-public-docs'})
+            .and.deep.contains({ name: 'Writing Documents', path: 'writing-documents'})
+            .and.deep.contains({ name: 'Competitive Analysis', path: 'competitive-analysis'});
     });
 });
