@@ -24,6 +24,7 @@ authRouter.use(bodyParser.json());
 authRouter.use(passport.initialize());
 authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void | Response => {
 
+  // return if the user already has correct cookie
   const user = userManager.verifyRequestAndRefreshCookie(req, res);
   if (user) {
     res.send({ status: 200, username: user.username });
@@ -34,26 +35,24 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
   passport.authenticate('ldapauth', (err, user, info): void => {
     var error = err || info;
     if (error) {
-      res.status(401);
-      res.send({ status: 401, message: error.message });
+      res.status(401).send({ status: 401, message: error.message });
     } else if (!user) {
-      res.status(500);
-      res.send({ status: 500, data: info });
+      res.status(500).send({ status: 500, data: info });
     } else {
       const name = req.body.username;
       const token = Guid.create().toString();
       userManager.saveToken(name, token, user.displayName);
-      res.cookie('navicore_site_username', name, { maxAge: userManager.maxAge });
-      res.cookie('navicore_site_displayName', user.displayName, { maxAge: userManager.maxAge });
-      res.cookie('navicore_site_token', token, { maxAge: userManager.maxAge });
-      res.send({ status: 200, username: name });
+      res.cookie('navicore_site_username', name, { maxAge: userManager.maxAge })
+        .cookie('navicore_site_displayName', user.displayName, { maxAge: userManager.maxAge })
+        .cookie('navicore_site_token', token, { maxAge: userManager.maxAge })
+        .send({ status: 200, username: name })
     }
   })(req, res, next);
 });
 
 authRouter.post('/logout', (req, res) => {
-  res.clearCookie('navicore_site_username');
-  res.clearCookie('navicore_site_displayName');
-  res.clearCookie('navicore_site_token');
-  res.send({ status: 200 });
+  res.clearCookie('navicore_site_username')
+    .clearCookie('navicore_site_displayName')
+    .clearCookie('navicore_site_token')
+    .send({ status: 200 });
 });
