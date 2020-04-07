@@ -1,1 +1,2 @@
+# For user authentication of navicore-site
 *

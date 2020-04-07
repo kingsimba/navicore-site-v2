@@ -43,11 +43,11 @@ describe('/api/v1/docs', async () => {
         expect(res).to.have.status(200);
         expect(res.body.docs).is.an('Array')
             .and.have.lengthOf(2)
-            .and.deep.contains({ name: 'NaviCore Public Documents', path: 'navicore-public-docs'})
-            .and.deep.contains({ name: 'Competitive Analysis', path: 'competitive-analysis'});
+            .and.deep.contains({ title: 'NaviCore Public Documents', path: 'navicore-public-docs'})
+            .and.deep.contains({ title: 'Competitive Analysis', path: 'competitive-analysis'});
 
         // simba don't have access
-        expect(res.body.docs).not.deep.contains({ name: 'Top Secret Document', path: 'top-secret'})
+        expect(res.body.docs).not.deep.contains({ title: 'Top Secret Document', path: 'top-secret'})
 
         // But God have access
         res = await chai.request(app)
@@ -56,8 +56,8 @@ describe('/api/v1/docs', async () => {
         expect(res).to.have.status(200);
         expect(res.body.docs).is.an('Array')
             .and.have.lengthOf(3)
-            .and.deep.contains({ name: 'NaviCore Public Documents', path: 'navicore-public-docs'})
-            .and.deep.contains({ name: 'Competitive Analysis', path: 'competitive-analysis'})
-            .and.deep.contains({ name: 'Top Secret Document', path: 'top-secret'})
+            .and.deep.contains({ title: 'NaviCore Public Documents', path: 'navicore-public-docs'})
+            .and.deep.contains({ title: 'Competitive Analysis', path: 'competitive-analysis'})
+            .and.deep.contains({ title: 'Top Secret Document', path: 'top-secret'})
     });
 });

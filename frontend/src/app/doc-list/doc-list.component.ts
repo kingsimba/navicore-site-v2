@@ -88,14 +88,6 @@ export class DocListComponent implements OnInit, OnDestroy {
                     + '本文档把功能按照状态分为几类：已完成、正在研发、等待研发、未计划、需要其他团队支持'
             },
             {
-                href: 'docs/competitive-analysis-trimmed',
-                title: `NaviCore 竞品分析和需求差距调研(删节版)`,
-                image: 'assets/docs/competitive-analysis-trimmed.png',
-                content:
-                    '通过本文档，我们希望暴露出我们的导航产品和竞品，以及和用户实际需求之间的差距。 希望相关业务单元知耻而后勇，努力改进我们的产品。'
-                    + '本文档把功能按照状态分为几类：已完成、正在研发、等待研发、未计划、需要其他团队支持'
-            },
-            {
                 href: 'docs/ncdocs',
                 title: `NaviCore Developer's Guide`,
                 image: 'assets/docs/ncdocs.png',
@@ -156,6 +148,6 @@ export class DocListComponent implements OnInit, OnDestroy {
             { title: '服务器文档', documents: serverDocuments },
             { title: '引擎模块文档', documents: moduleDocuments },
             { title: '其它文档', documents: otherDocuments },
-        ]
+        ];
     }
 }

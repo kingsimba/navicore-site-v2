@@ -4,7 +4,7 @@ import { LoginService } from './login.service';
 import { Subscription } from 'rxjs';
 
 export class Document {
-    constructor(public name: string, public link: string) { }
+    constructor(public title: string, public link: string) { }
 
     static documentsEqual(l: Document[], r: Document[]): boolean {
         if (l.length !== r.length) {
@@ -23,7 +23,7 @@ export class Document {
     }
 
     isEqual(r: Document): boolean {
-        return this.name === r.name && this.link === r.link;
+        return this.title === r.title && this.link === r.link;
     }
 }
 

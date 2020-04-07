@@ -122,7 +122,7 @@ export class DocsComponent implements OnInit, OnDestroy {
             this.currentDocUrl = docUrl;
             this.loadingDocument = true;
 
-            const subscription = this.http.get(`/api${docUrl}`, { responseType: 'text' }).subscribe({
+            const subscription = this.http.get(`/api/v1${docUrl}`, { responseType: 'text' }).subscribe({
                 next: value => {
                     const parser = new DOMParser();
                     const doc: HTMLDocument = parser.parseFromString(value, 'text/html');
@@ -133,7 +133,7 @@ export class DocsComponent implements OnInit, OnDestroy {
                     for (let i = images.length; i--;) {
                         const src = images[i].getAttribute('src');
 
-                        images[i].setAttribute('src', `/api${path}/${src}`);
+                        images[i].setAttribute('src', `/api/v1${path}/${src}`);
                         images[i].setAttribute('style', `cursor: pointer`);
                         images[i].addEventListener('click', this.openLightbox.bind(this));
                     }
@@ -248,7 +248,7 @@ export class DocsComponent implements OnInit, OnDestroy {
         const docUrl = this.getDocUrlFromFullUrl(url);
 
         if (!this.urlIsDocument(docUrl)) {
-            window.open(`/api${docUrl}`, '_blank');
+            window.open(`/api/v1${docUrl}`, '_blank');
             return;
         }
 

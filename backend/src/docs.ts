@@ -12,10 +12,16 @@ function authMiddleware(req: express.Request, res: express.Response, next: () =>
 }
 
 // find document name in '<a class="icon icon-home>Document Name</a>'
-async function getDocName(dirName: string): Promise<string> {
+async function getDocTitle(dirName: string): Promise<string> {
     try {
         const dom = new JSDOM(await fs.readFile(`docs/${dirName}/index.html`, 'utf8'));
-        return dom.window.document.querySelector(".icon-home").textContent;
+        let title = dom.window.document.querySelector(".icon-home").textContent;
+        const m = title.match(/[\s\r\n]*(.+)[\s\r\n]*/)
+        if (m) {
+            return m[1];
+        } else {
+            return null;
+        }
     } catch (error) {
         return null;
     }
@@ -44,9 +50,9 @@ async function docListMiddleware(req: express.Request, res: express.Response, ne
             const docs = [];
             const dirs = await fs.readdir('docs');
             for (const d of dirs) {
-                const name = await getDocName(d);
-                if (name && await isUserAuthorized(d, req.cookies.navicore_site_username)) {
-                    docs.push({ name: name, path: d });
+                const title = await getDocTitle(d);
+                if (title && await isUserAuthorized(d, req.cookies.navicore_site_username)) {
+                    docs.push({ title, path: d });
                 }
             };
 
