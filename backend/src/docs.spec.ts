@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 describe('/api/v1/docs', async () => {
     before( async () => {
         await userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
+        await userManager.saveToken('god_incarbinate@navinfo.com', '1111-1111', 'God Himself');
     });
 
     it('should return 401 if access token is incorrect', async () => {
@@ -35,15 +36,28 @@ describe('/api/v1/docs', async () => {
         expect(res.text).matches(/404: Page not found/i);
     });
 
-    it('should return list of document with docs/', async () => {
+    it('should return document list with docs/', async () => {
         let res = await chai.request(app)
             .get('/api/v1/docs')
             .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
         expect(res).to.have.status(200);
         expect(res.body.docs).is.an('Array')
+            .and.have.lengthOf(2)
+            .and.deep.contains({ name: 'NaviCore Public Documents', path: 'navicore-public-docs'})
+            .and.deep.contains({ name: 'Competitive Analysis', path: 'competitive-analysis'});
+
+        // simba don't have access
+        expect(res.body.docs).not.deep.contains({ name: 'Top Secret Document', path: 'top-secret'})
+
+        // But God have access
+        res = await chai.request(app)
+            .get('/api/v1/docs')
+            .set('Cookie', 'navicore_site_username=god_incarbinate@navinfo.com;navicore_site_token=1111-1111');
+        expect(res).to.have.status(200);
+        expect(res.body.docs).is.an('Array')
             .and.have.lengthOf(3)
             .and.deep.contains({ name: 'NaviCore Public Documents', path: 'navicore-public-docs'})
-            .and.deep.contains({ name: 'Writing Documents', path: 'writing-documents'})
-            .and.deep.contains({ name: 'Competitive Analysis', path: 'competitive-analysis'});
+            .and.deep.contains({ name: 'Competitive Analysis', path: 'competitive-analysis'})
+            .and.deep.contains({ name: 'Top Secret Document', path: 'top-secret'})
     });
 });

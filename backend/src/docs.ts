@@ -3,8 +3,6 @@ import { userManager } from "./user-manager";
 import fs from 'mz/fs';
 import { JSDOM } from 'jsdom'
 
-export const docsRouter = express.Router();
-
 function authMiddleware(req: express.Request, res: express.Response, next: () => void) {
     if (!userManager.verifyRequestAndRefreshCookie(req, res)) {
         res.status(401).send({ status: 401, message: 'Please login first' });
@@ -14,12 +12,28 @@ function authMiddleware(req: express.Request, res: express.Response, next: () =>
 }
 
 // find document name in '<a class="icon icon-home>Document Name</a>'
-async function getDocName(dirName: string) : Promise<string> {
+async function getDocName(dirName: string): Promise<string> {
     try {
         const dom = new JSDOM(await fs.readFile(`docs/${dirName}/index.html`, 'utf8'));
         return dom.window.document.querySelector(".icon-home").textContent;
     } catch (error) {
         return null;
+    }
+}
+
+// find document name in '<a class="icon icon-home>Document Name</a>'
+async function isUserAuthorized(dirName: string, username: string): Promise<boolean> {
+    try {
+        const file = await fs.readFile(`docs/${dirName}/authorize.txt`, 'utf8');
+        const lines = file.split('\n').map(o => o.trim());
+        for (const line of lines) {
+            if (line === '*' || line === username) {
+                return true;
+            }
+        }
+        return false;
+    } catch (error) {
+        return false;
     }
 }
 
@@ -31,7 +45,7 @@ async function docListMiddleware(req: express.Request, res: express.Response, ne
             const dirs = await fs.readdir('docs');
             for (const d of dirs) {
                 const name = await getDocName(d);
-                if (name) {
+                if (name && await isUserAuthorized(d, req.cookies.navicore_site_username)) {
                     docs.push({ name: name, path: d });
                 }
             };
@@ -45,6 +59,8 @@ async function docListMiddleware(req: express.Request, res: express.Response, ne
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+export const docsRouter = express.Router();
 docsRouter.use(authMiddleware);
 docsRouter.use('/', docListMiddleware); // serve static files
 docsRouter.use('/', express.static('docs')); // serve static files
