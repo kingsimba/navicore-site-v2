@@ -8,6 +8,7 @@ import { userManager } from './user-manager'
 ///////////////////////////////////////////////////////////////////////////
 // connect to LDAP server
 const OPTS: LdapStrategy.Options = {
+  usernameField: 'usernameWithoutSuffix',
   server: {
     url: "ldap://ldap.mapbar.com",
     bindDN: "uid=proxy_ios,ou=user,dc=mapbar,dc=com",
@@ -31,7 +32,15 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
     return;
   }
 
-  // perform LDAP
+  const username = req.body.username;
+  if (!username || !username.endsWith('@mapbar.com')) {
+    res.status(401).send({ status: 401, message: 'Incorrect username/password' });
+    return;
+  }
+
+  req.body.usernameWithoutSuffix = username.substr(0, username.indexOf('@mapbar.com'));
+
+  // perform MAPBAR LDAP
   passport.authenticate('ldapauth', (err, user, info): void => {
     var error = err || info;
     if (error) {
@@ -48,6 +57,7 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
         .send({ status: 200, username: name })
     }
   })(req, res, next);
+
 });
 
 authRouter.post('/logout', (req, res) => {

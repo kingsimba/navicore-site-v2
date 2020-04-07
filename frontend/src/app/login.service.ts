@@ -24,8 +24,9 @@ class CustomQueryEncoderHelper implements HttpParameterCodec {
     }
 }
 
-export const LOGIN_NAME = 'LoginName';
-export const LOGIN_TOKEN = 'LoginToken';
+export const LOGIN_NAME = 'navicore_site_username';
+export const LOGIN_TOKEN = 'navicore_site_token';
+export const LOGIN_DISPLAY_NAME = 'navicore_site_displayName';
 
 @Injectable({
     providedIn: 'root'
@@ -50,14 +51,12 @@ export class LoginService {
     login<T>(username: string, password: string): Observable<T> {
         const observable = new Observable<T>((observer) => {
             // post form data
-            const params = new HttpParams({ encoder: new CustomQueryEncoderHelper() })
-                .set('username', username)
-                .set('password', password);
-            const loginSubs = this.http.post<any>('api/login', params).subscribe(
+            const postBody = { username, password };
+            const loginSubs = this.http.post<any>('api/v1/auth/login', postBody).subscribe(
                 {
                     next: value => {
                         console.log(value);
-                        if (value.code === 0) {
+                        if (value.status === 200) {
                             this.syncWithCookie();
                             observer.next(value);
                         } else {
@@ -67,7 +66,7 @@ export class LoginService {
                         this.loginStatusChanged.emit(null);
                     },
                     error: err => {
-                        observer.error(err.errorMessage);
+                        observer.error(err.error.message);
                         this.syncWithCookie();
                         this.loginStatusChanged.emit(null);
                     }
@@ -90,11 +89,11 @@ export class LoginService {
         if (this.logoutSubs != null) {
             this.logoutSubs.unsubscribe();
         }
-        this.logoutSubs = this.http.get<any>('api/logout').subscribe(
+        this.logoutSubs = this.http.post<any>('api/v1/auth/logout', '').subscribe(
             {
                 next: value => {
                     console.log(value);
-                    if (value.code === 0) {
+                    if (value.status === 200) {
                         this.performLogout();
                     }
                     this.logoutSubs = undefined;
@@ -135,14 +134,14 @@ export class LoginService {
 
     syncWithCookie() {
         this.username = this.cookieService.get(LOGIN_NAME);
-        this.nickname = this.username.split('@')[0];
+        this.nickname = this.cookieService.get(LOGIN_DISPLAY_NAME);
         const token = this.cookieService.get(LOGIN_TOKEN);
         this.loginSucceeded = token !== null && token !== '';
     }
 
     download(url: string) {
         if (this.loginSucceeded) {
-          window.open(url);
+            window.open(url);
         } else {
             window.alert('请先登录');
         }

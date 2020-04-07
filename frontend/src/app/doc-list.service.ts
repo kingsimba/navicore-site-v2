@@ -67,12 +67,12 @@ export class DocListService implements OnDestroy {
             if (this.loadDocSubs != null) {
                 this.loadDocSubs.unsubscribe();
             }
-            this.loadDocSubs = this.http.get('/api/list').subscribe({
+            this.loadDocSubs = this.http.get('/api/v1/docs').subscribe({
                 next: value => {
-                    const docs = value['list'];
+                    const docs = value['docs'];
                     const modifiedDocs: Document[] = [];
                     for (const doc of docs) {
-                        const docObj = new Document(doc.title, 'docs/' + doc.dir);
+                        const docObj = new Document(doc.title, 'docs/' + doc.path);
                         modifiedDocs.push(docObj);
                     }
                     this.setDocuments(modifiedDocs);

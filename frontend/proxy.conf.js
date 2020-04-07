@@ -3,7 +3,7 @@ const PROXY_CONFIG = [
       context: [
           "/api"
       ],
-      target: "http://navicore.mapbar.com:9080",
+      target: "http://localhost:8080",
       secure: false
   }
 ]

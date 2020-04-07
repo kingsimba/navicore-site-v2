@@ -153,7 +153,7 @@ export class DocsComponent implements OnInit, OnDestroy {
                     // title
                     const titleEle = doc.querySelector('.icon-home');
                     this.documentTitle = titleEle.innerHTML.trim();
-                    this.titleService.setTitle(this.documentTitle + ' - NaviCore');// html title
+                    this.titleService.setTitle(this.documentTitle + ' - NaviCore'); // html title
                     const docRootPath = this.router.url.split('/').slice(0, 3).join('/');
                     this.documentTitleLink = docRootPath;
 
@@ -216,7 +216,7 @@ export class DocsComponent implements OnInit, OnDestroy {
             if (href.startsWith('#')) {
                 // section anchors
                 links[i].setAttribute('url', `${docUrl}${href}`);
-                
+
                 // use router
                 links[i].removeAttribute('href');
                 links[i].addEventListener('click', this.onClickLink.bind(this));
@@ -290,7 +290,7 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     openLightbox(image: any) {
         const url = image.currentTarget.getAttribute('src');
-        const album = []
+        const album = [];
         album.push({
             src: url
         });
@@ -299,15 +299,15 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     private isExternalLink(url: string) {
         return (url.startsWith('http://') || url.startsWith('https://'))
-            && !url.includes(location.hostname) 
+            && !url.includes(location.hostname)
             && !url.startsWith('#');
     }
 
-    private urlIsDocument(url: string) : boolean {
-         if (url.endsWith('.html') || url.endsWith('.htm')) {
+    private urlIsDocument(url: string): boolean {
+        if (url.endsWith('.html') || url.endsWith('.htm')) {
             return true;
-         }
+        }
 
-         return false;
+        return false;
     }
 }
