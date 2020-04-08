@@ -28,12 +28,12 @@ async function getDocTitle(dirName: string): Promise<string> {
 }
 
 // find document name in '<a class="icon icon-home>Document Name</a>'
-async function isUserAuthorized(dirName: string, username: string): Promise<boolean> {
+export async function isUserAuthorized(dirName: string, username: string): Promise<boolean> {
     try {
         const file = await fs.readFile(`docs/${dirName}/authorize.txt`, 'utf8');
         const lines = file.split('\n').map(o => o.trim());
         for (const line of lines) {
-            if (line === '*' || line === username) {
+            if (line === '*' || line === username || `${line}@mapbar.com` === username) {
                 return true;
             }
         }

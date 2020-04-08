@@ -101,13 +101,13 @@ export class DocListComponent implements OnInit, OnDestroy {
         // build otherDocuments
         this.featuredDocuments = [];
         const otherDocuments = [...this.documents];
-        items.forEach(item => {
+        for(const item of items) {
             const index = this.indexOfDoument(otherDocuments, item.href);
             if (index !== -1) {
                 this.featuredDocuments.push(item);
                 otherDocuments.splice(index, 1);
             }
-        });
+        }
 
         // build serverDocuments
         const serverDocuments = [];

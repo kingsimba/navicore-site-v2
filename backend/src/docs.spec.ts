@@ -2,12 +2,24 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { app } from './index';
 import { userManager } from './user-manager';
+import { isUserAuthorized } from "./docs";
 
 const expect = chai.expect;
 chai.use(chaiHttp);
 
+describe('Docs', () => {
+    describe('isUserAuthorized', () => {
+        it('should allow user with @mapbar.com postfix', async () => {
+            expect(await isUserAuthorized('competitive-analysis', 'simba')).is.true;
+            expect(await isUserAuthorized('competitive-analysis', 'simba@mapbar.com')).is.true;
+            expect(await isUserAuthorized('competitive-analysis', 'simba@other.com')).is.false;
+            expect(await isUserAuthorized('competitive-analysis', 'noneExistName')).is.false;
+        });
+    });
+});
+
 describe('/api/v1/docs', async () => {
-    before( async () => {
+    before(async () => {
         await userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
         await userManager.saveToken('god_incarbinate@navinfo.com', '1111-1111', 'God Himself');
     });
@@ -43,11 +55,11 @@ describe('/api/v1/docs', async () => {
         expect(res).to.have.status(200);
         expect(res.body.docs).is.an('Array')
             .and.have.lengthOf(2)
-            .and.deep.contains({ title: 'NaviCore Public Documents', path: 'navicore-public-docs'})
-            .and.deep.contains({ title: 'Competitive Analysis', path: 'competitive-analysis'});
+            .and.deep.contains({ title: 'NaviCore Public Documents', path: 'navicore-public-docs' })
+            .and.deep.contains({ title: 'Competitive Analysis', path: 'competitive-analysis' });
 
         // simba don't have access
-        expect(res.body.docs).not.deep.contains({ title: 'Top Secret Document', path: 'top-secret'})
+        expect(res.body.docs).not.deep.contains({ title: 'Top Secret Document', path: 'top-secret' })
 
         // But God have access
         res = await chai.request(app)
@@ -56,8 +68,8 @@ describe('/api/v1/docs', async () => {
         expect(res).to.have.status(200);
         expect(res.body.docs).is.an('Array')
             .and.have.lengthOf(3)
-            .and.deep.contains({ title: 'NaviCore Public Documents', path: 'navicore-public-docs'})
-            .and.deep.contains({ title: 'Competitive Analysis', path: 'competitive-analysis'})
-            .and.deep.contains({ title: 'Top Secret Document', path: 'top-secret'})
+            .and.deep.contains({ title: 'NaviCore Public Documents', path: 'navicore-public-docs' })
+            .and.deep.contains({ title: 'Competitive Analysis', path: 'competitive-analysis' })
+            .and.deep.contains({ title: 'Top Secret Document', path: 'top-secret' })
     });
 });
