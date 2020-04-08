@@ -3,11 +3,19 @@ import { userManager } from "./user-manager";
 import fs from 'mz/fs';
 import { JSDOM } from 'jsdom'
 
-function authMiddleware(req: express.Request, res: express.Response, next: () => void) {
+function authenticationMiddleware(req: express.Request, res: express.Response, next: () => void) {
     if (!userManager.verifyRequestAndRefreshCookie(req, res)) {
         res.status(401).send({ status: 401, message: 'Please login first' });
     } else {
         next();
+    }
+}
+
+async function authorizationMiddleware(req: express.Request, res: express.Response, next: () => void) {
+    if (await isUserAuthorized(req.params.doc, req.cookies.navicore_site_username)) {
+        next();
+    } else {
+        res.status(403).send({ status: 403, message: 'Forbidden' });
     }
 }
 
@@ -67,7 +75,8 @@ async function docListMiddleware(req: express.Request, res: express.Response, ne
 
 //////////////////////////////////////////////////////////////////////////////////
 export const docsRouter = express.Router();
-docsRouter.use(authMiddleware);
+docsRouter.use(authenticationMiddleware);
+docsRouter.use('/:doc/', authorizationMiddleware);
 docsRouter.use('/', docListMiddleware); // serve static files
 docsRouter.use('/', express.static('docs')); // serve static files
 docsRouter.use(function (req, res) {    // custom 404 page

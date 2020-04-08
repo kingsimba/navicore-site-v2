@@ -20,13 +20,14 @@ describe('Docs', () => {
 
 describe('/api/v1/docs', () => {
     before(async () => {
+        await userManager.init();
         userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
         userManager.saveToken('god_incarbinate@navinfo.com', '2222-2222', 'God Himself');
     });
 
     it('should return 401 if access token is incorrect', async () => {
         let res = await chai.request(app)
-            .get('/api/v1/docs/sample.html');
+            .get('/api/v1/docs/competitive-analysis/index.html');
         expect(res).to.have.status(401);
         expect(res.body.status).equals(401);
         expect(res.body.message).equals('Please login first');
@@ -34,18 +35,27 @@ describe('/api/v1/docs', () => {
 
     it('should return 200 if access token is correct', async () => {
         let res = await chai.request(app)
-            .get('/api/v1/docs/sample.html')
+            .get('/api/v1/docs/competitive-analysis/index.html')
             .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
         expect(res).to.have.status(200);
-        expect(res.text).matches(/This is a static sample HTML page/);
+        expect(res.text).matches(/Contents Here/);
     });
 
     it('should return 404 if page is not found', async () => {
         let res = await chai.request(app)
-            .get('/api/v1/docs/non-exist.html')
+            .get('/api/v1/docs/competitive-analysis/non-exist.html')
             .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
         expect(res).to.have.status(404);
         expect(res.text).matches(/404: Page not found/i);
+    });
+
+    it('should return 403 for unauthorized document', async () => {
+        let res = await chai.request(app)
+            .get('/api/v1/docs/top-secret/index.html')
+            .set('Cookie', 'navicore_site_username=simba;navicore_site_token=1111-1111');
+        expect(res).to.have.status(403);
+        expect(res.body.status).equals(403);
+        expect(res.body.message).equals('Forbidden');
     });
 
     it('should return document list with docs/', async () => {

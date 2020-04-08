@@ -9,18 +9,18 @@ class AuthUser {
 }
 
 let g_creating = false;
-let g_created = false;
 
-export class UserManager {
+class UserManager {
     private tokens: loki.Collection;
 
-    static init(): Promise<any> {
-        return new Promise<any>(async (solve) => {
+    async init(): Promise<any> {
+        return new Promise<any>(async (resolve) => {
             if (g_creating) {
-                while (!g_created) {
+                // wait for db loading
+                while (!userManager.tokens) {
                     await sleep(10);
                 }
-                solve();
+                resolve();
             }
             else {
                 g_creating = true;
@@ -37,26 +37,26 @@ export class UserManager {
                     }
 
                     userManager.tokens = db.getCollection('tokens');
-                    g_created = true;
-
-                    solve();
+                    resolve();
                 }
             }
         });
     }
 
     saveToken(username: string, token: string, displayName: string) {
-        if (!this.tokens.findOne({ token })) {
+        if (this.tokens && !this.tokens.findOne({ token })) {
             this.tokens.insert({ token, username, displayName });
         }
     }
 
     removeAllTokens() {
-        this.tokens.clear();
+        if (this.tokens) {
+            this.tokens.clear();
+        }
     }
 
     findUserWithToken(username: string, token: string): AuthUser {
-        const user = this.tokens.findOne({ token });
+        const user = this.tokens && this.tokens.findOne({ token });
         if (user && user.username === username) {
             return user;
         }
@@ -64,21 +64,17 @@ export class UserManager {
     }
 
     verifyRequestAndRefreshCookie(req: express.Request, res: express.Response) {
-        try {
-            const name = req.cookies.navicore_site_username;
-            const token = req.cookies.navicore_site_token;
-            const user: AuthUser = this.findUserWithToken(name, token);
-            if (user) {
-                // refersh token Expire time
-                res.cookie('navicore_site_username', name, { maxAge: TOKEN_TTL });
-                res.cookie('navicore_site_displayName', user.displayName, { maxAge: TOKEN_TTL });
-                res.cookie('navicore_site_token', token, { maxAge: TOKEN_TTL });
-            }
-
-            return user;
-        } catch (error) {
-            return undefined;
+        const name = req.cookies.navicore_site_username;
+        const token = req.cookies.navicore_site_token;
+        const user: AuthUser = this.findUserWithToken(name, token);
+        if (user) {
+            // refersh token Expire time
+            res.cookie('navicore_site_username', name, { maxAge: TOKEN_TTL });
+            res.cookie('navicore_site_displayName', user.displayName, { maxAge: TOKEN_TTL });
+            res.cookie('navicore_site_token', token, { maxAge: TOKEN_TTL });
         }
+
+        return user;
     }
 }
 

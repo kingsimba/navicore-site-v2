@@ -56,7 +56,7 @@ export const authRouter = express.Router();
 passport.use(new LdapStrategy(getLdapOptions));
 authRouter.use(bodyParser.json());
 authRouter.use(passport.initialize());
-authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void | Response => {
+authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void => {
   try {
     // return if the user already has correct cookie
     const user = userManager.verifyRequestAndRefreshCookie(req, res);
