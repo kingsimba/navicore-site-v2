@@ -1,27 +1,14 @@
 import fs from "mz/fs";
 import deepExtend from "deep-extend";
 
-interface LocalUser {
-    name: string;
-    password: string;
-}
-
-interface ServerOptions {
-    address: string;
-    port: number;
-}
-
-interface GlobalOptions {
-    server: ServerOptions;
-    localUsers: LocalUser[];
-}
-
 class GlobalOptions {
-    server: ServerOptions = {
+    server = {
         address: "localhost",
         port: 8080
     }
-    localUsers: LocalUser[] = []
+    localUsers = [
+        { name: 'sampleUser', password: 'samplePassword' }
+    ]
 
     constructor() {
         try {
