@@ -4,6 +4,7 @@ import passport from 'passport';
 import LdapStrategy from 'passport-ldapauth'
 import bodyParser from 'body-parser'
 import { userManager } from './user-manager'
+import { globalOptions } from "./global-options";
 
 // provide LDAP options
 var getLdapOptions = function (req: express.Request, callback: (arg0: any, arg1: LdapStrategy.Options) => void) {
@@ -41,6 +42,15 @@ var getLdapOptions = function (req: express.Request, callback: (arg0: any, arg1:
 
 };
 
+function responseLoginOK(res: express.Response, username: string, displayName: string) {
+  const token = Guid.create().toString();
+  userManager.saveToken(username, token, displayName);
+  res.cookie('navicore_site_username', username, { maxAge: userManager.maxAge })
+    .cookie('navicore_site_displayName', displayName, { maxAge: userManager.maxAge })
+    .cookie('navicore_site_token', token, { maxAge: userManager.maxAge })
+    .send({ status: 200, username });
+}
+
 export const authRouter = express.Router();
 
 passport.use(new LdapStrategy(getLdapOptions));
@@ -55,9 +65,22 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
     return;
   }
 
+  // check username/password not null
   const username: string = req.body.username;
-  if (!username || (!username.endsWith('@mapbar.com') && !username.endsWith('@navinfo.com'))) {
-    res.status(401).send({ status: 401, message: 'Incorrect username/password' });
+  const password: string = req.body.password;
+  if (!username || !password) {
+    res.status(400).send({ status: 400, message: 'Please provide username/password' });
+    return;
+  }
+
+  // verify local user
+  if (!username.endsWith('@mapbar.com') && !username.endsWith('@navinfo.com')) {
+    if (globalOptions.verifyUserAndPassword(username, password)) {
+      responseLoginOK(res, username, username);
+    }
+    else {
+      res.status(401).send({ status: 401, message: 'Invalid username/password' });
+    }
     return;
   }
 
@@ -69,13 +92,7 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
     } else if (!user) {
       res.status(500).send({ status: 500, data: info });
     } else {
-      const name = req.body.username;
-      const token = Guid.create().toString();
-      userManager.saveToken(name, token, user.displayName);
-      res.cookie('navicore_site_username', name, { maxAge: userManager.maxAge })
-        .cookie('navicore_site_displayName', user.displayName, { maxAge: userManager.maxAge })
-        .cookie('navicore_site_token', token, { maxAge: userManager.maxAge })
-        .send({ status: 200, username: name })
+      responseLoginOK(res, username, user.displayName);
     }
   })(req, res, next);
 

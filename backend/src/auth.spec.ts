@@ -31,48 +31,87 @@ class Cookies {
 }
 
 describe('/api/v1/auth/login', async () => {
-    it('with wrong password, it should fail', async () => {
-        const res = await chai.request(app)
-            .post('/api/v1/auth/login')
-            .send({ username, password: 'badpassword' });
-        expect(res).to.have.status(401);
-        expect(res.body.status).equals(401);
-        expect(res.body.message).matches(/invalid username/i);
+
+    context('For LDAP users', () => {
+
+        it('without password, it should return 400', async () => {
+            const res = await chai.request(app)
+                .post('/api/v1/auth/login')
+                .send({ username });
+            expect(res).to.have.status(400);
+            expect(res.body.status).equals(400);
+        });
+
+        it('with wrong password, it should fail', async () => {
+            const res = await chai.request(app)
+                .post('/api/v1/auth/login')
+                .send({ username, password: 'badpassword' });
+            expect(res).to.have.status(401);
+            expect(res.body.status).equals(401);
+            expect(res.body.message).matches(/invalid username/i);
+        });
+
+        it('with correct password, it should succ', async () => {
+            const res = await chai.request(app)
+                .post('/api/v1/auth/login')
+                .send({ username, password });
+            expect(res).to.have.status(200);
+            expect(res.body.status).equals(200);
+            expect(res).to.have.cookie('navicore_site_username', E(username));
+            expect(res).to.have.cookie('navicore_site_displayName', E(displayName));
+            expect(res).to.have.cookie('navicore_site_token');
+
+            expect(new Cookies(res).valueWithName('navicore_site_token')).to.be.string;
+        });
+
+        it('should return the same token for double login', async () => {
+            let res = await chai.request(app)
+                .post('/api/v1/auth/login')
+                .send({ username, password });
+            expect(res).to.have.status(200);
+            expect(res.body.status).equals(200);
+
+            const cookies = new Cookies(res);
+            const firstTimeUserName = cookies.valueWithName('navicore_site_username');
+            const firstTimeCookie = cookies.valueWithName('navicore_site_token');
+
+            res = await chai.request(app)
+                .post('/api/v1/auth/login')
+                .set('Cookie', `navicore_site_username=${firstTimeUserName};navicore_site_token=${firstTimeCookie}`)
+                .send({ username, password });
+
+            expect(res).to.have.status(200);
+            expect(res).to.have.cookie('navicore_site_username', E(username));
+            expect(res).to.have.cookie('navicore_site_displayName', E(displayName));
+            expect(res).to.have.cookie('navicore_site_token', firstTimeCookie);
+        });
     });
 
-    it('with correct password, it should succ', async () => {
-        const res = await chai.request(app)
-            .post('/api/v1/auth/login')
-            .send({ username, password });
-        expect(res).to.have.status(200);
-        expect(res.body.status).equals(200);
-        expect(res).to.have.cookie('navicore_site_username', E(username));
-        expect(res).to.have.cookie('navicore_site_displayName', E(displayName));
-        expect(res).to.have.cookie('navicore_site_token');
+    context('For local users', () => {
 
-        expect(new Cookies(res).valueWithName('navicore_site_token')).to.be.string;
-    });
+        const LOCAL_USERNAME = 'simba';
+        const LOCAL_PASSWORD = "simba'spassword";
 
-    it('should return the same token for double login', async () => {
-        let res = await chai.request(app)
-            .post('/api/v1/auth/login')
-            .send({ username, password });
-        expect(res).to.have.status(200);
-        expect(res.body.status).equals(200);
+        it('should return 200 for local user login', async () => {
+            const res = await chai.request(app)
+                .post('/api/v1/auth/login')
+                .send({ username: LOCAL_USERNAME, password: LOCAL_PASSWORD });
+            expect(res).to.have.status(200);
+            expect(res.body.status).equals(200);
+            expect(res).to.have.cookie('navicore_site_username', LOCAL_USERNAME);
+            expect(res).to.have.cookie('navicore_site_displayName', LOCAL_USERNAME);
+            expect(res).to.have.cookie('navicore_site_token');
 
-        const cookies = new Cookies(res);
-        const firstTimeUserName = cookies.valueWithName('navicore_site_username');
-        const firstTimeCookie = cookies.valueWithName('navicore_site_token');
+            expect(new Cookies(res).valueWithName('navicore_site_token')).to.be.string;
+        });
 
-        res = await chai.request(app)
-            .post('/api/v1/auth/login')
-            .set('Cookie', `navicore_site_username=${firstTimeUserName};navicore_site_token=${firstTimeCookie}`)
-            .send({ username, password });
-
-        expect(res).to.have.status(200);
-        expect(res).to.have.cookie('navicore_site_username', E(username));
-        expect(res).to.have.cookie('navicore_site_displayName', E(displayName));
-        expect(res).to.have.cookie('navicore_site_token', firstTimeCookie);
+        it('should return 401 if local user login failed', async () => {
+            const res = await chai.request(app)
+                .post('/api/v1/auth/login')
+                .send({ username: LOCAL_USERNAME, password: 'baspassword' });
+            expect(res).to.have.status(401);
+            expect(res.body.status).equals(401);
+        });
     });
 });
 
