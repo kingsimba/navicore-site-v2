@@ -7,20 +7,44 @@ import { userManager } from './user-manager'
 
 ///////////////////////////////////////////////////////////////////////////
 // connect to LDAP server
-const OPTS: LdapStrategy.Options = {
-  usernameField: 'usernameWithoutSuffix',
-  server: {
-    url: "ldap://ldap.mapbar.com",
-    bindDN: "uid=proxy_ios,ou=user,dc=mapbar,dc=com",
-    bindCredentials: '0b2gSyBmIVXk',
-    searchBase: 'ou=user,dc=mapbar,dc=com',
-    searchFilter: 'uid={{username}}'
-  }
-}
+var getLDAPConfiguration = function (req: express.Request, callback: (arg0: any, arg1: LdapStrategy.Options) => void) {
+  process.nextTick( () => {
+
+    let opts: LdapStrategy.Options = null;
+
+    const username: string = req.body.username;
+    const nameWithoutSuffix = username.substr(0, username.lastIndexOf('@'));
+
+    if (username.endsWith('@mapbar.com')) {
+      opts = {
+        server: {
+          url: "ldap://ldap.mapbar.com",
+          bindDN: `uid=${nameWithoutSuffix},ou=user,dc=mapbar,dc=com`,
+          bindCredentials: req.body.password,
+          searchBase: 'ou=user,dc=mapbar,dc=com',
+          searchFilter: `uid=${nameWithoutSuffix}`
+        }
+      }
+    } else if (username.endsWith('@navinfo.com')) {
+      
+      opts = {
+        server: {
+          url: 'ldap://192.168.0.151:389',
+          bindDN: username,
+          bindCredentials: req.body.password,
+          searchBase: 'ou=Navinfo,dc=navinfo,dc=net',
+          searchFilter: `(&(objectCategory=Person)(sAMAccountName=${nameWithoutSuffix}))`
+        }
+      };
+    }
+
+    callback(null, opts);
+  });
+};
 
 export const authRouter = express.Router();
 
-passport.use(new LdapStrategy(OPTS))
+passport.use(new LdapStrategy(getLDAPConfiguration))
 authRouter.use(bodyParser.json());
 authRouter.use(passport.initialize());
 authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void | Response => {
@@ -32,13 +56,11 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
     return;
   }
 
-  const username = req.body.username;
-  if (!username || !username.endsWith('@mapbar.com')) {
+  const username: string = req.body.username;
+  if (!username || (!username.endsWith('@mapbar.com') && !username.endsWith('@navinfo.com'))) {
     res.status(401).send({ status: 401, message: 'Incorrect username/password' });
     return;
   }
-
-  req.body.usernameWithoutSuffix = username.substr(0, username.indexOf('@mapbar.com'));
 
   // perform MAPBAR LDAP
   passport.authenticate('ldapauth', (err, user, info): void => {

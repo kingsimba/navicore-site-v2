@@ -8,6 +8,10 @@ chai.use(chaiHttp);
 
 const E = encodeURIComponent;
 
+const username = 'proxy_ios@mapbar.com';
+const password = '0b2gSyBmIVXk';
+const displayName = '图吧';
+
 class Cookies {
     private cookies: any[];
     valueWithName(name: string): string {
@@ -30,7 +34,7 @@ describe('/api/v1/auth/login', async () => {
     it('with wrong password, it should fail', async () => {
         const res = await chai.request(app)
             .post('/api/v1/auth/login')
-            .send({ username: 'proxy_ios@mapbar.com', password: 'badpassword' });
+            .send({ username, password: 'badpassword' });
         expect(res).to.have.status(401);
         expect(res.body.status).equals(401);
         expect(res.body.message).matches(/invalid username/i);
@@ -39,11 +43,11 @@ describe('/api/v1/auth/login', async () => {
     it('with correct password, it should succ', async () => {
         const res = await chai.request(app)
             .post('/api/v1/auth/login')
-            .send({ username: 'proxy_ios@mapbar.com', password: '0b2gSyBmIVXk' });
+            .send({ username, password });
         expect(res).to.have.status(200);
         expect(res.body.status).equals(200);
-        expect(res).to.have.cookie('navicore_site_username', E('proxy_ios@mapbar.com'));
-        expect(res).to.have.cookie('navicore_site_displayName', E('图吧'));
+        expect(res).to.have.cookie('navicore_site_username', E(username));
+        expect(res).to.have.cookie('navicore_site_displayName', E(displayName));
         expect(res).to.have.cookie('navicore_site_token');
 
         expect(new Cookies(res).valueWithName('navicore_site_token')).to.be.string;
@@ -52,22 +56,22 @@ describe('/api/v1/auth/login', async () => {
     it('should return the same token for double login', async () => {
         let res = await chai.request(app)
             .post('/api/v1/auth/login')
-            .send({ username: 'proxy_ios@mapbar.com', password: '0b2gSyBmIVXk' });
+            .send({ username, password });
         expect(res).to.have.status(200);
         expect(res.body.status).equals(200);
 
         const cookies = new Cookies(res);
+        const firstTimeUserName = cookies.valueWithName('navicore_site_username');
         const firstTimeCookie = cookies.valueWithName('navicore_site_token');
 
         res = await chai.request(app)
             .post('/api/v1/auth/login')
-            .set('Cookie', 'navicore_site_username=proxy_ios@mapbar.com'
-                + ';navicore_site_token=' + firstTimeCookie)
-            .send({ username: 'proxy_ios@mapbar.com', password: '0b2gSyBmIVXk' });
+            .set('Cookie', `navicore_site_username=${firstTimeUserName};navicore_site_token=${firstTimeCookie}`)
+            .send({ username, password });
 
         expect(res).to.have.status(200);
-        expect(res).to.have.cookie('navicore_site_username', E('proxy_ios@mapbar.com'));
-        expect(res).to.have.cookie('navicore_site_displayName', E('图吧'));
+        expect(res).to.have.cookie('navicore_site_username', E(username));
+        expect(res).to.have.cookie('navicore_site_displayName', E(displayName));
         expect(res).to.have.cookie('navicore_site_token', firstTimeCookie);
     });
 });
@@ -76,10 +80,10 @@ describe('/api/v1/auth/logout', async () => {
     it('can clear cookie after logout', async () => {
         let res = await chai.request(app)
             .post('/api/v1/auth/login')
-            .send({ username: 'proxy_ios@mapbar.com', password: '0b2gSyBmIVXk' });
+            .send({ username, password });
         expect(res).to.have.status(200);
-        expect(res).to.have.cookie('navicore_site_username', E('proxy_ios@mapbar.com'));
-        expect(res).to.have.cookie('navicore_site_displayName', E('图吧'));
+        expect(res).to.have.cookie('navicore_site_username', E(username));
+        expect(res).to.have.cookie('navicore_site_displayName', E(displayName));
         expect(res).to.have.cookie('navicore_site_token');
 
         res = await chai.request(app)
