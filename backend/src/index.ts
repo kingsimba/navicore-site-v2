@@ -5,8 +5,8 @@ import CookieParser from 'cookie-parser';
 import { globalOptions } from "./global-options";
 
 export const app = express();
-const address = globalOptions.serverOpts.address;
-const port = globalOptions.serverOpts.port;
+const address = globalOptions.server.address;
+const port = globalOptions.server.port;
 
 app.use(CookieParser());
 app.use('/api/v1/docs', docsRouter);

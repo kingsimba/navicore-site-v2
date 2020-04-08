@@ -1,4 +1,5 @@
 import fs from "mz/fs";
+import deepExtend from "deep-extend";
 
 interface LocalUser {
     name: string;
@@ -10,21 +11,32 @@ interface ServerOptions {
     port: number;
 }
 
+interface GlobalOptions {
+    server: ServerOptions;
+    localUsers: LocalUser[];
+}
+
 class GlobalOptions {
-    serverOpts: ServerOptions = { address: 'localhost', port: 8080 };
-    localUsers: LocalUser[] = [];
+    server: ServerOptions = {
+        address: "localhost",
+        port: 8080
+    }
+    localUsers: LocalUser[] = []
 
     constructor() {
         try {
             const root = JSON.parse(fs.readFileSync('navicore-site.json', 'utf8'));
-            this.localUsers = root.localUsers;
-            this.serverOpts = root.server;
+            // merge json options into default options.
+            deepExtend(this.server, root.server);
+            if (root.localUsers) {
+                this.localUsers = root.localUsers;
+            }
         } catch (error) {
         }
     }
 
-    verifyUserAndPassword(username: string, password: string): boolean {
-        const user = this.localUsers.find(o => o.name === username && o.password === password);
+    verifyLocalUser(username: string, password: string): boolean {
+        const user = globalOptions.localUsers.find(o => o.name === username && o.password === password);
         return user != undefined;
     }
 }

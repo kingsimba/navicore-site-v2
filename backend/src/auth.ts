@@ -75,7 +75,7 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
 
   // verify local user
   if (!username.endsWith('@mapbar.com') && !username.endsWith('@navinfo.com')) {
-    if (globalOptions.verifyUserAndPassword(username, password)) {
+    if (globalOptions.verifyLocalUser(username, password)) {
       responseLoginOK(res, username, username);
     }
     else {
