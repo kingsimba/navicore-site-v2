@@ -3,7 +3,7 @@ import express from 'express';
 import passport from 'passport';
 import LdapStrategy from 'passport-ldapauth'
 import bodyParser from 'body-parser'
-import { userManager } from './user-manager'
+import { userManager, TOKEN_TTL } from './user-manager'
 import { globalOptions } from "./global-options";
 
 // provide LDAP options
@@ -45,9 +45,9 @@ var getLdapOptions = function (req: express.Request, callback: (arg0: any, arg1:
 function responseLoginOK(res: express.Response, username: string, displayName: string) {
   const token = Guid.create().toString();
   userManager.saveToken(username, token, displayName);
-  res.cookie('navicore_site_username', username, { maxAge: userManager.maxAge })
-    .cookie('navicore_site_displayName', displayName, { maxAge: userManager.maxAge })
-    .cookie('navicore_site_token', token, { maxAge: userManager.maxAge })
+  res.cookie('navicore_site_username', username, { maxAge: TOKEN_TTL })
+    .cookie('navicore_site_displayName', displayName, { maxAge: TOKEN_TTL })
+    .cookie('navicore_site_token', token, { maxAge: TOKEN_TTL })
     .send({ status: 200, username });
 }
 
@@ -56,10 +56,10 @@ export const authRouter = express.Router();
 passport.use(new LdapStrategy(getLdapOptions));
 authRouter.use(bodyParser.json());
 authRouter.use(passport.initialize());
-authRouter.post('/login', async (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void | Response> => {
+authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void | Response => {
   try {
     // return if the user already has correct cookie
-    const user = await userManager.verifyRequestAndRefreshCookie(req, res);
+    const user = userManager.verifyRequestAndRefreshCookie(req, res);
     if (user) {
       res.send({ status: 200, username: user.username });
       return;

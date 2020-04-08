@@ -3,9 +3,8 @@ import { userManager } from "./user-manager";
 import fs from 'mz/fs';
 import { JSDOM } from 'jsdom'
 
-async function authMiddleware(req: express.Request, res: express.Response, next: () => void) {
-    const user = await userManager.verifyRequestAndRefreshCookie(req, res)
-    if (!user) {
+function authMiddleware(req: express.Request, res: express.Response, next: () => void) {
+    if (!userManager.verifyRequestAndRefreshCookie(req, res)) {
         res.status(401).send({ status: 401, message: 'Please login first' });
     } else {
         next();

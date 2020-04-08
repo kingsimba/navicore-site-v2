@@ -18,10 +18,10 @@ describe('Docs', () => {
     });
 });
 
-describe('/api/v1/docs', async () => {
-    beforeEach( async () => {
-        await userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
-        await userManager.saveToken('god_incarbinate@navinfo.com', '2222-2222', 'God Himself');
+describe('/api/v1/docs', () => {
+    before(async () => {
+        userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
+        userManager.saveToken('god_incarbinate@navinfo.com', '2222-2222', 'God Himself');
     });
 
     it('should return 401 if access token is incorrect', async () => {
