@@ -56,46 +56,48 @@ export const authRouter = express.Router();
 passport.use(new LdapStrategy(getLdapOptions));
 authRouter.use(bodyParser.json());
 authRouter.use(passport.initialize());
-authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void | Response => {
-
-  // return if the user already has correct cookie
-  const user = userManager.verifyRequestAndRefreshCookie(req, res);
-  if (user) {
-    res.send({ status: 200, username: user.username });
-    return;
-  }
-
-  // check username/password not null
-  const username: string = req.body.username;
-  const password: string = req.body.password;
-  if (!username || !password) {
-    res.status(400).send({ status: 400, message: 'Please provide username/password' });
-    return;
-  }
-
-  // verify local user
-  if (!username.endsWith('@mapbar.com') && !username.endsWith('@navinfo.com')) {
-    if (globalOptions.verifyLocalUser(username, password)) {
-      responseLoginOK(res, username, username);
+authRouter.post('/login', async (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void | Response> => {
+  try {
+    // return if the user already has correct cookie
+    const user = await userManager.verifyRequestAndRefreshCookie(req, res);
+    if (user) {
+      res.send({ status: 200, username: user.username });
+      return;
     }
-    else {
-      res.status(401).send({ status: 401, message: 'Invalid username/password' });
+
+    // check username/password not null
+    const username: string = req.body.username;
+    const password: string = req.body.password;
+    if (!username || !password) {
+      res.status(400).send({ status: 400, message: 'Please provide username/password' });
+      return;
     }
-    return;
+
+    // verify local user
+    if (!username.endsWith('@mapbar.com') && !username.endsWith('@navinfo.com')) {
+      if (globalOptions.verifyLocalUser(username, password)) {
+        responseLoginOK(res, username, username);
+      }
+      else {
+        res.status(401).send({ status: 401, message: 'Invalid username/password' });
+      }
+      return;
+    }
+
+    // perform LDAP
+    passport.authenticate('ldapauth', (err, user, info): void => {
+      var error = err || info;
+      if (error) {
+        res.status(401).send({ status: 401, message: error.message });
+      } else if (!user) {
+        res.status(500).send({ status: 500, data: info });
+      } else {
+        responseLoginOK(res, username, user.displayName);
+      }
+    })(req, res, next);
+  } catch (error) {
+    res.status(500).send({ status: 500, error });
   }
-
-  // perform LDAP
-  passport.authenticate('ldapauth', (err, user, info): void => {
-    var error = err || info;
-    if (error) {
-      res.status(401).send({ status: 401, message: error.message });
-    } else if (!user) {
-      res.status(500).send({ status: 500, data: info });
-    } else {
-      responseLoginOK(res, username, user.displayName);
-    }
-  })(req, res, next);
-
 });
 
 authRouter.post('/logout', (req, res) => {

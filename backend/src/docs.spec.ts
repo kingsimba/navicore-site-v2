@@ -19,9 +19,9 @@ describe('Docs', () => {
 });
 
 describe('/api/v1/docs', async () => {
-    before(async () => {
+    beforeEach( async () => {
         await userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
-        await userManager.saveToken('god_incarbinate@navinfo.com', '1111-1111', 'God Himself');
+        await userManager.saveToken('god_incarbinate@navinfo.com', '2222-2222', 'God Himself');
     });
 
     it('should return 401 if access token is incorrect', async () => {
@@ -64,7 +64,7 @@ describe('/api/v1/docs', async () => {
         // But God have access
         res = await chai.request(app)
             .get('/api/v1/docs')
-            .set('Cookie', 'navicore_site_username=god_incarbinate@navinfo.com;navicore_site_token=1111-1111');
+            .set('Cookie', 'navicore_site_username=god_incarbinate@navinfo.com;navicore_site_token=2222-2222');
         expect(res).to.have.status(200);
         expect(res.body.docs).is.an('Array')
             .and.have.lengthOf(3)
