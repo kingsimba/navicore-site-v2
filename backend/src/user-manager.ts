@@ -60,7 +60,7 @@ class UserManager {
         const user = this.tokens && this.tokens.findOne({ token });
         if (user && user.username === username) {
             // update ttl in db
-            const metaObj : any = user;
+            const metaObj: any = user;
             const now = Date.now();
             const lastSaveTime = now - metaObj.meta.created;
             if (lastSaveTime > TOKEN_UPDATE_TIME) {
@@ -69,6 +69,13 @@ class UserManager {
             return user;
         }
         return undefined;
+    }
+
+    removeToken(token: string) {
+        const user = this.tokens && this.tokens.findOne({ token });
+        if (user) {
+            this.tokens.remove(user);
+        }
     }
 
     verifyRequestAndRefreshCookie(req: express.Request, res: express.Response) {

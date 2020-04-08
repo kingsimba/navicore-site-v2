@@ -101,6 +101,7 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
 });
 
 authRouter.post('/logout', (req, res) => {
+  userManager.removeToken(req.cookies.navicore_site_token);
   res.clearCookie('navicore_site_username')
     .clearCookie('navicore_site_displayName')
     .clearCookie('navicore_site_token')
