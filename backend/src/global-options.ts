@@ -5,15 +5,21 @@ interface LocalUser {
     password: string;
 }
 
+interface ServerOptions {
+    address: string;
+    port: number;
+}
+
 class GlobalOptions {
+    serverOpts: ServerOptions = { address: 'localhost', port: 8080 };
     localUsers: LocalUser[] = [];
 
     constructor() {
         try {
             const root = JSON.parse(fs.readFileSync('navicore-site.json', 'utf8'));
             this.localUsers = root.localUsers;
+            this.serverOpts = root.server;
         } catch (error) {
-
         }
     }
 
