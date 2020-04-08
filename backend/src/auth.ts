@@ -5,11 +5,10 @@ import LdapStrategy from 'passport-ldapauth'
 import bodyParser from 'body-parser'
 import { userManager } from './user-manager'
 
-///////////////////////////////////////////////////////////////////////////
-// connect to LDAP server
-var getLDAPConfiguration = function (req: express.Request, callback: (arg0: any, arg1: LdapStrategy.Options) => void) {
-  process.nextTick( () => {
+// provide LDAP options
+var getLdapOptions = function (req: express.Request, callback: (arg0: any, arg1: LdapStrategy.Options) => void) {
 
+  process.nextTick(() => {
     let opts: LdapStrategy.Options = null;
 
     const username: string = req.body.username;
@@ -26,7 +25,6 @@ var getLDAPConfiguration = function (req: express.Request, callback: (arg0: any,
         }
       }
     } else if (username.endsWith('@navinfo.com')) {
-      
       opts = {
         server: {
           url: 'ldap://192.168.0.151:389',
@@ -40,11 +38,12 @@ var getLDAPConfiguration = function (req: express.Request, callback: (arg0: any,
 
     callback(null, opts);
   });
+
 };
 
 export const authRouter = express.Router();
 
-passport.use(new LdapStrategy(getLDAPConfiguration))
+passport.use(new LdapStrategy(getLdapOptions));
 authRouter.use(bodyParser.json());
 authRouter.use(passport.initialize());
 authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void | Response => {
@@ -62,7 +61,7 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
     return;
   }
 
-  // perform MAPBAR LDAP
+  // perform LDAP
   passport.authenticate('ldapauth', (err, user, info): void => {
     var error = err || info;
     if (error) {
