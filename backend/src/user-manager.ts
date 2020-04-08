@@ -3,6 +3,7 @@ import loki from "lokijs";
 import { sleep } from "./utils";
 
 export const TOKEN_TTL = 1000 * 3600 * 24 * 7; // 7 days
+const TOKEN_UPDATE_TIME = 1000 * 3600 * 24; // 1 days
 
 class AuthUser {
     constructor(public username: string, public token: string, public displayName: string) { }
@@ -58,6 +59,13 @@ class UserManager {
     findUserWithToken(username: string, token: string): AuthUser {
         const user = this.tokens && this.tokens.findOne({ token });
         if (user && user.username === username) {
+            // update ttl in db
+            const metaObj : any = user;
+            const now = Date.now();
+            const lastSaveTime = now - metaObj.meta.created;
+            if (lastSaveTime > TOKEN_UPDATE_TIME) {
+                this.tokens.update(user);
+            }
             return user;
         }
         return undefined;
