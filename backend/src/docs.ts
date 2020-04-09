@@ -1,7 +1,6 @@
 import express from 'express';
 import { userManager } from "./user-manager";
 import fs from 'mz/fs';
-import { JSDOM } from 'jsdom'
 
 function authenticationMiddleware(req: express.Request, res: express.Response, next: () => void) {
     if (!userManager.verifyRequestAndRefreshCookie(req, res)) {
@@ -22,14 +21,21 @@ async function authorizationMiddleware(req: express.Request, res: express.Respon
 // find document name in '<a class="icon icon-home>Document Name</a>'
 async function getDocTitle(dirName: string): Promise<string> {
     try {
-        const dom = new JSDOM(await fs.readFile(`docs/${dirName}/index.html`, 'utf8'));
-        let title = dom.window.document.querySelector(".icon-home").textContent;
-        const m = title.match(/[\s\r\n]*(.+)[\s\r\n]*/)
-        if (m) {
-            return m[1];
-        } else {
-            return null;
+        const htmlText = await fs.readFile(`docs/${dirName}/index.html`, 'utf8');
+        // DOM will be more safe. But it's slow
+        // let title = dom.window.document.querySelector(".icon-home").textContent;
+        let titleStart = htmlText.indexOf('class="icon icon-home"');
+        if (titleStart != -1) {
+            titleStart = htmlText.indexOf('>', titleStart);
+            const titleEnd = htmlText.indexOf('<', titleStart);
+            const title = htmlText.substr(titleStart, titleEnd - titleStart);
+            const m = title.match(/>[\s\r\n]*(.+)[\s\r\n]*/)
+            if (m) {
+                return m[1];
+            }
         }
+        return null;
+        
     } catch (error) {
         return null;
     }
