@@ -29,7 +29,7 @@ class UserManager {
                     autoload: true,
                     autoloadCallback: databaseInitialize,
                     autosave: true,
-                    autosaveInterval: 5000
+                    autosaveInterval: 1000 * 60 // one minute
                 });
 
                 function databaseInitialize() {
