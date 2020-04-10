@@ -11,6 +11,7 @@
         "autosave",
         "ldapauth",
         "myname",
+        "mypassword",
         "mytoken"
     ]
 }
