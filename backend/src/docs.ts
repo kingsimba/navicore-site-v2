@@ -1,9 +1,9 @@
 import express from 'express';
-import { userManager } from "./user-manager";
+import { tokenManager } from "./token-manager";
 import fs from 'mz/fs';
 
 function authenticationMiddleware(req: express.Request, res: express.Response, next: () => void) {
-    if (!userManager.verifyRequestAndRefreshCookie(req, res)) {
+    if (!tokenManager.verifyRequestAndRefreshCookie(req, res)) {
         res.status(401).send({ status: 401, message: 'Please login first' });
     } else {
         next();
@@ -22,17 +22,14 @@ async function authorizationMiddleware(req: express.Request, res: express.Respon
 async function getDocTitle(dirName: string): Promise<string> {
     try {
         const htmlText = await fs.readFile(`docs/${dirName}/index.html`, 'utf8');
-        // DOM will be more safe. But it's slow
+        // I should have used DOM, But it's too slow.
         // let title = dom.window.document.querySelector(".icon-home").textContent;
-        let titleStart = htmlText.indexOf('class="icon icon-home"');
+        let titleStart = htmlText.indexOf('class="icon icon-home">');
         if (titleStart != -1) {
-            titleStart = htmlText.indexOf('>', titleStart);
+            titleStart = htmlText.indexOf('>', titleStart) + 1;
             const titleEnd = htmlText.indexOf('<', titleStart);
             const title = htmlText.substr(titleStart, titleEnd - titleStart);
-            const m = title.match(/>[\s\r\n]*(.+)[\s\r\n]*/)
-            if (m) {
-                return m[1];
-            }
+            return title.trim();
         }
         return null;
         

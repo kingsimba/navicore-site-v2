@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { app } from './index';
-import { userManager } from './user-manager';
+import { tokenManager } from './token-manager';
 import { isUserAuthorized } from "./docs";
 
 const expect = chai.expect;
@@ -20,9 +20,9 @@ describe('Docs', () => {
 
 describe('/api/v1/docs', () => {
     before(async () => {
-        await userManager.init();
-        userManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
-        userManager.saveToken('god_incarbinate@navinfo.com', '2222-2222', 'God Himself');
+        await tokenManager.init();
+        tokenManager.saveToken('simba', '1111-1111', 'Zhaolin Feng');
+        tokenManager.saveToken('god_incarbinate@navinfo.com', '2222-2222', 'God Himself');
     });
 
     it('should return 401 if access token is incorrect', async () => {

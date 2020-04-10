@@ -3,7 +3,7 @@ import express from 'express';
 import passport from 'passport';
 import LdapStrategy from 'passport-ldapauth'
 import bodyParser from 'body-parser'
-import { userManager, TOKEN_TTL } from './user-manager'
+import { tokenManager, TOKEN_TTL } from './token-manager'
 import { globalOptions } from "./global-options";
 
 // provide LDAP options
@@ -13,7 +13,7 @@ var getLdapOptions = function (req: express.Request, callback: (arg0: any, arg1:
     let opts: LdapStrategy.Options = null;
 
     const username: string = req.body.username;
-    const nameWithoutSuffix = username.substr(0, username.lastIndexOf('@'));
+    const nameWithoutSuffix = username.substr(0, username.indexOf('@'));
 
     if (username.endsWith('@mapbar.com')) {
       opts = {
@@ -44,7 +44,7 @@ var getLdapOptions = function (req: express.Request, callback: (arg0: any, arg1:
 
 function responseLoginOK(res: express.Response, username: string, displayName: string) {
   const token = Guid.create().toString();
-  userManager.saveToken(username, token, displayName);
+  tokenManager.saveToken(username, token, displayName);
   res.cookie('navicore_site_username', username, { maxAge: TOKEN_TTL })
     .cookie('navicore_site_displayName', displayName, { maxAge: TOKEN_TTL })
     .cookie('navicore_site_token', token, { maxAge: TOKEN_TTL })
@@ -54,12 +54,12 @@ function responseLoginOK(res: express.Response, username: string, displayName: s
 export const authRouter = express.Router();
 
 passport.use(new LdapStrategy(getLdapOptions));
-authRouter.use(bodyParser.json());
+authRouter.use(bodyParser.json());  // This middleware will add `response.body` by parsing `response.txt` as json.
 authRouter.use(passport.initialize());
 authRouter.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction): void => {
   try {
     // return if the user already has correct cookie
-    const user = userManager.verifyRequestAndRefreshCookie(req, res);
+    const user = tokenManager.verifyRequestAndRefreshCookie(req, res);
     if (user) {
       res.send({ status: 200, username: user.username });
       return;
@@ -101,7 +101,7 @@ authRouter.post('/login', (req: express.Request, res: express.Response, next: ex
 });
 
 authRouter.post('/logout', (req, res) => {
-  userManager.removeToken(req.cookies.navicore_site_token);
+  tokenManager.removeToken(req.cookies.navicore_site_token);
   res.clearCookie('navicore_site_username')
     .clearCookie('navicore_site_displayName')
     .clearCookie('navicore_site_token')

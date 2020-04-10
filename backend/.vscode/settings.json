@@ -5,5 +5,12 @@
         "dist": true,
         ".gitignore": true
     },
-    "restructuredtext.confPath": ""
+    "restructuredtext.confPath": "",
+    "cSpell.ignoreWords": [
+        "autoload",
+        "autosave",
+        "ldapauth",
+        "myname",
+        "mytoken"
+    ]
 }
