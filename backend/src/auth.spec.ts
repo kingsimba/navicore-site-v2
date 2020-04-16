@@ -8,8 +8,8 @@ chai.use(chaiHttp);
 
 const E = encodeURIComponent;
 
-const username = 'proxy_ios@mapbar.com';
-const password = '0b2gSyBmIVXk';
+const username = '';
+const password = '';
 const displayName = '图吧';
 
 class Cookies {
@@ -33,6 +33,11 @@ class Cookies {
 describe('/api/v1/auth/login', async () => {
 
     context('For LDAP users', () => {
+
+        it('should have valid username before testing', async () => {
+            expect(username).is.not.empty;
+            expect(password).is.not.empty;
+        });
 
         it('without password, it should return 400', async () => {
             const res = await chai.request(app)
