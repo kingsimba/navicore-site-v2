@@ -1,3 +1,5 @@
 /backend/tokens.json
 /backend/dist
 node_modules
+/backend/beijing2shanghai.json
+/backend/tokens.db
