@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsc && node .",
     "prebuild" : "node ./clean_dist_folder.js",
-    "build": "tsc"
+    "build": "tsc && ncc build dist/index.js -o dist --minify",
+    "postbuild": "rename dist\\index.js nc-backend.js"
   },
   "keywords": [],
   "author": "",

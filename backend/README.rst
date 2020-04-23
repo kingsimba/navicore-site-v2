@@ -147,3 +147,32 @@ Response
 *  401: If username or token is incorrect.
 *  403: If the user is not permitted to access the document.
 *  404: If the file is not found.
+
+Return CA information
+---------------------
+
+Request
+^^^^^^^
+
+::
+
+   GET /ca
+
+host
+   The host name to retrieve CA informat. Like 'navicore.cn'.
+
+Response
+^^^^^^^^
+
+*  200: OK
+   
+   .. code-block:: js
+   
+      {
+         "host": "navicore.cn",
+         "port": 443,
+         "daysLeft": 127
+      }
+
+*  400: Parameter is missing
+*  500: Server error

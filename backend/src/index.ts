@@ -23,12 +23,15 @@ app.use('/api/v1/docs', docsRouter);
 app.use('/api/v1/auth', authRouter);
 app.get('/api/v1/ca', async function (req, res) {
     try {
-        const { daysLeft, host, port } = await checkCertExpiration('navicore.cn');
-        res.send({ host, port, daysLeft });
+        if (req.query.host == undefined) {
+            res.status(400).send({ status: 400, message: 'Please specify host' });
+        } else {
+            const { daysLeft, host, port } = await checkCertExpiration(req.query.host);
+            res.send({ host, port, daysLeft });
+        }
     } catch (err) {
         res.status(500).send({ status: 500, err });
     }
-    res.status(404).send('404: Page not Found');
 });
 
 // start the Express server
