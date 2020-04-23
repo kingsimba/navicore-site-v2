@@ -175,4 +175,25 @@ Response
       }
 
 *  400: Parameter is missing
+   
+   .. code-block:: js
+   
+      {
+         status: 400,
+         message: "Please specify host"
+      }
+
 *  500: Server error
+
+   .. code-block:: js
+
+      {
+         status: 500,
+         err: {
+            errno: -3008,
+            code: "ENOTFOUND",
+            syscall: "getaddrinfo",
+            hostname: "somebadhostnamewhichneverexist.com",
+            name: "CHECK_CERT_EXPIRATION_COMM"
+         }
+      }
