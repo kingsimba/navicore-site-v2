@@ -11,8 +11,8 @@ import { LoginService } from '../login.service';
     styleUrls: ['./title-bar.component.scss']
 })
 export class TitleBarComponent implements OnInit, OnDestroy {
-    @ViewChild('loginBox', { static: false }) loginBox: NzModalRef;
-    @ViewChild('passwordInput', { static: false }) passwordInput: ElementRef;
+    @ViewChild('loginBox') loginBox: NzModalRef;
+    @ViewChild('passwordInput') passwordInput: ElementRef;
 
     loginMessage = '';
     passwordVisible = false;

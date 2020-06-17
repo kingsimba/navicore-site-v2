@@ -12,10 +12,10 @@ import { Lightbox } from 'ngx-lightbox';
     styleUrls: ['./docs.component.scss']
 })
 export class DocsComponent implements OnInit, OnDestroy {
-    @ViewChild('docContent', { static: false }) docContent: ElementRef;
-    @ViewChild('navigation', { static: false }) navigation: ElementRef;
-    @ViewChild('siderBar', { static: false }) siderBar: ElementRef;
-    @ViewChild('footer', { static: false }) footer: ElementRef;
+    @ViewChild('docContent') docContent: ElementRef;
+    @ViewChild('navigation') navigation: ElementRef;
+    @ViewChild('siderBar') siderBar: ElementRef;
+    @ViewChild('footer') footer: ElementRef;
 
     titleBarBottom: number;
     titleBarVisible = true;
