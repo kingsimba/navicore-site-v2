@@ -1,5 +1,3 @@
-.. image:: https://travis-ci.com/kingsimba/navicore-site-v2.svg?branch=master&status=started
-
 NaviCore Site Backend API Document
 ==================================
 
