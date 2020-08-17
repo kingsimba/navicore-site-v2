@@ -34,6 +34,6 @@ printCommand("rm js");
 deleteFolderRecursive('./js');
 
 exec('npx tsc');
-exec('ncc build js/index.js -o dist --minify');
+exec('npx ncc build js/index.js -o dist --minify');
 
 fs.renameSync('dist/index.js', 'dist/user-center');
