@@ -33,7 +33,7 @@ deleteFolderRecursive('./dist');
 printCommand("rm js");
 deleteFolderRecursive('./js');
 
-exec('node_modules\\.bin\\tsc');
+exec('npx tsc');
 exec('ncc build js/index.js -o dist --minify');
 
 fs.renameSync('dist/index.js', 'dist/user-center');
