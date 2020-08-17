@@ -6,12 +6,14 @@ import { LoginService } from '../login.service';
     templateUrl: './navizero.component.html',
     styleUrls: ['./navizero.component.scss']
 })
-export class NavizeroComponent implements OnInit {
+export class NaviZeroComponent implements OnInit {
 
     images = [
-        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/01badf49f62874d2914cbeea8efc1c7eb3977f9e2',
-        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/04a92659fd343469a0f1069e7aa22d69fb03845e3',
-        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/0ab3f64178cf143690f7f881c81016e677375c5ca'
+        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/0df0ae43179a84dfa3ab136c07c20a2b857402ec9',
+        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/09e2344073ded851e79686b2201ed71a876414c92',
+        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/04cca04f952c842a40bad9d72b3aa651c1f23ce33',
+        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/06a44436a66bd95312234a9d5df6144f0ff40c5cc',
+        'http://file.market.xiaomi.com/thumbnail/jpeg/l395/AppStore/09f0a4531a978bdf49ab1d6c0322002e8e743c7ae',
     ];
 
     downloads = [

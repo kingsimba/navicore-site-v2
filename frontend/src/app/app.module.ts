@@ -72,7 +72,7 @@ const ICONS = [
 ];
 
 import { HomePageComponent } from './home-page/home-page.component';
-import { NavizeroComponent } from './navizero/navizero.component';
+import { NaviZeroComponent } from './navizero/navizero.component';
 import { SdkComponent } from './sdk/sdk.component';
 import { OpenSourceComponent } from './open-source/open-source.component';
 import { IteComponent } from './ite/ite.component';
@@ -88,7 +88,7 @@ registerLocaleData(en);
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
     { path: 'sdk', component: SdkComponent },
-    { path: 'navizero', component: NavizeroComponent },
+    { path: 'navizero', component: NaviZeroComponent },
     { path: 'api', component: ApiComponent },
     { path: 'ite', component: IteComponent },
     { path: 'open-source', component: OpenSourceComponent },
@@ -108,7 +108,7 @@ const ROUTES: Routes = [
     declarations: [
         AppComponent,
         HomePageComponent,
-        NavizeroComponent,
+        NaviZeroComponent,
         SdkComponent,
         OpenSourceComponent,
         IteComponent,

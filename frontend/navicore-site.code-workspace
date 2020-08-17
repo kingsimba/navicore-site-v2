@@ -5,6 +5,11 @@
 		}
 	],
 	"settings": {
-		"explorer.compactFolders": false
+		"explorer.compactFolders": false,
+		"cSpell.words": [
+			"Navi",
+			"mapbar",
+			"navizero"
+		]
 	}
 }
