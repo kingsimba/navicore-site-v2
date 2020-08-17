@@ -17,8 +17,6 @@ cache:
     - ./frontend/node_modules
     - ./backend/node_modules
 
-before_script: cd frontend
-
 install:
   - cd frontend
   - npm install
@@ -26,6 +24,8 @@ install:
   - npm install
 
 script:
-  - cd frontend
+  - cd ../frontend
   - ng build --prod
+  - cd ../backend
+  - npm run build
   #- npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
