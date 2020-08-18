@@ -1,4 +1,5 @@
-.. image:: https://travis-ci.com/kingsimba/navicore-site-v2.svg?branch=master&status=started
+.. image:: https://travis-ci.com/kingsimba/navicore-site-v2.svg?branch=master
+  :target: https://travis-ci.com/kingsimba/navicore-site-v2/
 
 NaviCore Department Site
 ========================
