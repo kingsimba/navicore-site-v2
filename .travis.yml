@@ -23,9 +23,12 @@ install:
   - cd ../backend
   - npm install
 
+before_script:
+  - npm install -g gulp-cli
+
 script:
   - cd ../frontend
   - ng build --prod
   - cd ../backend
-  - npm run build
+  - gulp
   #- npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
