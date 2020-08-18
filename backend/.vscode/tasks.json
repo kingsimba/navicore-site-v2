@@ -4,6 +4,25 @@
     "version": "2.0.0",
     "tasks": [
       {
+        "label": "tsc watch",
+        "type": "typescript",
+        "tsconfig": "tsconfig.json",
+        "option": "watch",
+        "problemMatcher": [
+          "$tsc-watch"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "presentation": {
+          "reveal": "never",
+          "echo": false,
+          "focus": false,
+          "panel": "dedicated"
+        }
+      },
+      {
         "type": "npm",
         "script": "build",
         "group": "build",
