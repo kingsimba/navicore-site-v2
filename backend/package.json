@@ -4,7 +4,7 @@
   "description": "Develop and ExpressJS webserver using TypeScript",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npx tsc && node .",
+    "start": "npx tsc && node js/index.js",
     "build": "npx gulp"
   },
   "keywords": [],

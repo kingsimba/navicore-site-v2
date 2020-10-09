@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener, OnDestroy, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LoginService } from '../login.service';
@@ -20,7 +20,8 @@ export class DocsComponent implements OnInit, OnDestroy {
     titleBarBottom: number;
     titleBarVisible = true;
     siderBarHeight: number;
-    currentDocUrl: string;
+    currentDocPath: string; // without tag
+    currentDocTag: string;  // tag
     loadingDocUrl: string;
     loadingDocument: boolean;
     isCollapsed = true;
@@ -102,7 +103,7 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     updatePageIfNeeded() {
         if (!this.loginService.loginSucceeded) {
-            this.currentDocUrl = '';
+            this.currentDocPath = '';
             return;
         }
 
@@ -116,13 +117,14 @@ export class DocsComponent implements OnInit, OnDestroy {
         this.openLink(url);
     }
 
-    loadPage<T>(docUrl: string): Observable<T> {
+    loadPage<T>(docPath: string, tag: string): Observable<T> {
         const observable = new Observable<T>((observer) => {
-            const path = docUrl.substring(0, docUrl.lastIndexOf('/'));
-            this.currentDocUrl = docUrl;
+            const path = docPath.substring(0, docPath.lastIndexOf('/'));
+            this.currentDocPath = docPath;
+            this.currentDocTag = tag;
             this.loadingDocument = true;
 
-            const subscription = this.http.get(`/api/v1${docUrl}`, { responseType: 'text' }).subscribe({
+            const subscription = this.http.get(`/api/v1${docPath}`, { responseType: 'text' }).subscribe({
                 next: value => {
                     const parser = new DOMParser();
                     const doc: HTMLDocument = parser.parseFromString(value, 'text/html');
@@ -138,13 +140,13 @@ export class DocsComponent implements OnInit, OnDestroy {
                         images[i].addEventListener('click', this.openLightbox.bind(this));
                     }
 
-                    this.correctLinks(mainDocument, docUrl, path);
+                    this.correctLinks(mainDocument, docPath, path);
 
                     this.docContent.nativeElement.innerHTML = '';
                     this.docContent.nativeElement.insertAdjacentElement('beforeend', mainDocument);
 
                     const navigationEle = this.getNavigationElement(doc);
-                    this.correctLinks(navigationEle, docUrl, path);
+                    this.correctLinks(navigationEle, docPath, path);
                     this.navigation.nativeElement.innerHTML = '';
                     this.navigation.nativeElement.insertAdjacentElement('beforeend', navigationEle);
                     this.loadingDocument = false;
@@ -159,7 +161,7 @@ export class DocsComponent implements OnInit, OnDestroy {
 
                     // footer
                     const footerNode = doc.querySelector('.rst-footer-buttons');
-                    this.correctLinks(footerNode, docUrl, path);
+                    this.correctLinks(footerNode, docPath, path);
                     this.makeFootBar(footerNode);
                 },
                 error: err => {
@@ -245,18 +247,18 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
 
     openLink(url: string, navigateTo: boolean = false): void {
-        const docUrl = this.getDocUrlFromFullUrl(url);
+        const [docPath, tag] = this.splitUrlIntoPathAndTag(url);
 
-        if (!this.urlIsDocument(docUrl)) {
-            window.open(`/api/v1${docUrl}`, '_blank');
+        if (!this.urlIsDocument(docPath)) {
+            window.open(`/api/v1${docPath}`, '_blank');
             return;
         }
 
-        if (this.currentDocUrl !== docUrl) {
+        if (this.currentDocPath !== docPath) {
             if (this.docSubs) {
                 this.docSubs.unsubscribe();
             }
-            this.docSubs = this.loadPage(docUrl).subscribe({
+            this.docSubs = this.loadPage(docPath, tag).subscribe({
                 next: value => {
                     this.router.navigateByUrl(url);
                 }
@@ -266,14 +268,15 @@ export class DocsComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getDocUrlFromFullUrl(fullUrl: string): string {
+    private splitUrlIntoPathAndTag(fullUrl: string): [string, string] {
         // trim #anchor from url
-        let docUrl: string = fullUrl;
+        const docUrl: string = fullUrl;
         const anchorIndex = docUrl.lastIndexOf('#');
         if (anchorIndex !== -1) {
-            docUrl = docUrl.substring(0, docUrl.lastIndexOf('#'));
+            return [docUrl.substring(0, anchorIndex), docUrl.substring(anchorIndex + 1)];
+        } else {
+            return [docUrl, ''];
         }
-        return docUrl;
     }
 
     public toggleCollapsed(): void {
