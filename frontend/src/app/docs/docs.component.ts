@@ -302,7 +302,6 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     private isExternalLink(url: string) {
         return (url.startsWith('http://') || url.startsWith('https://'))
-            && !url.includes(location.hostname)
             && !url.startsWith('#');
     }
 
