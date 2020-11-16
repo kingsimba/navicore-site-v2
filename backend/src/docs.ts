@@ -24,7 +24,7 @@ async function getDocTitle(dirName: string): Promise<string> {
         const htmlText = await fs.readFile(`docs/${dirName}/index.html`, 'utf8');
         // I should have used DOM, But it's too slow.
         // let title = dom.window.document.querySelector(".icon-home").textContent;
-        let titleStart = htmlText.indexOf('class="icon icon-home">');
+        let titleStart = htmlText.indexOf('class="icon icon-home"');
         if (titleStart != -1) {
             titleStart = htmlText.indexOf('>', titleStart) + 1;
             const titleEnd = htmlText.indexOf('<', titleStart);
@@ -32,7 +32,6 @@ async function getDocTitle(dirName: string): Promise<string> {
             return title.trim();
         }
         return null;
-        
     } catch (error) {
         return null;
     }
