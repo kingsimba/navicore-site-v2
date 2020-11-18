@@ -16,12 +16,6 @@
             "outFiles": [
                 "${workspaceFolder}/js/**/*.js"
             ]
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Nodemon",
-            "program": "${workspaceFolder}/node_modules/nodemon/bin/nodemon.js"
         }
     ]
 }
