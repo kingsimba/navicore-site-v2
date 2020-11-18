@@ -1,34 +1,27 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558 
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "tsc watch",
-        "type": "typescript",
-        "tsconfig": "tsconfig.json",
-        "option": "watch",
-        "problemMatcher": [
-          "$tsc-watch"
-        ],
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        },
-        "presentation": {
-          "reveal": "never",
-          "echo": false,
-          "focus": false,
-          "panel": "dedicated"
-        }
+  // See https://go.microsoft.com/fwlink/?LinkId=733558 
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    // This task enables Ctrl+Shift+B to build & watch the project
+    {
+      "label": "tsc watch",
+      "type": "typescript",
+      "tsconfig": "tsconfig.json",
+      "option": "watch",
+      "problemMatcher": [
+        "$tsc-watch" // send result to PROBLEMS panel
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true // default task
       },
-      {
-        "type": "npm",
-        "script": "build",
-        "group": "build",
-        "problemMatcher": [],
-        "label": "npm: build",
-        "detail": "node bin/build.js"
+      "presentation": {
+        "reveal": "never", // build in background
+        "echo": false,
+        "focus": false,
+        "panel": "dedicated"
       }
-    ]
+    }
+  ]
 }

@@ -5,6 +5,7 @@
         "dist": true,
         ".gitignore": true
     },
+    "editor.formatOnSave": true,
     "restructuredtext.confPath": "",
     "cSpell.ignoreWords": [
         "autoload",

@@ -7,8 +7,8 @@
 	"settings": {
 		"cSpell.words": [
 			"lokijs",
-			"navicore"
-		],
-		"debug.internalConsoleOptions": "openOnSessionStart"
+			"navicore",
+			"respawn"
+		]
 	}
 }

@@ -2,9 +2,14 @@
   "name": "navicore-site",
   "version": "1.0.0",
   "description": "Develop and ExpressJS webserver using TypeScript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kingsimba/navicore-site-v2"
+  },
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx webpack"
+    "build": "npx webpack",
+    "watch": "ts-node-dev --respawn -- src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -37,9 +42,10 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "colors": "^1.4.0",
-    "mocha": "^7.1.1",
+    "mocha": "^8.2.1",
     "ts-loader": "^8.0.11",
-    "typescript": "^3.9.7",
+    "ts-node-dev": "^1.0.0",
+    "typescript": "^4.0.5",
     "webpack": "^5.5.0",
     "webpack-cli": "^4.2.0"
   }

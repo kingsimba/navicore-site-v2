@@ -10,7 +10,7 @@ const E = encodeURIComponent;
 
 const username = '';
 const password = '';
-const displayName = '图吧';
+const displayName = '';
 
 class Cookies {
     private cookies: any[];
@@ -35,7 +35,7 @@ describe('/api/v1/auth/login', async () => {
     context('For LDAP users', () => {
 
         it('should have valid username before testing', async () => {
-            expect(username).is.not.empty;
+            expect(username, 'Please enter valid user information to pass all tests').is.not.empty;
             expect(password).is.not.empty;
         });
 
