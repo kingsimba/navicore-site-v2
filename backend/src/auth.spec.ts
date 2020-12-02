@@ -8,6 +8,7 @@ chai.use(chaiHttp);
 
 const E = encodeURIComponent;
 
+// Enter correct information to pass all tests
 const username = '';
 const password = '';
 const displayName = '';

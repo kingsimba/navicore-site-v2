@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npx webpack",
-    "watch": "ts-node-dev --respawn -- src/index.ts"
+    "dev": "ts-node-dev --respawn -- src/index.ts"
   },
   "keywords": [],
   "author": "",

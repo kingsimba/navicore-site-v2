@@ -17,7 +17,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        filename: 'bundle.js',
+        filename: 'nc-site-backend.js',
         path: path.resolve(__dirname, 'dist'),
     },
     target: 'node'

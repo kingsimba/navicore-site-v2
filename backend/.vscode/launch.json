@@ -7,8 +7,8 @@
         {
             "type": "node-terminal",
             "request": "launch",
-            "name": "Run npm watch",
-            "command": "npm run watch"
+            "name": "Run npm dev",
+            "command": "npm run dev"
         }
     ]
 }
