@@ -135,9 +135,17 @@ export class DocsComponent implements OnInit, OnDestroy {
                     for (let i = images.length; i--;) {
                         const src = images[i].getAttribute('src');
 
+                        // bind lightbox
                         images[i].setAttribute('src', `/api/v1${path}/${src}`);
                         images[i].setAttribute('style', `cursor: pointer`);
                         images[i].addEventListener('click', this.openLightbox.bind(this));
+
+                        // Remove outer link. <a><img /></a>
+                        // Because we will use lightbox to support click & enlarge.
+                        const parent = images[i].parentElement;
+                        if (parent.tagName === 'A' && parent.childNodes.length === 1) {
+                            parent.replaceWith(images[i]);
+                        }
                     }
 
                     this.correctLinks(mainDocument, docPath, path);
@@ -241,8 +249,27 @@ export class DocsComponent implements OnInit, OnDestroy {
         return navigation;
     }
 
+    /**
+     * Remove "/../" in path. For example, change "aaa/bbb/.../ccc/ddd" into "aaa/ccc/ddd".
+     */
+    normalize(url: string): string {
+        if (url.indexOf('/../') === -1) {
+            return url;
+        } else {
+            const pieces = url.split('/');
+            for (let i = 0; i < pieces.length - 1; i++) {
+                if (pieces[i + 1] === '..') {
+                    pieces.splice(i, 2);
+                    i--;
+                }
+            }
+            return pieces.join('/');
+        }
+    }
+
     onClickLink(doc: any) {
-        const url = doc.currentTarget.getAttribute('url');
+        let url = doc.currentTarget.getAttribute('url');
+        url = this.normalize(url);
         this.openLink(url, true);
     }
 
