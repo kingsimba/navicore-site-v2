@@ -30,5 +30,5 @@ script:
   - cd ../frontend
   - ng build --prod
   - cd ../backend
-  - gulp
+  - npm run build
   #- npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
