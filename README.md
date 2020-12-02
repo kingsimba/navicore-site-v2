@@ -1,5 +1,4 @@
-.. image:: https://travis-ci.com/kingsimba/navicore-site-v2.svg?branch=master
-  :target: https://travis-ci.com/kingsimba/navicore-site-v2/
+[![CI](https://travis-ci.com/kingsimba/navicore-site-v2.svg?branch=master)](https://travis-ci.com/kingsimba/navicore-site-v2/)
 
 # NaviCore Department Site
 
@@ -7,6 +6,8 @@ This repository is the source code of our department website: https://navicore.c
 
 It contains the frontend and the backend.
 The backend is used for LDAP login and online document browsing.
+
+![HomePage](images/homepage.png)
 
 ## Main Feature
 
