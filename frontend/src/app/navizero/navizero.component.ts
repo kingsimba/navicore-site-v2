@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
 
 @Component({
     selector: 'app-navizero',
@@ -54,7 +53,7 @@ export class NaviZeroComponent implements OnInit {
         }
     ];
 
-    constructor(public loginService: LoginService) { }
+    constructor() { }
 
     ngOnInit() {
     }

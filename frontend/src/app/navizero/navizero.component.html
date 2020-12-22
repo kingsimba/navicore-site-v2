@@ -8,7 +8,7 @@
     <p>并且，它已经内部全部开源。各项目部可以在它的基础上做改造，做项目定制。</p>
 
     <div class="scrolling-wrapper-flexbox">
-        <img [src]="img" *ngFor="let img of images"/>
+        <img [src]="img" *ngFor="let img of images" />
     </div>
 
     <h2>下载</h2>
@@ -24,26 +24,23 @@
     <p>源代码只能从公司内网访问。</p>
     <ul>
         <li>
-            <a (click)="loginService.download('https://gitlab.mapbar.com/navicore/navi-zero-ios')">
+            <app-protected-link href="https://gitlab.mapbar.com/navicore/navi-zero-ios">
                 iOS版代码仓库
-            </a>
+            </app-protected-link>
         </li>
         <li>
-            <a (click)="loginService.download('https://gitlab.mapbar.com/navicore/navi-zero-android')">
+            <app-protected-link href="https://gitlab.mapbar.com/navicore/navi-zero-android">
                 Android版代码仓库
-            </a>
+            </app-protected-link>
         </li>
     </ul>
 
     <h2>其它资料</h2>
     <ul>
         <li *ngFor="let ref of references">
-            <a [href]="ref.link" *ngIf="ref.link.startsWith('http')">
+            <app-protected-link [href]="ref.link">
                 {{ ref.title }}
-            </a>
-            <a [routerLink]="ref.link" *ngIf="!ref.link.startsWith('http')">
-                {{ ref.title }}
-            </a>
+            </app-protected-link>
         </li>
     </ul>
 </div>

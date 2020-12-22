@@ -3,3 +3,4 @@
 node_modules
 /backend/beijing2shanghai.json
 /backend/tokens.db
+/frontend/debug.log

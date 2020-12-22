@@ -1,0 +1,9 @@
+<ng-template #content>
+    <ng-content></ng-content>
+</ng-template>
+<a [href]="this.href" *ngIf="loginService.loginSucceeded">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</a>
+<a (click)="this.alert()" *ngIf="!loginService.loginSucceeded">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</a>

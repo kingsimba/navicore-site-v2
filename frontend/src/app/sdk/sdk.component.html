@@ -19,9 +19,9 @@
 
     <ul>
         <li *ngFor="let file of downloads">
-            <a (click)="loginService.download(file.link)">
+            <app-protected-link [href]="file.link">
                 {{ file.title }}
-            </a>
+            </app-protected-link>
         </li>
     </ul>
 
@@ -29,9 +29,9 @@
     <p>只对内开源，代码只能从内网访问。</p>
     <ul>
         <li *ngFor="let repo of codesRepos">
-            <a (click)="loginService.download(repo.link)">
+            <app-protected-link [href]="repo.link">
                 {{ repo.title }}
-            </a>
+            </app-protected-link>
         </li>
     </ul>
 

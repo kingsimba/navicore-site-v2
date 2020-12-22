@@ -82,6 +82,7 @@ import { HtmlPageComponent } from './navizero/html-page/html-page.component';
 import { TitleBarComponent } from './title-bar/title-bar.component';
 import { DocsComponent } from './docs/docs.component';
 import { DocListComponent } from './doc-list/doc-list.component';
+import { ProtectedLinkComponent } from './protected-link/protected-link.component';
 
 registerLocaleData(en);
 
@@ -117,7 +118,8 @@ const ROUTES: Routes = [
         HtmlPageComponent,
         TitleBarComponent,
         DocsComponent,
-        DocListComponent
+        DocListComponent,
+        ProtectedLinkComponent
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-ite',
@@ -8,7 +7,7 @@ import { LoginService } from '../login.service';
 })
 export class IteComponent implements OnInit {
 
-  constructor(public loginService: LoginService) { }
+  constructor() { }
 
   ngOnInit() {
   }

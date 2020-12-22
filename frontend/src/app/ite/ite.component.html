@@ -11,15 +11,17 @@
     </p>
 
     <img src="assets/ite.png" style="max-width:100%;" />
-    
+
     <h1>下载</h1>
 
     <p>
-        <a (click)="loginService.download('http://navicore.mapbar.com/ncgit/ite_win32.zip')">Windows 8/10 下载</a>
+        <app-protected-link href="http://navicore.mapbar.com/ncgit/ite_win32.zip">Windows 8/10 下载</app-protected-link>
         &nbsp;<nz-tag [nzColor]="'gold'">Windows 7 不再支持</nz-tag>
     </p>
 
     <h1>代码</h1>
     <p>只能在内网环境访问</p>
-    <p><a (click)="loginService.download('https://gitlab.mapbar.com/navicore/ite')">ITE代码仓库</a></p>
+    <p>
+        <app-protected-link href="https://gitlab.mapbar.com/navicore/ite">ITE代码仓库</app-protected-link>
+    </p>
 </div>
