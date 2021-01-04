@@ -16,9 +16,7 @@ class GlobalOptions {
     ]
 
     // super users can read all documents
-    superUsers = [
-        'some_super_user@navinfo.com'
-    ]
+    superUsers: String[] = []
 
     constructor() {
         this.localUsers = []
@@ -33,6 +31,12 @@ class GlobalOptions {
             // load local users
             if (root.localUsers) {
                 this.localUsers = root.localUsers;
+            }
+
+            if (root.superUsers) {
+                this.superUsers = root.superUsers;
+            } else {
+                this.superUsers = [];
             }
         } catch (error) {
         }
