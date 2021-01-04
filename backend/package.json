@@ -8,7 +8,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx webpack",
+    "build": "npx ncc build src/index.ts -o dist -s",
     "dev": "ts-node-dev --respawn -- src/index.ts"
   },
   "keywords": [],
@@ -39,14 +39,13 @@
     "@types/node": "^12.12.31",
     "@types/passport": "^1.0.3",
     "@types/request": "^2.48.4",
+    "@vercel/ncc": "^0.26.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "colors": "^1.4.0",
     "mocha": "^8.2.1",
     "ts-loader": "^8.0.11",
     "ts-node-dev": "^1.0.0",
-    "typescript": "^4.0.5",
-    "webpack": "^5.5.0",
-    "webpack-cli": "^4.2.0"
+    "typescript": "^4.0.5"
   }
 }
