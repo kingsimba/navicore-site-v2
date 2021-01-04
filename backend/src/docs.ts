@@ -1,6 +1,7 @@
 import express from 'express';
 import { tokenManager } from "./token-manager";
 import fs from 'mz/fs';
+import { globalOptions } from './global-options';
 
 function authenticationMiddleware(req: express.Request, res: express.Response, next: () => void) {
     if (!tokenManager.verifyRequestAndRefreshCookie(req, res)) {
@@ -40,6 +41,9 @@ async function getDocTitle(dirName: string): Promise<string> {
 // find document name in '<a class="icon icon-home>Document Name</a>'
 export async function isUserAuthorized(dirName: string, username: string): Promise<boolean> {
     try {
+        if (globalOptions.superUsers.indexOf(username) != -1) {
+            return true;
+        }
         const file = await fs.readFile(`docs/${dirName}/authorize.txt`, 'utf8');
         const lines = file.split('\n').map(o => o.trim());
         for (const line of lines) {

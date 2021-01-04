@@ -8,5 +8,8 @@
 			"name": "simba",
 			"password": "simba'spassword"
 		}
+	],
+	"superUsers": [
+		"some_super_user@navinfo.com"
 	]
 }

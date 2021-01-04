@@ -15,6 +15,11 @@ describe('Docs', () => {
             expect(await isUserAuthorized('competitive-analysis', 'simba@other.com')).is.false;
             expect(await isUserAuthorized('competitive-analysis', 'noneExistName')).is.false;
         });
+
+        it('should allow super users with unlimited access', async () => {
+            expect(await isUserAuthorized('competitive-analysis', 'some_super_user@navinfo.com')).is.true;
+            expect(await isUserAuthorized('any-none-exist-document', 'some_super_user@navinfo.com')).is.true;
+        });
     });
 });
 

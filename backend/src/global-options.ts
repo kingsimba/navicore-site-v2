@@ -15,9 +15,14 @@ class GlobalOptions {
         { name: 'sampleUser', password: 'samplePassword' }
     ]
 
+    // super users can read all documents
+    superUsers = [
+        'some_super_user@navinfo.com'
+    ]
+
     constructor() {
         this.localUsers = []
-        
+
         try {
             // load file
             const root = JSON.parse(fs.readFileSync('navicore-site.json', 'utf8'));
