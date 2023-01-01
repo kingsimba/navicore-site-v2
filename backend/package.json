@@ -44,7 +44,7 @@
     "chai-http": "^4.3.0",
     "colors": "^1.4.0",
     "mocha": "^8.2.1",
-    "ts-loader": "^8.0.11",
+    "ts-loader": "^8.4.0",
     "ts-node-dev": "^1.0.0",
     "typescript": "^4.0.5"
   }
